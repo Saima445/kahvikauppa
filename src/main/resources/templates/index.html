@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kahvikauppa</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/reset.css"
+      th:href="@{css/reset.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/layout.css"
+      th:href="@{css/layout.css}"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Etusivu</a></li>
+          <li><a href="kahvilalaitteet.html">Kahvilalaitteet</a></li>
+          <li><a href="kulutustuotteet.html">Kulutustuotteet</a></li>
+        </ul>
+      </nav>
+      <h3>KAHVIKAUPPA</h3>
+      <section>
+        <p>Tervetuloa Kahvikauppaan</p>
+        <p>Myymme kahvilalaitteita ja -tuotteita</p>
+        <p>
+          Ota yhteyttä <span><a href="#">Kahvikauppa</a></span>
+        </p>
+      </section>
+    </header>
+  </body>
+</html>
