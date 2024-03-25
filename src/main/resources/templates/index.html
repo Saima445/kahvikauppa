@@ -9,6 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kahvikauppa</title>
     <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/e00b2e3114.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
       rel="stylesheet"
       type="text/css"
       href="../static/css/reset.css"
@@ -23,21 +31,112 @@
   </head>
   <body>
     <header>
-      <nav>
-        <ul>
-          <li><a href="index.html">Etusivu</a></li>
-          <li><a href="kahvilalaitteet.html">Kahvilalaitteet</a></li>
-          <li><a href="kulutustuotteet.html">Kulutustuotteet</a></li>
-        </ul>
-      </nav>
-      <h3>KAHVIKAUPPA</h3>
-      <section>
+      <section class="upper-bar">
+        <figure><img th:src="@{/images/kahvilogo.png}" alt="logo" /></figure>
+        <nav>
+          <ul class="navigation-items">
+            <li><a href="index.html" th:href="@{/}">Etusivu</a></li>
+            <li>
+              <a href="kahvilaitteet.html" th:href="@{/kahvilaitteet}"
+                >Kahvilaitteet</a
+              >
+            </li>
+            <li>
+              <a href="kulutustuotteet.html" th:href="@{/kulutustuotteet}"
+                >Kulutustuotteet</a
+              >
+            </li>
+            <li>
+              <a href="admin.html" th:href="@{/admin}"
+                ><i class="fa-regular fa-user"></i
+              ></a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+      <section class="header-text">
+        <h1>TÖÖLÖN KAHVIKAUPPA</h1>
         <p>Tervetuloa Kahvikauppaan</p>
         <p>Myymme kahvilalaitteita ja -tuotteita</p>
         <p>
-          Ota yhteyttä <span><a href="#">Kahvikauppa</a></span>
+          Ota yhteyttä
+          <span class="header-text-a"><a href="#footer">Kahvikauppa</a></span>
         </p>
       </section>
     </header>
+    <main>
+      <div class="cardflexes">
+        <div class="card">
+          <figure class="cardpicturesize">
+            <img th:src="@{/images/cardpic4.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Kahvilalaitteet</h3>
+          <p>
+            <a href="kahvilaitteet.html" th:href="@{/kahvilaitteet}"
+              >Valikoimaan <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+        <div class="card">
+          <figure class="cardpicturesize">
+            <img th:src="@{/images/cardpic2.png}" alt="coffee-maker" />
+          </figure>
+          <h3>Kulutustuotteet</h3>
+          <p>
+            <a href="kulutustuotteet.html" th:href="@{/kulutustuotteet}"
+              >Valikoimaan <i class="fa-solid fa-arrow-right-long"></i
+            ></a>
+          </p>
+        </div>
+        <div class="card">
+          <figure class="cardpicturesize">
+            <img th:src="@{/images/cardpic3.png}" alt="coffee" />
+          </figure>
+          <h3>Rekisteröidy VIP-asiakkaaksemme</h3>
+          <p>
+            <a href="#"
+              >Rekisteröidy <i class="fa-solid fa-arrow-right-long"></i
+            ></a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer id="footer">
+      <section class="footer-contact">
+        <h2>Yhteystiedot</h2>
+        <p>Töölön Kahvikauppa</p>
+        <p>Töölöntorinkatu 445, 00160 Helsinki</p>
+        <p>00160 Helsinki</p>
+        <p>0400445445</p>
+        <p>toolo@toolonkahvikauppa.fi</p>
+      </section>
+      <section class="footer-about-us">
+        <h2>Tietoa meistä</h2>
+        <p><a href="#">Toimitusehdot</a></p>
+        <p><a href="#">Tietosuojaseloste</a></p>
+        <p>Y-tunnus: 292292-4</p>
+      </section>
+      <section class="footer-icons">
+        <h2 id="icons-h2">Tuhtaamista somessa</h2>
+        <p>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </p>
+      </section>
+      <p id="copyright">
+        Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
+      </p>
+    </footer>
   </body>
 </html>

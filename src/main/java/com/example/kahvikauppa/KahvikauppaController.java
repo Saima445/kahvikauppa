@@ -10,4 +10,19 @@ public class KahvikauppaController {
         return "index";
     }
 
+    @GetMapping("/kahvilaitteet")
+    public String laitteet() {
+        return "kahvilaitteet";
+    }
+
+    @GetMapping("/kulutustuotteet")
+    public String tuotteet() {
+        return "kulutustuotteet";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
 }
