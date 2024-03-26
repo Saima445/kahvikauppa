@@ -25,6 +25,12 @@
     <link
       rel="stylesheet"
       type="text/css"
+      href="../static/css/layout.css"
+      th:href="@{css/layout.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
       href="../static/css/products.css"
       th:href="@{css/products.css}"
     />
@@ -58,16 +64,28 @@
         <h1>TÖÖLÖN KAHVIKAUPPA</h1>
         <p>Tervetuloa Kahvikauppaan</p>
         <p>Myymme kahvilalaitteita ja -tuotteita</p>
-        <p>
+        <p id="header-text-a-margin">
           Ota yhteyttä
-          <span class="header-text-a"><a href="#footer">Kahvikauppa</a></span>
+          <span id="header-text-a"><a href="#footer">Kahvikauppa</a></span>
         </p>
       </section>
     </header>
     <main>
-      <div class="cardflexes">
-        <div class="card">
-          <figure class="cardpicturesize">
+      <section class="grid-container">
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
+            <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Laitteen nimi</h3>
+          <p>Laitteen hinta</p>
+          <p>
+            <a href="tuote-laite.html" th:href="@{/tuote-laite}"
+              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
             <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
           </figure>
           <h3>Laitteen nimi</h3>
@@ -78,13 +96,73 @@
             </a>
           </p>
         </div>
-      </div>
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
+            <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Laitteen nimi</h3>
+          <p>Laitteen hinta</p>
+          <p>
+            <a href="#"
+              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
+            <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Laitteen nimi</h3>
+          <p>Laitteen hinta</p>
+          <p>
+            <a href="#"
+              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
+            <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Laitteen nimi</h3>
+          <p>Laitteen hinta</p>
+          <p>
+            <a href="#"
+              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
+            <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Laitteen nimi</h3>
+          <p>Laitteen hinta</p>
+          <p>
+            <a href="#"
+              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+        <div class="grid-card">
+          <figure class="grid-cardpicturesize">
+            <img th:src="@{/images/cardpic1.png}" alt="coffee-machine" />
+          </figure>
+          <h3>Laitteen nimi</h3>
+          <p>Laitteen hinta</p>
+          <p>
+            <a href="#"
+              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+          </p>
+        </div>
+      </section>
     </main>
     <footer id="footer">
       <section class="footer-contact">
         <h2>Yhteystiedot</h2>
         <p>Töölön Kahvikauppa</p>
-        <p>Töölöntorinkatu 445, 00160 Helsinki</p>
+        <p>Töölöntorinkatu 445,</p>
         <p>00160 Helsinki</p>
         <p>0400445445</p>
         <p>toolo@toolonkahvikauppa.fi</p>

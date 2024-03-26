@@ -1,180 +1,46 @@
-html {
-  font-size: 62.5%;
+/* GRID */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(6, auto);
+  grid-gap: 2rem;
+  padding: 4rem;
 }
 
-body {
-  margin: 1rem;
-  font-size: 1.6rem;
-  font-family: "Bodoni Moda", serif;
-}
-
-header {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../images/kahvilaite1.jpg");
-  max-height: 100%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 55rem;
-  padding: 2rem;
-  text-align: center;
-}
-
-.upper-bar {
-  position: fixed;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 94vw;
-}
-.navigation-items {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: end;
-  align-items: center;
-}
-
-.navigation-items a {
-  color: whitesmoke;
-  letter-spacing: 0.1rem;
-  text-decoration: none;
-  margin-inline-start: 2rem;
-}
-
-.upper-bar figure {
-  width: 7.5rem;
-  height: 7.5rem;
-}
-
-img {
-  max-width: 100%;
-  /* max-height: 100%; */
-}
-.header-text {
-  margin-block-start: 14rem;
-  font-family: "Abril Fatface", serif;
-  letter-spacing: 0.2rem;
-  font-size: 2rem;
-  color: whitesmoke;
-}
-
-.header-text p {
-  margin-block-start: 1rem;
-}
-
-.header-text-a a {
-  color: whitesmoke;
-}
-h1 {
-  font-size: 4rem;
-  margin-block-end: 3rem;
-  margin-block-start: 2rem;
-}
-
-h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-block-end: 2rem;
-}
-
-h3 {
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-/*CARD-SECTIONIN MUOKKAUKSIA*/
-.cardflexes {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  padding: 2rem;
-}
-
-.card {
+/* GRID-CARD MUOKKAUKSIA */
+.grid-card {
   border: 1px solid darkgray;
   transition: 0.3s;
   padding: 1rem;
-  margin: 1rem;
-  width: 33%;
 }
 
-.card h3,
-.card p,
-.card figure {
+.grid-cardpicturesize {
+  width: 100%;
+}
+
+/* .grid-cardpicturesize img {
+  max-width: 100%;
+  object-fit: cover; 
+} */
+
+.grid-card h3,
+.grid-card p,
+.grid-card figure {
   margin-block-end: 1rem;
 }
 
-.card:hover {
+.grid-card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
 }
-.card a {
+.grid-card a {
   text-decoration: none;
   color: black;
 }
-.card a:hover {
+.grid-card a:hover {
   color: rgb(45, 120, 45);
   font-style: italic;
-  letter-spacing: 0.1rem;
+  /* letter-spacing: 0.1rem; */
 }
-
-.card i {
+.grid-card i {
   margin-inline-start: 1rem;
-}
-
-/* FOOTER */
-
-footer {
-  padding: 4rem 2rem 2rem 2rem;
-  background-color: #09271d;
-  color: whitesmoke;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-footer p {
-  margin-block-start: 1rem;
-}
-
-footer a {
-  color: whitesmoke;
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-footer > * {
-  /* flex-basis: 0; */
-  width: 33%;
-  /* flex-grow: 1; */
-  text-align: center;
-}
-
-#copyright {
-  flex-basis: 100%;
-  font-size: 1.2rem;
-  text-align: center;
-  /* flex-grow: 2; */
-}
-
-.footer-icons {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.footer-icons > * {
-  flex-basis: 0;
-  font-size: 2rem;
-}
-
-#icons-h2 {
-  flex-basis: 100%;
 }

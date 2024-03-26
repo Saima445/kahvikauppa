@@ -20,6 +20,11 @@ public class KahvikauppaController {
         return "kulutustuotteet";
     }
 
+    @GetMapping("/tuote-laite")
+    public String yksittainentuote() {
+        return "tuote-laite";
+    }
+
     @GetMapping("/admin")
     public String admin() {
         return "admin";

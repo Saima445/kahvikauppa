@@ -48,12 +48,8 @@ header {
   height: 7.5rem;
 }
 
-img {
-  max-width: 100%;
-  /* max-height: 100%; */
-}
 .header-text {
-  margin-block-start: 14rem;
+  margin-block-start: 17rem;
   font-family: "Abril Fatface", serif;
   letter-spacing: 0.2rem;
   font-size: 2rem;
@@ -64,11 +60,14 @@ img {
   margin-block-start: 1rem;
 }
 
-.header-text-a a {
+#header-text-a a {
   color: whitesmoke;
 }
+#header-text-a-margin {
+  margin-block-start: 2rem;
+}
 h1 {
-  font-size: 4rem;
+  font-size: 6rem;
   margin-block-end: 3rem;
   margin-block-start: 2rem;
 }
@@ -76,12 +75,17 @@ h1 {
 h2 {
   font-size: 2rem;
   font-weight: bold;
-  margin-block-end: 2rem;
+  margin-block-end: 1rem;
 }
 
 h3 {
   font-size: 1.8rem;
   font-weight: bold;
+}
+
+img {
+  max-width: 100%;
+  /* max-height: 100%; */
 }
 
 /*CARD-SECTIONIN MUOKKAUKSIA*/
@@ -123,6 +127,23 @@ h3 {
   margin-inline-start: 1rem;
 }
 
+/* ADMIN */
+
+.admin-section {
+  padding: 4rem;
+}
+
+/* INDIVIDUAL PRODUCTS */
+
+.product-section {
+  padding: 4rem;
+}
+
+.product-section p,
+figure {
+  margin-block-end: 1rem;
+}
+
 /* FOOTER */
 
 footer {
@@ -154,12 +175,18 @@ footer > * {
   width: 33%;
   /* flex-grow: 1; */
   text-align: center;
+  letter-spacing: 0.1rem;
+}
+
+footer h2 {
+  margin-block-end: 2rem;
 }
 
 #copyright {
   flex-basis: 100%;
   font-size: 1.2rem;
   text-align: center;
+  margin-block-start: 4rem;
   /* flex-grow: 2; */
 }
 
@@ -167,7 +194,7 @@ footer > * {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .footer-icons > * {
