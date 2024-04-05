@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -48,16 +49,51 @@ public class KahvikauppaController {
         return "toimittajat";
     }
 
+    @PostMapping("/toimittajat")
+    public String addSupplier(@RequestParam String name, @RequestParam String contactPerson,
+            @RequestParam String contactPersonEmail) {
+        Toimittaja newToimittaja = new Toimittaja();
+        newToimittaja.setName(name.trim());
+        newToimittaja.setContactPerson(contactPerson.trim());
+        newToimittaja.setContactPersonEmail(contactPersonEmail.trim());
+
+        this.toimittajaRepository.save(newToimittaja);
+
+        return "redirect:/toimittajat";
+    }
+
     @GetMapping("/valmistajat")
     public String producers(Model model) {
         model.addAttribute("producers", this.valmistajaRepository.findAll());
         return "valmistajat";
     }
 
+    @PostMapping("/valmistajat")
+    public String addProducer(@RequestParam String name, @RequestParam String url) {
+        Valmistaja newValmistaja = new Valmistaja();
+        newValmistaja.setName(name.trim());
+        newValmistaja.setUrl(url.trim());
+
+        this.valmistajaRepository.save(newValmistaja);
+
+        return "redirect:/valmistajat";
+    }
+
     @GetMapping("/osastot")
     public String departments(Model model) {
         model.addAttribute("departments", this.osastoRepository.findAll());
         return "osastot";
+    }
+
+    @PostMapping("/osastot")
+    public String addDepartment(@RequestParam String name, @RequestParam Long osastoIDP) {
+        Osasto newOsasto = new Osasto();
+        newOsasto.setName(name.trim());
+        newOsasto.setOsastoIDP(osastoIDP);
+
+        this.osastoRepository.save(newOsasto);
+
+        return "redirect:/osastot";
     }
 
     @GetMapping("/admin")

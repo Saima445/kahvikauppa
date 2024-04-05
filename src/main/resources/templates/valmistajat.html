@@ -70,10 +70,10 @@
         <div class="add-section">
           <h3>Lisää valmistaja:</h3>
           <form class="form-flex" th:action="@{/valmistajat}" method="POST">
-            <label for="">Valmistajan nimi:</label>
+            <label for="name">Valmistajan nimi:</label>
             <input type="text" name="name" id="name" />
-            <label for="">Nettisivut:</label>
-            <input type="text" name="siteLink" id="siteLink" />
+            <label for="url">Nettisivut:</label>
+            <input type="text" name="url" id="url" />
             <input class="submit-button" type="submit" value="Lisää" />
           </form>
         </div>
@@ -93,9 +93,15 @@
 
         <tbody>
           <tr th:each="producer : ${producers}">
-            <!-- th:each="account : ${client.accounts}" -->
             <td th:text="${producer.name}">Producer's name</td>
-            <td th:text="${producer.url}">Producer's website</td>
+            <td>
+              <a
+                th:href="${producer.url}"
+                th:text="${producer.url}"
+                target="_blank"
+                >Producer's website</a
+              >
+            </td>
             <!-- <td>
               <form
                 th:action="@{/updateProduct/{id}(id=${product.id})}"
@@ -113,18 +119,16 @@
                 th:action="@{/deleteProducer/{id}(id=${producer.id})}"
                 method="POST"
               >
-                <button
-                  class="delete-button"
-                  type="submit"
-                  value="Poista"
-                ></button>
+                <button class="delete-button" type="submit" value="Poista">
+                  Poista
+                </button>
               </form>
             </td>
           </tr>
           <tr>
             <td colspan="3" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
-              <!-- <span th:text="${products.size()}">0</span> -->
+              <span th:text="${producers.size()}">0</span>
               valmistajaa.
             </td>
           </tr>

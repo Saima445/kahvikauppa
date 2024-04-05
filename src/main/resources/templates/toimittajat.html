@@ -70,11 +70,11 @@
         <div class="add-section">
           <h3>Lisää toimittaja:</h3>
           <form class="form-flex" th:action="@{/toimittajat}" method="POST">
-            <label for="">Toimittajan nimi:</label>
+            <label for="name">Toimittajan nimi:</label>
             <input type="text" name="name" id="name" />
-            <label for="">Yhteyshenkilö:</label>
+            <label for="contactPerson">Yhteyshenkilö:</label>
             <input type="text" name="contactPerson" id="contactPerson" />
-            <label for="">Yhteyshenkilön sähköposti:</label>
+            <label for="contactPersonEmail">Yhteyshenkilön sähköposti:</label>
             <input
               type="text"
               name="contactPersonEmail"
@@ -100,7 +100,6 @@
 
         <tbody>
           <tr th:each="supplier : ${suppliers}">
-            <!-- th:each="account : ${client.accounts}" -->
             <td th:text="${supplier.name}">Suppliers name</td>
             <td th:text="${supplier.contactPerson}">
               Suppliers contact person
@@ -125,18 +124,16 @@
                 th:action="@{/deleteSupplier/{id}(id=${supplier.id})}"
                 method="POST"
               >
-                <button
-                  class="delete-button"
-                  type="submit"
-                  value="Poista"
-                ></button>
+                <button class="delete-button" type="submit" value="Poista">
+                  Poista
+                </button>
               </form>
             </td>
           </tr>
           <tr>
             <td colspan="4" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
-              <!-- <span th:text="${products.size()}">0</span> -->
+              <span th:text="${suppliers.size()}">0</span>
               toimittajaa.
             </td>
           </tr>

@@ -5,9 +5,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
 // import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -23,10 +23,6 @@ import java.util.List;
 @Data
 @Table(name = "valmistaja_details")
 public class Valmistaja extends AbstractPersistable<Long> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
-    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -35,7 +31,6 @@ public class Valmistaja extends AbstractPersistable<Long> {
     private String url;
 
     @OneToMany(mappedBy = "valmistaja")
-    // @JoinColumn(name = "tuote_id", referencedColumnName = "valmistaja_id")
     private List<Tuote> tuotteet; // = new ArrayList<>();
 
 }
