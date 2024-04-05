@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tuote_details")
 public class Tuote extends AbstractPersistable<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

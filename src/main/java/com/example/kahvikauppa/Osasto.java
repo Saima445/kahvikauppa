@@ -24,7 +24,7 @@ import java.util.List;
 @Table(name = "osasto_details")
 public class Osasto extends AbstractPersistable<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -35,7 +35,6 @@ public class Osasto extends AbstractPersistable<Long> {
     private Long osastoIDP;
 
     @OneToMany(mappedBy = "osasto")
-    // @JoinColumn(name = "tuote_id", referencedColumnName = "osasto_id")
     private List<Tuote> tuotteet; // = new ArrayList<>();
 
 }

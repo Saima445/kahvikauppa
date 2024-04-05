@@ -28,12 +28,6 @@
       href="../static/css/layout.css"
       th:href="@{css/layout.css}"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/products.css"
-      th:href="@{css/products.css}"
-    />
   </head>
   <body>
     <header>
@@ -71,95 +65,73 @@
       </section>
     </header>
     <main>
-      <h2>KULUTUSTUOTTEET</h2>
-      <p>Tuotteita yhteensä:</p>
-      <section class="grid-container">
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="tuote-laite.html" th:href="@{/tuote-laite}"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
+      <h2>ADMIN</h2>
+      <section class="admin-section">
+        <div class="add-section">
+          <h3>Lisää valmistaja:</h3>
+          <form class="form-flex" th:action="@{/valmistajat}" method="POST">
+            <label for="">Valmistajan nimi:</label>
+            <input type="text" name="name" id="name" />
+            <label for="">Nettisivut:</label>
+            <input type="text" name="siteLink" id="siteLink" />
+            <input class="submit-button" type="submit" value="Lisää" />
+          </form>
         </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
+        <button><a th:href="@{/admin}">Tuotteet</a></button>
+        <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
+        <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Valmistajan nimi</th>
+            <th>Nettisivut</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="producer : ${producers}">
+            <!-- th:each="account : ${client.accounts}" -->
+            <td th:text="${producer.name}">Producer's name</td>
+            <td th:text="${producer.url}">Producer's website</td>
+            <!-- <td>
+              <form
+                th:action="@{/updateProduct/{id}(id=${product.id})}"
+                method="POST"
+              >
+                <button
+                  class="update-button"
+                  type="submit"
+                  value="Muokkaa"
+                ></button>
+              </form>
+            </td> -->
+            <td>
+              <form
+                th:action="@{/deleteProducer/{id}(id=${producer.id})}"
+                method="POST"
+              >
+                <button
+                  class="delete-button"
+                  type="submit"
+                  value="Poista"
+                ></button>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="font-style: italic; text-align: center">
+              Taulukossa on yhteensä
+              <!-- <span th:text="${products.size()}">0</span> -->
+              valmistajaa.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </main>
+
     <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>

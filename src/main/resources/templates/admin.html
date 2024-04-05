@@ -65,13 +65,95 @@
       </section>
     </header>
     <main>
+      <h2>ADMIN</h2>
       <section class="admin-section">
-        <h2>Lisää tuotteita:</h2>
+        <div class="add-section">
+          <h3>Lisää tuote:</h3>
+          <form class="form-flex" th:action="@{/admin}" method="POST">
+            <label for="name">Tuotteen nimi:</label>
+            <input type="text" name="name" id="name" />
+            <label for="price">Tuotteen hinta:</label>
+            <input type="bigDecimal" name="price" id="price" />
+            <label for="description">Tuotteen kuvaus:</label>
+            <textarea name="description" id="description" rows="4"></textarea>
+            <label for="img">Kuva:</label>
+            <input type="text" name="img" id="img" />
+            <label for="department">Osasto:</label>
+            <input type="text" name="department" id="department" />
+            <label for="supplier">Toimittaja:</label>
+            <input type="text" name="supplier" id="supplier" />
+            <label for="producer">Valmistaja:</label>
+            <input type="text" name="producer" id="producer" />
+            <input class="submit-button" type="submit" value="Lisää" />
+          </form>
+        </div>
+        <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
+        <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
+        <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Tuotteet nimi</th>
+            <th>Tuotteen hinta</th>
+            <th>Tuotteen kuvaus</th>
+            <th>Osasto</th>
+            <th>Toimittaja</th>
+            <th>Valmistaja</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="product : ${products}">
+            <!-- th:each="account : ${client.accounts}" -->
+            <td th:text="${product.name}">Product name</td>
+            <td th:text="${product.price}">Product's price</td>
+            <td th:text="${product.description}">Product description</td>
+            <td th:text="${product.department}">Product's department</td>
+            <td th:text="${product.supplier}">Product's supplier</td>
+            <td th:text="${product.producer}">Product's producer</td>
+            <td>
+              <form
+                th:action="@{/updateProduct/{id}(id=${product.id})}"
+                method="POST"
+              >
+                <button
+                  class="update-button"
+                  type="submit"
+                  value="Muokkaa"
+                ></button>
+              </form>
+            </td>
+            <td>
+              <form
+                th:action="@{/deleteProduct/{id}(id=${product.id})}"
+                method="POST"
+              >
+                <button
+                  class="delete-button"
+                  type="submit"
+                  value="Poista"
+                ></button>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="8" style="font-style: italic; text-align: center">
+              Taulukossa on yhteensä
+              <!-- <span th:text="${products.size()}">0</span> -->
+              tuotetta.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </main>
+
     <footer id="footer">
       <section class="footer-contact">
-        <h2>Yhteystiedot</h2>
+        <h4>Yhteystiedot</h4>
         <p>Töölön Kahvikauppa</p>
         <p>Töölöntorinkatu 445,</p>
         <p>00160 Helsinki</p>
@@ -79,13 +161,13 @@
         <p>toolo@toolonkahvikauppa.fi</p>
       </section>
       <section class="footer-about-us">
-        <h2>Tietoa meistä</h2>
+        <h4>Tietoa meistä</h4>
         <p><a href="#">Toimitusehdot</a></p>
         <p><a href="#">Tietosuojaseloste</a></p>
         <p>Y-tunnus: 292292-4</p>
       </section>
       <section class="footer-icons">
-        <h2 id="icons-h2">Tuhtaamista somessa</h2>
+        <h4 id="icons-h4">Tuhtaamista somessa</h4>
         <p>
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
         </p>

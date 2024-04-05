@@ -73,14 +73,22 @@ h1 {
 }
 
 h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-block-end: 1rem;
+  font-size: 3rem;
+  /* font-weight: bold; */
+  margin: 2rem 1rem 1rem 1rem;
 }
 
 h3 {
   font-size: 1.8rem;
   font-weight: bold;
+  margin-block-end: 2rem;
+}
+
+/* FOOTER H-KOKO */
+h4 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-block-end: 2rem;
 }
 
 img {
@@ -125,23 +133,6 @@ img {
 
 .card i {
   margin-inline-start: 1rem;
-}
-
-/* ADMIN */
-
-.admin-section {
-  padding: 4rem;
-}
-
-/* INDIVIDUAL PRODUCTS */
-
-.product-section {
-  padding: 4rem;
-}
-
-.product-section p,
-figure {
-  margin-block-end: 1rem;
 }
 
 /* FOOTER */
@@ -202,6 +193,108 @@ footer h2 {
   font-size: 2rem;
 }
 
-#icons-h2 {
+#icons-h4 {
   flex-basis: 100%;
+}
+
+/* BUTTONIT */
+button {
+  background-color: whitesmoke;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: "Bodoni Moda", serif;
+  width: 15rem;
+  /* margin-block-start: 1rem; */
+  /* font-weight: bold; */
+}
+
+a {
+  text-decoration: unset;
+  color: black;
+}
+
+button:hover,
+.submit-button:hover {
+  cursor: pointer;
+  background-color: rgb(224, 224, 224);
+  color: blue;
+}
+
+.update-button {
+}
+
+.delete-button {
+}
+
+/* ADMIN-SIVU */
+
+.admin-section {
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 2rem;
+}
+
+.add-section {
+  flex-grow: 1;
+}
+
+.form-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.form-flex input,
+.form-flex textarea {
+  padding: 0.5rem;
+  font-size: 1.6rem;
+  border-radius: 4px;
+  border: 0.8px black solid;
+  width: 35rem;
+  font-family: "Bodoni Moda", serif;
+}
+
+input.submit-button {
+  background-color: whitesmoke;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 0.6rem 2.3rem;
+  margin-block-start: 1rem;
+  width: fit-content;
+}
+
+/* TABLE-MUOKKAUKSIA */
+
+.admin-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-block-end: 3rem;
+  background-color: white;
+}
+
+.admin-table th,
+td {
+  border: 0.8px solid black;
+  padding: 1.5rem;
+}
+
+.admin-table th {
+  background-color: #526e25;
+  color: white;
+}
+
+/* INDIVIDUAL PRODUCTS-SIVUT */
+
+.product-section {
+  padding: 4rem;
+}
+
+.product-section p,
+figure {
+  margin-block-end: 1rem;
 }
