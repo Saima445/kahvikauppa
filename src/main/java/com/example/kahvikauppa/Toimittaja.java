@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,10 +22,6 @@ import java.util.List;
 @Data
 @Table(name = "toimittaja_details")
 public class Toimittaja extends AbstractPersistable<Long> {
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name = "id")
-    // private Long id;
 
     @Column(name = "name")
     private String name;
@@ -37,6 +33,6 @@ public class Toimittaja extends AbstractPersistable<Long> {
     private String contactPersonEmail;
 
     @OneToMany(mappedBy = "toimittaja")
-    private List<Tuote> tuotteet; // = new ArrayList<>();
+    private List<Tuote> products = new ArrayList<>();
 
 }

@@ -70,18 +70,19 @@
         <div class="add-section">
           <h3>Lisää osasto:</h3>
           <form class="form-flex" th:action="@{/osastot}" method="POST">
-            <!-- <label for="">Osaston ID:</label>
-            <input type="Long" name="id" id="id" /> -->
             <label for="name">Osaston nimi:</label>
             <input type="text" name="name" id="name" />
             <label for="osastoIDP">Osasto ID:</label>
-            <input type="Long" name="osastoIDP" id="osastoIDP" />
+            <input type="text" name="osastoIDP" id="osastoIDP" />
             <input class="submit-button" type="submit" value="Lisää" />
           </form>
         </div>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
-        <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
         <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
+        <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
+        <button style="background-color: rgb(254, 255, 217)">
+          <a th:href="@{/osastot}">Osastot</a>
+        </button>
       </section>
 
       <table class="admin-table">
@@ -90,6 +91,7 @@
             <th>ID</th>
             <th>Osaston nimi</th>
             <th>Osasto ID</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -101,18 +103,16 @@
             <td th:text="${department.osastoIDP}">
               Department's departmentIDP
             </td>
-            <!-- <td>
+            <td>
               <form
-                th:action="@{/updateProduct/{id}(id=${product.id})}"
+                th:action="@{/updateDepartment/{id}(id=${department.id})}"
                 method="POST"
               >
-                <button
-                  class="update-button"
-                  type="submit"
-                  value="Muokkaa"
-                ></button>
+                <button class="update-button" type="submit" value="Muokkaa">
+                  Muokkaa
+                </button>
               </form>
-            </td> -->
+            </td>
             <td>
               <form
                 th:action="@{/deleteDepartment/{id}(id=${department.id})}"
@@ -125,7 +125,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="4" style="font-style: italic; text-align: center">
+            <td colspan="5" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
               <span th:text="${departments.size()}">0</span>
               osastoa.

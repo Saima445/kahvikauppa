@@ -4,7 +4,7 @@
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(6, auto);
   grid-gap: 2rem;
-  padding: 4rem;
+  padding: 2rem 4rem;
 }
 
 /* GRID-CARD MUOKKAUKSIA */

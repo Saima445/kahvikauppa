@@ -84,6 +84,10 @@ h3 {
   margin-block-end: 2rem;
 }
 
+.summary-p {
+  margin: 2rem 1rem 1rem 2rem;
+}
+
 /* FOOTER H-KOKO */
 h4 {
   font-size: 2rem;
@@ -226,6 +230,11 @@ button:hover,
 }
 
 .update-button {
+  width: fit-content;
+}
+
+.update-button:hover {
+  color: rgb(255, 149, 0);
 }
 
 .delete-button {
@@ -241,6 +250,7 @@ button:hover,
   padding: 2rem;
   display: flex;
   flex-direction: row;
+  /* flex-wrap: wrap; */
   justify-content: flex-start;
   align-items: baseline;
   gap: 2rem;
@@ -258,7 +268,9 @@ button:hover,
 }
 
 .form-flex input,
-.form-flex textarea {
+.form-flex textarea,
+.form-flex select {
+  margin-block-end: 1rem;
   padding: 0.5rem;
   font-size: 1.6rem;
   border-radius: 4px;
@@ -274,6 +286,7 @@ input.submit-button {
   padding: 0.6rem 2.3rem;
   margin-block-start: 1rem;
   width: fit-content;
+  font-size: 1.4rem;
 }
 
 /* TABLE-MUOKKAUKSIA */

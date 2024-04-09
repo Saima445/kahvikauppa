@@ -79,6 +79,9 @@
         </div>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
         <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
+        <button style="background-color: rgb(254, 255, 217)">
+          <a th:href="@{/valmistajat}">Valmistajat</a>
+        </button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
 
@@ -87,6 +90,7 @@
           <tr>
             <th>Valmistajan nimi</th>
             <th>Nettisivut</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -102,18 +106,16 @@
                 >Producer's website</a
               >
             </td>
-            <!-- <td>
+            <td>
               <form
-                th:action="@{/updateProduct/{id}(id=${product.id})}"
+                th:action="@{/updateProducer/{id}(id=${producer.id})}"
                 method="POST"
               >
-                <button
-                  class="update-button"
-                  type="submit"
-                  value="Muokkaa"
-                ></button>
+                <button class="update-button" type="submit" value="Muokkaa">
+                  Muokkaa
+                </button>
               </form>
-            </td> -->
+            </td>
             <td>
               <form
                 th:action="@{/deleteProducer/{id}(id=${producer.id})}"
@@ -126,7 +128,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="3" style="font-style: italic; text-align: center">
+            <td colspan="4" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
               <span th:text="${producers.size()}">0</span>
               valmistajaa.

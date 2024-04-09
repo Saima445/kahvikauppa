@@ -73,20 +73,100 @@
             <label for="name">Tuotteen nimi:</label>
             <input type="text" name="name" id="name" />
             <label for="price">Tuotteen hinta:</label>
-            <input type="bigDecimal" name="price" id="price" />
+            <input type="text" name="price" id="price" />
             <label for="description">Tuotteen kuvaus:</label>
             <textarea name="description" id="description" rows="4"></textarea>
-            <label for="img">Kuva:</label>
-            <input type="text" name="img" id="img" />
+            <!-- <label for="img">Kuva:</label>
+            <input type="text" name="img" id="img" /> -->
             <label for="department">Osasto:</label>
-            <input type="text" name="department" id="department" />
+            <!-- <input type="text" name="department" id="department" /> -->
+            <select name="departmentId" id="department">
+              <option value="">Valitse osasto</option>
+              <option
+                th:each="department : ${departments}"
+                th:value="${department.id}"
+                th:text="${department.name}"
+              ></option>
+            </select>
+            <!-- OSASTO OPTION SELECTI PORRASTETUSTI!! -->
+            <!-- <label for="rootDepartment">Osasto:</label>
+            <select id="rootDepartment" name="rootDepartment">
+              <option value="">Valitse pääosasto</option>
+              <option
+                th:each="rootDepartment : ${rootDepartments}"
+                th:value="${rootDepartment.id}"
+                th:text="${rootDepartment.name}"
+              ></option>
+            </select> -->
+
+            <!-- Sub department valinta, näkyy vain jos pääosasto on valittu -->
+            <!-- <label
+              for="subDepartment"
+              th:if="${not #lists.isEmpty(subDepartments)}"
+              >Alaosasto:</label
+            >
+            <select
+              id="subDepartment"
+              name="subDepartment"
+              th:if="${not #lists.isEmpty(subDepartments)}"
+            >
+              <option value="">Valitse alaosasto</option>
+              <option
+                th:each="subDepartment : ${subDepartments}"
+                th:value="${subDepartment.id}"
+                th:text="${subDepartment.name}"
+              ></option>
+            </select> -->
+
+            <!-- Lower level department valinta, näkyy vain jos alaosasto on valittu -->
+            <!-- <label
+              for="lowerLevelDepartment"
+              th:if="${not #lists.isEmpty(lowerLevelDepartments)}"
+              >Valitse alemman tason osasto:</label
+            >
+            <select
+              id="lowerLevelDepartment"
+              name="lowerLevelDepartment"
+              th:if="${not #lists.isEmpty(lowerLevelDepartments)}"
+            >
+              <option value="">Valitse alempi tason osasto</option>
+              <option
+                th:each="lowerLevelDepartment : ${lowerLevelDepartments}"
+                th:value="${lowerLevelDepartment.id}"
+                th:text="${lowerLevelDepartment.name}"
+              ></option>
+            </select> -->
+
             <label for="supplier">Toimittaja:</label>
-            <input type="text" name="supplier" id="supplier" />
+            <select name="supplierId" id="supplier">
+              <option value="">Valitse toimittaja</option>
+              <option value="-1">Lisää uusi toimittaja</option>
+              <option
+                th:each="supplier : ${suppliers}"
+                th:value="${supplier.id}"
+                th:text="${supplier.name}"
+              ></option>
+            </select>
+             <!-- LISÄTÄÄN UUSI TOIMITTAJA JOS TARVITSEE -->
+            <label for="newSupplierName" id="newSupplierName" style="display: none; margin-inline-start: 2rem;">Uuden toimittajan nimi:</label>
+            <input type="text" id="newSupplierNameInput" name="newSupplierName" style="display: none; margin-inline-start: 2rem; border:1.5px solid orange" th:if="${isNewSupplier}" />
+    
+            <!-- <label for="producer">Valmistaja:</label>
+            <input type="text" name="producer" id="producer" /> -->
             <label for="producer">Valmistaja:</label>
-            <input type="text" name="producer" id="producer" />
+            <select name="producerId" id="producer">
+            <option value="">Valitse valmistaja</option>
+            <option value="-1">Lisää uusi valmistaja</option>
+            <option th:each="producer : ${producers}" th:value="${producer.id}" th:text="${producer.name}"></option>
+            </select>
+            <label for="newProducerName" id="newProducerName" style="display: none; margin-inline-start: 2rem;">Uuden valmistajan nimi:</label>
+            <input type="text" id="newProducerNameInput" name="newProducerName" style="display: none; margin-inline-start: 2rem; border:1.5px solid orange;" th:if="${isNewProducer}" />
             <input class="submit-button" type="submit" value="Lisää" />
           </form>
         </div>
+        <button style="background-color: rgb(254, 255, 217)">
+          <a th:href="@{/admin}">Tuotteet</a>
+        </button>
         <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
         <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
@@ -108,23 +188,20 @@
 
         <tbody>
           <tr th:each="product : ${products}">
-            <!-- th:each="account : ${client.accounts}" -->
             <td th:text="${product.name}">Product name</td>
             <td th:text="${product.price}">Product's price</td>
             <td th:text="${product.description}">Product description</td>
-            <td th:text="${product.department}">Product's department</td>
-            <td th:text="${product.supplier}">Product's supplier</td>
-            <td th:text="${product.producer}">Product's producer</td>
+            <td th:text="${product.osasto.name}">Product's department</td>
+            <td th:text="${product.toimittaja.name}">Product's supplier</td>
+            <td th:text="${product.valmistaja.name}">Product's producer</td>
             <td>
               <form
                 th:action="@{/updateProduct/{id}(id=${product.id})}"
                 method="POST"
               >
-                <button
-                  class="update-button"
-                  type="submit"
-                  value="Muokkaa"
-                ></button>
+                <button class="update-button" type="submit" value="">
+                  Muokkaa
+                </button>
               </form>
             </td>
             <td>
@@ -135,15 +212,15 @@
                 <button
                   class="delete-button"
                   type="submit"
-                  value="Poista"
-                ></button>
+                  value=
+                >Poista</button>
               </form>
             </td>
           </tr>
           <tr>
             <td colspan="8" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
-              <!-- <span th:text="${products.size()}">0</span> -->
+              <span th:text="${products.size()}">0</span>
               tuotetta.
             </td>
           </tr>
@@ -188,5 +265,17 @@
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
     </footer>
+    <script>
+      document.getElementById('supplier').addEventListener('change', function() {
+        var isNewSupplier = document.getElementById('supplier').value === '-1';
+        document.getElementById('newSupplierName').style.display = isNewSupplier ? 'block' : 'none';
+        document.getElementById('newSupplierNameInput').style.display = isNewSupplier ? 'block' : 'none';
+      });
+      document.getElementById('producer').addEventListener('change', function() {
+        var isNewProducer = document.getElementById('producer').value === '-1';
+        document.getElementById('newProducerName').style.display = isNewProducer ? 'block' : 'none';
+        document.getElementById('newProducerNameInput').style.display = isNewProducer ? 'block' : 'none';
+    });
+    </script>
   </body>
 </html>

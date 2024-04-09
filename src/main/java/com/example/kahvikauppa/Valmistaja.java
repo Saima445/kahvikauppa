@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,6 +31,6 @@ public class Valmistaja extends AbstractPersistable<Long> {
     private String url;
 
     @OneToMany(mappedBy = "valmistaja")
-    private List<Tuote> tuotteet; // = new ArrayList<>();
+    private List<Tuote> products = new ArrayList<>();
 
 }

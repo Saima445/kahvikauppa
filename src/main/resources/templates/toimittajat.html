@@ -84,6 +84,9 @@
           </form>
         </div>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
+        <button style="background-color: rgb(254, 255, 217)">
+          <a th:href="@{/toimittajat}">Toimittajat</a>
+        </button>
         <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
@@ -94,6 +97,7 @@
             <th>Toimittajan nimi</th>
             <th>Yhteyshenkilö</th>
             <th>Yhteyshenkilön sähköposti</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -107,18 +111,16 @@
             <td th:text="${supplier.contactPersonEmail}">
               Contact person's email
             </td>
-            <!-- <td>
+            <td>
               <form
-                th:action="@{/updateProduct/{id}(id=${product.id})}"
+                th:action="@{/updateSupplier/{id}(id=${supplier.id})}"
                 method="POST"
               >
-                <button
-                  class="update-button"
-                  type="submit"
-                  value="Muokkaa"
-                ></button>
+                <button class="update-button" type="submit" value="Muokkaa">
+                  Muokkaa
+                </button>
               </form>
-            </td> -->
+            </td>
             <td>
               <form
                 th:action="@{/deleteSupplier/{id}(id=${supplier.id})}"
@@ -131,7 +133,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="4" style="font-style: italic; text-align: center">
+            <td colspan="5" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
               <span th:text="${suppliers.size()}">0</span>
               toimittajaa.

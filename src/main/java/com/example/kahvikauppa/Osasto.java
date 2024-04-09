@@ -5,7 +5,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 // import jakarta.persistence.GeneratedValue;
 // import jakarta.persistence.GenerationType;
 // import jakarta.persistence.Id;
@@ -15,7 +14,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,10 +24,6 @@ import java.util.List;
 @Table(name = "osasto_details")
 
 public class Osasto extends AbstractPersistable<Long> {
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name = "id")
-    // private Long id;
 
     @Column(name = "name")
     private String name;
@@ -37,6 +32,6 @@ public class Osasto extends AbstractPersistable<Long> {
     private Long osastoIDP;
 
     @OneToMany(mappedBy = "osasto")
-    private List<Tuote> tuotteet; // = new ArrayList<>();
+    private List<Tuote> tuotteet = new ArrayList<>();
 
 }
