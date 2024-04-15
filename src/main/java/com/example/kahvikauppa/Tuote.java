@@ -43,6 +43,16 @@ public class Tuote extends AbstractPersistable<Long> {
     @Lob
     private byte[] productImage;
 
+    // TARVITAANKO?
+    // @Column(name = "imageName")
+    // private String imageName;
+
+    // @Column(name = "imageType")
+    // private String imageType;
+
+    // @Column(name = "imageSize")
+    // private Long imageSize;
+
     @ManyToOne
     private Osasto osasto;
 

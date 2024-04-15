@@ -65,17 +65,14 @@
         <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
 
-      <section class="product-section">
+      <section class="edit-section">
         <h3>Muokkaa tuotetietoja:</h3>
         <figure class="edit-product-figure">
           <!-- <img
-            th:src="@{/images/${product.productImage}}"
-            alt="Product Image"
-          /> -->
-          <img
             th:src="|data:image/jpeg;base64,${base64Image}|"
             alt="Product Image"
-          />
+          /> -->
+          <img th:src="${imageURL}" alt="Product Image" />
         </figure>
         <form
           class="form-flex"
@@ -118,12 +115,14 @@
             style="margin-block-end: 1rem; font-size: 1.2rem"
           ></div>
           <label for="productImage">Kuva:</label>
+          <!-- th:src="${base64Image}" -->
           <input
-            th:value="${product.productImage}"
+            th:value="${imageURL}"
             type="file"
             name="productImage"
             id="productImage"
             accept="image/*"
+            required
           />
           <label for="department">Osasto:</label>
           <select name="departmentId" id="department" required>
@@ -160,7 +159,7 @@
             style="
               display: none;
               margin-inline-start: 2rem;
-              border: 1.5px solid orange;
+              border: 1.5px solid rgb(83, 190, 252);
             "
             th:if="${isNewSupplier}"
           />
@@ -190,7 +189,7 @@
             style="
               display: none;
               margin-inline-start: 2rem;
-              border: 1.5px solid orange;
+              border: 1.5px solid rgb(83, 190, 252);
             "
             th:if="${isNewProducer}"
           />

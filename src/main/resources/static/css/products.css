@@ -1,8 +1,8 @@
 /* GRID */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(6, auto);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   grid-gap: 2rem;
   padding: 2rem 4rem;
 }
@@ -15,13 +15,16 @@
 }
 
 .grid-cardpicturesize {
-  width: 100%;
+  /* width: 100%; */
+  width: 27rem;
+  height: 27rem;
 }
 
-/* .grid-cardpicturesize img {
+.grid-cardpicturesize img {
   max-width: 100%;
-  object-fit: cover; 
-} */
+  height: 100%;
+  object-fit: cover;
+}
 
 .grid-card h3,
 .grid-card p,

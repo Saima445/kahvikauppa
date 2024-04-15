@@ -3,9 +3,14 @@ package com.example.kahvikauppa;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,12 +40,17 @@ public class KahvikauppaController {
     }
 
     @GetMapping("/kahvilaitteet")
-    public String machines() {
+    public String machines(Model model) {
+        // List<Osasto> kahvilaitteet = osastoRepository.findByOsastoIDP(1);
+        List<Tuote> kahvilaitteet = tuoteRepository.findProductsByOsastoID(1L); // kaikki tuotteet osasto 1 alla
+        model.addAttribute("kahvilaitteet", kahvilaitteet);
         return "kahvilaitteet";
     }
 
     @GetMapping("/kulutustuotteet")
-    public String consumerProducts() {
+    public String consumerProducts(Model model) {
+        List<Osasto> kulutustuotteet = osastoRepository.findByOsastoIDP(2);
+        model.addAttribute("kulutustuotteet", kulutustuotteet);
         return "kulutustuotteet";
     }
 
@@ -227,16 +237,20 @@ public class KahvikauppaController {
             @RequestParam String description, @RequestParam Long departmentId, @RequestParam String supplierId,
             @RequestParam String newSupplierName, @RequestParam String producerId,
             @RequestParam String newProducerName, @RequestParam("productImage") MultipartFile productImage,
-            Model model) {
+            Model model) throws IOException {
 
         // Kuvan käsittely ja tallennus tietokantaan
-        byte[] imageBytes = null;
-        try {
-            imageBytes = productImage.getBytes();
-        } catch (IOException e) {
-            // Virheenkäsittely tarvittaessa
-            e.printStackTrace();
-        }
+        // byte[] imageBytes = null;
+        // try {
+        // imageBytes = productImage.getBytes();
+        // } catch (IOException e) {
+        // // Virheenkäsittely tarvittaessa
+        // e.printStackTrace();
+        // }
+        byte[] imageBytes = productImage.getBytes();
+        // String imageName = productImage.getOriginalFilename();
+        // String imageType = productImage.getContentType();
+        // Long imageSize = productImage.getSize();
 
         // Haetaan osasto, toimittaja ja valmistaja niiden ID:n perusteella
         Osasto existingDepartment = osastoRepository.findById(departmentId).orElse(null);
@@ -290,6 +304,17 @@ public class KahvikauppaController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/productImage/{id}")
+    public ResponseEntity<byte[]> getProductImage(@PathVariable Long id) {
+        Tuote product = tuoteRepository.findById(id).orElse(null);
+        if (product != null && product.getProductImage() != null) {
+            HttpHeaders headers = new HttpHeaders();
+            return new ResponseEntity<>(product.getProductImage(), headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/updateProduct/{id}")
     public String getUpdateProductPage(@PathVariable Long id, Model model) {
         // Haetaan tuote tietokannasta tuotteen id:n perusteella
@@ -300,12 +325,14 @@ public class KahvikauppaController {
             return "redirect:/admin"; // Ohjataan takaisin admin-sivulle
         }
         // Muunnetaan byte array Base64-muotoon
-        String base64Image = Base64.getEncoder().encodeToString(product.getProductImage());
+        // String base64Image =
+        // Base64.getEncoder().encodeToString(product.getProductImage());
+        String imageURL = "/productImage/" + id;
 
         model.addAttribute("product", product);
         model.addAttribute("description", product.getDescription()); // Lisätään tuotteen kuvaus attribuuttina
-        model.addAttribute("base64Image", base64Image); // // tuotekuva attribuuttina
-        // model.addAttribute("productImage", product.getProductImage());
+        // model.addAttribute("base64Image", base64Image); // // tuotekuva attribuuttina
+        model.addAttribute("imageURL", imageURL); // Lisätään kuvan URL attribuuttina
         model.addAttribute("departments", osastoRepository.findAll());
         model.addAttribute("suppliers", toimittajaRepository.findAll());
         model.addAttribute("producers", valmistajaRepository.findAll());
@@ -320,18 +347,15 @@ public class KahvikauppaController {
             @RequestParam String description, @RequestParam Long departmentId, @RequestParam String supplierId,
             @RequestParam String newSupplierName, @RequestParam String producerId,
             @RequestParam String newProducerName, @RequestParam("productImage") MultipartFile productImage,
-            Model model) {
+            Model model) throws IOException {
 
         Tuote product = tuoteRepository.findById(id).orElse(null);
+
         if (product != null) {
             // Kuvan käsittely ja tallennus tietokantaan
-            byte[] imageBytes = null;
-            try {
-                imageBytes = productImage.getBytes();
-            } catch (IOException e) {
-                // Virheenkäsittely tarvittaessa
-                e.printStackTrace();
-            }
+            byte[] imageBytes = productImage.getBytes();
+            // String imageURL = "/productImage/" + id;
+            // model.addAttribute("imageURL", imageURL);
 
             // Haetaan osasto, toimittaja ja valmistaja niiden ID:n perusteella
             Osasto existingDepartment = osastoRepository.findById(departmentId).orElse(null);
@@ -381,7 +405,7 @@ public class KahvikauppaController {
             existingDepartment.getProducts().add(product);
         }
 
-        return "redirect:/osastot";
+        return "redirect:/admin";
     }
 
     @PostMapping("/deleteProduct/{id}")
