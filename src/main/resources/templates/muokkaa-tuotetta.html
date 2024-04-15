@@ -16,18 +16,8 @@
       src="https://kit.fontawesome.com/e00b2e3114.js"
       crossorigin="anonymous"
     ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/reset.css"
-      th:href="@{css/reset.css}"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/layout.css"
-      th:href="@{css/layout.css}"
-    />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
   </head>
   <body>
     <header>
@@ -67,25 +57,43 @@
     <main>
       <section class="admin-section">
         <h2>ADMIN</h2>
-        <button style="background-color: rgb(254, 255, 217)">
+        <button>
           <a th:href="@{/admin}">Tuotteet</a>
         </button>
         <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
         <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
-      <div class="add-section">
-        <h3>Lisää uusi tuote:</h3>
+
+      <section class="product-section">
+        <h3>Muokkaa tuotetietoja:</h3>
+        <figure class="edit-product-figure">
+          <!-- <img
+            th:src="@{/images/${product.productImage}}"
+            alt="Product Image"
+          /> -->
+          <img
+            th:src="|data:image/jpeg;base64,${base64Image}|"
+            alt="Product Image"
+          />
+        </figure>
         <form
           class="form-flex"
-          th:action="@{/admin}"
+          th:action="@{/updateProduct/{id}(id=${product.id})}"
           method="POST"
           enctype="multipart/form-data"
         >
           <label for="name">Tuotteen nimi:</label>
-          <input type="text" name="name" id="name" required />
+          <input
+            th:value="${product.name}"
+            type="text"
+            name="name"
+            id="name"
+            required
+          />
           <label for="price">Tuotteen hinta:</label>
           <input
+            th:value="${product.price}"
             type="text"
             name="price"
             id="price"
@@ -95,9 +103,10 @@
           />
           <label for="description">Tuotteen kuvaus:</label>
           <textarea
+            th:utext="${description}"
             name="description"
             id="description"
-            rows="4"
+            rows="7"
             required
             maxlength="2000"
             style="margin-block-end: 0"
@@ -105,10 +114,12 @@
           ></textarea>
           <div
             id="charCount"
+            th:text="${description.length() + '/2000'}"
             style="margin-block-end: 1rem; font-size: 1.2rem"
           ></div>
           <label for="productImage">Kuva:</label>
           <input
+            th:value="${product.productImage}"
             type="file"
             name="productImage"
             id="productImage"
@@ -121,9 +132,9 @@
               th:each="department : ${departments}"
               th:value="${department.id}"
               th:text="${department.name}"
+              th:selected="${department.id == product.osasto.id}"
             ></option>
           </select>
-
           <label for="supplier">Toimittaja:</label>
           <select name="supplierId" id="supplier" required>
             <option value="">Valitse toimittaja</option>
@@ -132,6 +143,7 @@
               th:each="supplier : ${suppliers}"
               th:value="${supplier.id}"
               th:text="${supplier.name}"
+              th:selected="${supplier.id == product.toimittaja.id}"
             ></option>
           </select>
           <!-- LISÄTÄÄN UUSI TOIMITTAJA JOS TARVITSEE -->
@@ -161,6 +173,7 @@
               th:each="producer : ${producers}"
               th:value="${producer.id}"
               th:text="${producer.name}"
+              th:selected="${producer.id == product.valmistaja.id}"
             ></option>
           </select>
           <!-- LISÄTÄÄN UUSI VALMISTAJA JOS TARVITSEE -->
@@ -177,65 +190,23 @@
             style="
               display: none;
               margin-inline-start: 2rem;
-              border: 1.5px solid rgb(0, 162, 255);
+              border: 1.5px solid orange;
             "
             th:if="${isNewProducer}"
           />
-          <input class="submit-button" type="submit" value="Lisää" />
+          <input
+            class="submit-button"
+            type="submit"
+            value="Tallenna muutokset"
+          />
         </form>
-      </div>
-
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Tuotteet nimi</th>
-            <th>Tuotteen hinta</th>
-            <!-- <th>Tuotteen kuvaus</th>
-            <th>Kuva</th> -->
-            <th>Osasto</th>
-            <th>Toimittaja</th>
-            <th>Valmistaja</th>
-            <th style="width: 15%">Tarkemmat tiedot/muokkaa</th>
-            <th style="width: 10%"></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr th:each="product : ${products}">
-            <td th:text="${product.name}">Product name</td>
-            <td th:text="${product.price}">Product's price</td>
-            <!-- <td th:text="${product.description}">Product description</td>
-            <td th:text="${product.productImage}">Product image path</td> -->
-            <td th:text="${product.osasto.name}">Product's department</td>
-            <td th:text="${product.toimittaja.name}">Product's supplier</td>
-            <td th:text="${product.valmistaja.name}">Product's producer</td>
-            <td>
-              <a th:href="@{/updateProduct/{id}(id=${product.id})}">
-                <button class="update-button">Muokkaa</button>
-              </a>
-            </td>
-            <td>
-              <form
-                th:action="@{/deleteProduct/{id}(id=${product.id})}"
-                method="POST"
-              >
-                <button class="delete-button" type="submit" value="">
-                  Poista
-                </button>
-              </form>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="7" style="font-style: italic; text-align: center">
-              Taulukossa on yhteensä
-              <span th:text="${products.size()}">0</span>
-              tuotetta.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <button>
+          <a th:href="@{/admin}"
+            ><i class="fa-solid fa-arrow-left-long"></i> Takaisin</a
+          >
+        </button>
+      </section>
     </main>
-
     <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
@@ -278,10 +249,6 @@
         var textarea = document.getElementById("description");
         var counter = document.getElementById("charCount");
 
-        // Alustava merkkimäärän laskenta
-        var initialCount = textarea.value.length;
-        counter.textContent = initialCount + "/2000";
-
         textarea.addEventListener("input", function () {
           var count = textarea.value.length;
           counter.textContent = count + "/2000"; // Enimmäismerkkimäärä 2000 tietokannassa
@@ -310,52 +277,3 @@
     </script>
   </body>
 </html>
-
-<!-- OSASTO OPTION SELECTI PORRASTETUSTI!! -->
-<!-- <label for="rootDepartment">Osasto:</label>
-            <select id="rootDepartment" name="rootDepartment">
-              <option value="">Valitse pääosasto</option>
-              <option
-                th:each="rootDepartment : ${rootDepartments}"
-                th:value="${rootDepartment.id}"
-                th:text="${rootDepartment.name}"
-              ></option>
-            </select> -->
-
-<!-- Sub department valinta, näkyy vain jos pääosasto on valittu -->
-<!-- <label
-              for="subDepartment"
-              th:if="${not #lists.isEmpty(subDepartments)}"
-              >Alaosasto:</label
-            >
-            <select
-              id="subDepartment"
-              name="subDepartment"
-              th:if="${not #lists.isEmpty(subDepartments)}"
-            >
-              <option value="">Valitse alaosasto</option>
-              <option
-                th:each="subDepartment : ${subDepartments}"
-                th:value="${subDepartment.id}"
-                th:text="${subDepartment.name}"
-              ></option>
-            </select> -->
-
-<!-- Lower level department valinta, näkyy vain jos alaosasto on valittu -->
-<!-- <label
-              for="lowerLevelDepartment"
-              th:if="${not #lists.isEmpty(lowerLevelDepartments)}"
-              >Valitse alemman tason osasto:</label
-            >
-            <select
-              id="lowerLevelDepartment"
-              name="lowerLevelDepartment"
-              th:if="${not #lists.isEmpty(lowerLevelDepartments)}"
-            >
-              <option value="">Valitse alempi tason osasto</option>
-              <option
-                th:each="lowerLevelDepartment : ${lowerLevelDepartments}"
-                th:value="${lowerLevelDepartment.id}"
-                th:text="${lowerLevelDepartment.name}"
-              ></option>
-            </select> -->

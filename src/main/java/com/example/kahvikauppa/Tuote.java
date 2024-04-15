@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 // import jakarta.persistence.GeneratedValue;
 // import jakarta.persistence.GenerationType;
 // import jakarta.persistence.Id;
@@ -29,14 +30,18 @@ public class Tuote extends AbstractPersistable<Long> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    // muokkasin h2-tietokantaan kuvaus-kentän merkkien pituutta, jotta käyttäjä voi
+    // kirjoittaa pidemmän kuvauksen
+    // ALTER TABLE TUOTE_DETAILS ALTER COLUMN DESCRIPTION VARCHAR(2000);
 
     @Column(name = "price")
     private BigDecimal price;
 
-    // @Column(name = "productPicture")
-    // private Blob productPicture;
+    @Column(name = "productImage")
+    @Lob
+    private byte[] productImage;
 
     @ManyToOne
     private Osasto osasto;

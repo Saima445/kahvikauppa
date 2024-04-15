@@ -65,18 +65,8 @@
       </section>
     </header>
     <main>
-      <h2>ADMIN</h2>
       <section class="admin-section">
-        <div class="add-section">
-          <h3>Lisää valmistaja:</h3>
-          <form class="form-flex" th:action="@{/valmistajat}" method="POST">
-            <label for="name">Valmistajan nimi:</label>
-            <input type="text" name="name" id="name" />
-            <label for="url">Nettisivut:</label>
-            <input type="text" name="url" id="url" />
-            <input class="submit-button" type="submit" value="Lisää" />
-          </form>
-        </div>
+        <h2>ADMIN</h2>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
         <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
         <button style="background-color: rgb(254, 255, 217)">
@@ -84,14 +74,23 @@
         </button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
-
+      <div class="add-section">
+        <h3>Lisää uusi valmistaja:</h3>
+        <form class="form-flex" th:action="@{/valmistajat}" method="POST">
+          <label for="name">Valmistajan nimi:</label>
+          <input type="text" name="name" id="name" required />
+          <label for="url">Nettisivut:</label>
+          <input type="text" name="url" id="url" required />
+          <input class="submit-button" type="submit" value="Lisää" />
+        </form>
+      </div>
       <table class="admin-table">
         <thead>
           <tr>
             <th>Valmistajan nimi</th>
             <th>Nettisivut</th>
-            <th></th>
-            <th></th>
+            <th style="width: 15%">Tarkemmat tiedot/muokkaa</th>
+            <th style="width: 10%"></th>
           </tr>
         </thead>
 
@@ -107,14 +106,9 @@
               >
             </td>
             <td>
-              <form
-                th:action="@{/updateProducer/{id}(id=${producer.id})}"
-                method="POST"
-              >
-                <button class="update-button" type="submit" value="Muokkaa">
-                  Muokkaa
-                </button>
-              </form>
+              <a th:href="@{/updateProducer/{id}(id=${producer.id})}">
+                <button class="update-button">Muokkaa</button>
+              </a>
             </td>
             <td>
               <form
@@ -137,7 +131,6 @@
         </tbody>
       </table>
     </main>
-
     <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>

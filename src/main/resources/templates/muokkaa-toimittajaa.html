@@ -16,18 +16,8 @@
       src="https://kit.fontawesome.com/e00b2e3114.js"
       crossorigin="anonymous"
     ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/reset.css"
-      th:href="@{css/reset.css}"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/layout.css"
-      th:href="@{css/layout.css}"
-    />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
   </head>
   <body>
     <header>
@@ -67,96 +57,60 @@
     <main>
       <section class="admin-section">
         <h2>ADMIN</h2>
-        <button><a th:href="@{/admin}">Tuotteet</a></button>
-        <button style="background-color: rgb(254, 255, 217)">
-          <a th:href="@{/toimittajat}">Toimittajat</a>
+        <button>
+          <a th:href="@{/admin}">Tuotteet</a>
         </button>
+        <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
         <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
       </section>
-      <div class="add-section">
-        <h3>Lisää uusi toimittaja:</h3>
-        <form class="form-flex" th:action="@{/toimittajat}" method="POST">
+
+      <section class="product-section">
+        <h3>Muokkaa toimittajaa:</h3>
+        <form
+          class="form-flex"
+          th:action="@{/updateSupplier/{id}(id=${supplier.id})}"
+          method="POST"
+        >
           <label for="name">Toimittajan nimi:</label>
-          <input type="text" name="name" id="name" required />
-          <label for="contactPerson">Yhteyshenkilö:</label>
-          <input type="text" name="contactPerson" id="contactPerson" required />
-          <label for="contactPersonEmail">Yhteyshenkilön sähköposti:</label>
           <input
+            th:value="${supplier.name}"
+            type="text"
+            name="name"
+            id="name"
+            required
+          />
+          <label for="contactPerson">Toimittajan yhteyshenkilö:</label>
+          <input
+            th:value="${supplier.contactPerson}"
+            type="text"
+            name="contactPerson"
+            id="contactPerson"
+            required
+          />
+          <label for="contactPersonEmail"
+            >Toimittajan yhteyshenkilön sähköposti:</label
+          >
+          <input
+            th:value="${supplier.contactPersonEmail}"
             type="text"
             name="contactPersonEmail"
             id="contactPersonEmail"
             required
           />
-          <input class="submit-button" type="submit" value="Lisää" />
+          <input
+            class="submit-button"
+            type="submit"
+            value="Tallenna muutokset"
+          />
         </form>
-      </div>
-
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Toimittajan nimi</th>
-            <th>Yhteyshenkilö</th>
-            <th>Yhteyshenkilön sähköposti</th>
-            <th style="width: 15%">Tarkemmat tiedot/muokkaa</th>
-            <th style="width: 10%"></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr th:each="supplier : ${suppliers}">
-            <td th:text="${supplier.name}">Suppliers name</td>
-            <td th:text="${supplier.contactPerson}">
-              Suppliers contact person
-            </td>
-
-            <td th:text="${supplier.contactPersonEmail}">
-              Contact person's email
-            </td>
-            <td>
-              <a th:href="@{/updateSupplier/{id}(id=${supplier.id})}">
-                <button class="update-button">Muokkaa</button>
-              </a>
-            </td>
-            <!-- <td>
-              <form th:value="${supplier.id}">
-                <button
-                  class="update-button"
-                  id="editSupplierButton"
-                  type="button"
-                  value="edit"
-                  onclick="toggleAndFillForm('${supplier}')"
-                > -->
-            <!-- '${supplier.id}',
-                    '${supplier.name}',
-            '${supplier.contactPerson}',
-            '${supplier.contactPersonEmail}' -->
-            <!-- Muokkaa
-                </button>
-              </form>
-            </td> -->
-            <td>
-              <form
-                th:action="@{/deleteSupplier/{id}(id=${supplier.id})}"
-                method="POST"
-              >
-                <button class="delete-button" type="submit" value="">
-                  Poista
-                </button>
-              </form>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="5" style="font-style: italic; text-align: center">
-              Taulukossa on yhteensä
-              <span th:text="${suppliers.size()}">0</span>
-              toimittajaa.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <button>
+          <a th:href="@{/toimittajat}"
+            ><i class="fa-solid fa-arrow-left-long"></i> Takaisin</a
+          >
+        </button>
+      </section>
     </main>
-
     <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
