@@ -29,6 +29,9 @@ public class Osasto extends AbstractPersistable<Long> {
     @Column(name = "osastoIDP")
     private Long osastoIDP;
 
+    @Column(name = "productCount")
+    private Integer productCount; // Lisätty kenttä tuotteiden määrälle
+
     @OneToMany(mappedBy = "osasto")
     private List<Tuote> products = new ArrayList<>();
 

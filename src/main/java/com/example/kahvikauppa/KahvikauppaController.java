@@ -2,10 +2,10 @@ package com.example.kahvikauppa;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Base64;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -41,40 +41,79 @@ public class KahvikauppaController {
 
     @GetMapping("/kahvilaitteet")
     public String machines(Model model) {
-        // List<Osasto> kahvilaitteet = osastoRepository.findByOsastoIDP(1);
         List<Tuote> kahvilaitteet = tuoteRepository.findProductsByOsastoID(1L); // kaikki tuotteet osasto 1 alla
         model.addAttribute("kahvilaitteet", kahvilaitteet);
         return "kahvilaitteet";
     }
 
+    @GetMapping("/laite/{id}")
+    public String individualMachinePage(@PathVariable Long id, Model model) {
+        Tuote product = tuoteRepository.findById(id).orElse(null);
+
+        if (product == null) {
+            return "redirect:/kulutustuotteet";
+        }
+        String imageURL = "/productImage/" + id;
+        model.addAttribute("imageURL", imageURL);
+        model.addAttribute("product", product);
+
+        return "tuote";
+    }
+
     @GetMapping("/kulutustuotteet")
     public String consumerProducts(Model model) {
-        List<Osasto> kulutustuotteet = osastoRepository.findByOsastoIDP(2);
-        model.addAttribute("kulutustuotteet", kulutustuotteet);
+        // kaikki tuotteet osasto 2 alla, EI TOIMI OSASTO 7 ALLE!
+        // List<Tuote> kulutustuotteet = tuoteRepository.findProductsByOsastoID(2L);
+        // model.addAttribute("kulutustuotteet", kulutustuotteet);
+
+        // Haetaan tuotteet osaston 2 alla
+        List<Tuote> osasto2Tuotteet = tuoteRepository.findProductsByOsastoID(2L);
+        // Haetaan tuotteet osaston 7 alla
+        List<Tuote> osasto7Tuotteet = tuoteRepository.findProductsByOsastoID(7L);
+        // Yhdistetään
+        osasto2Tuotteet.addAll(osasto7Tuotteet);
+        // poistetaan mahdolliset duplikaatit
+        Set<Tuote> yhdistetytTuotteet = new LinkedHashSet<>(osasto2Tuotteet);
+
+        model.addAttribute("kulutustuotteet", new ArrayList<>(yhdistetytTuotteet));
         return "kulutustuotteet";
     }
 
-    @GetMapping("/tuote-laite")
-    public String individualProduct() {
-        return "tuote-laite";
+    @GetMapping("/tuote/{id}")
+    public String individualProductPage(@PathVariable Long id, Model model) {
+        Tuote product = tuoteRepository.findById(id).orElse(null);
+
+        if (product == null) {
+            return "redirect:/kulutustuotteet";
+        }
+        String imageURL = "/productImage/" + id;
+        model.addAttribute("imageURL", imageURL);
+        model.addAttribute("product", product);
+
+        return "tuote";
     }
 
     @GetMapping("/toimittajat")
     public String suppliers(Model model) {
+        List<Toimittaja> suppliers = this.toimittajaRepository.findAll();
+        // Käydään läpi jokainen toimittaja ja lasketaan tuotteiden määrä
+        for (Toimittaja supplier : suppliers) {
+            Long productCount = tuoteRepository.countProductsByToimittajaID(supplier.getId());
+            supplier.setProductCount(productCount.intValue());
+        }
         model.addAttribute("suppliers", this.toimittajaRepository.findAll());
-        model.addAttribute("editSupplier", true);
         return "toimittajat";
     }
 
     @PostMapping("/toimittajat")
     public String addSupplier(@RequestParam String name, @RequestParam String contactPerson,
             @RequestParam String contactPersonEmail) {
-        Toimittaja newToimittaja = new Toimittaja();
-        newToimittaja.setName(name.trim());
-        newToimittaja.setContactPerson(contactPerson.trim());
-        newToimittaja.setContactPersonEmail(contactPersonEmail.trim());
+        Toimittaja newSupplier = new Toimittaja();
+        newSupplier.setName(name.trim());
+        newSupplier.setContactPerson(contactPerson.trim());
+        newSupplier.setContactPersonEmail(contactPersonEmail.trim());
 
-        this.toimittajaRepository.save(newToimittaja);
+        this.toimittajaRepository.save(newSupplier);
 
         return "redirect:/toimittajat";
     }
@@ -85,12 +124,12 @@ public class KahvikauppaController {
         Toimittaja supplier = toimittajaRepository.findById(id).orElse(null);
 
         if (supplier == null) {
-            // Jos tuotetta ei löydy
-            return "redirect:/toimittajat"; // Ohjataan takaisin toimittajat-sivulle
+            // Jos tuotetta ei löydy ohjataan takaisin toimittajat-sivulle
+            return "redirect:/toimittajat";
         }
         model.addAttribute("supplier", supplier);
 
-        return "muokkaa-toimittajaa"; // Palautetaan näkymän nimi
+        return "muokkaa-toimittajaa";
     }
 
     @PostMapping("/updateSupplier/{id}")
@@ -117,6 +156,12 @@ public class KahvikauppaController {
 
     @GetMapping("/valmistajat")
     public String producers(Model model) {
+        List<Valmistaja> producers = this.valmistajaRepository.findAll();
+        // Käydään läpi jokainen valmistaja ja lasketaan tuotteiden määrä
+        for (Valmistaja producer : producers) {
+            Long productCount = tuoteRepository.countProductsByValmistajaID(producer.getId());
+            producer.setProductCount(productCount.intValue());
+        }
         model.addAttribute("producers", this.valmistajaRepository.findAll());
         return "valmistajat";
     }
@@ -138,12 +183,12 @@ public class KahvikauppaController {
         Valmistaja producer = valmistajaRepository.findById(id).orElse(null);
 
         if (producer == null) {
-            // Jos tuotetta ei löydy
-            return "redirect:/valmistajat"; // Ohjataan takaisin valmistajat-sivulle
+            // Jos tuotetta ei löydy ohjataan takaisin valmistajat-sivulle
+            return "redirect:/valmistajat";
         }
         model.addAttribute("producer", producer);
 
-        return "muokkaa-valmistajaa"; // Palautetaan näkymän nimi
+        return "muokkaa-valmistajaa";
     }
 
     @PostMapping("/updateProducer/{id}")
@@ -168,6 +213,12 @@ public class KahvikauppaController {
 
     @GetMapping("/osastot")
     public String departments(Model model) {
+        List<Osasto> departments = this.osastoRepository.findAll();
+        // Käydään läpi jokainen osasto ja lasketaan tuotteiden määrä
+        for (Osasto department : departments) {
+            Long productCount = tuoteRepository.countProductsByOsastoID(department.getId());
+            department.setProductCount(productCount.intValue());
+        }
         model.addAttribute("departments", this.osastoRepository.findAll());
         return "osastot";
     }
@@ -189,13 +240,13 @@ public class KahvikauppaController {
         Osasto department = osastoRepository.findById(id).orElse(null);
 
         if (department == null) {
-            // Jos osastoa ei löydy
-            return "redirect:/osastot"; // Ohjataan takaisin osastot-sivulle
+            // Jos osastoa ei löydy ohjataan takaisin osastot-sivulle
+            return "redirect:/osastot";
         }
 
         model.addAttribute("department", department);
 
-        return "muokkaa-osastoa"; // Palautetaan näkymän nimi
+        return "muokkaa-osastoa";
     }
 
     @PostMapping("/updateDepartment/{id}")
@@ -289,7 +340,7 @@ public class KahvikauppaController {
         Tuote newProduct = new Tuote();
         newProduct.setName(name.trim());
         newProduct.setPrice(price);
-        newProduct.setDescription(description.trim());
+        newProduct.setDescription(description);
         newProduct.setOsasto(existingDepartment);
         newProduct.setToimittaja(existingSupplier);
         newProduct.setValmistaja(existingProducer);
@@ -304,12 +355,14 @@ public class KahvikauppaController {
         return "redirect:/admin";
     }
 
+    // KUVIEN PURKAMINEN
     @GetMapping("/productImage/{id}")
     public ResponseEntity<byte[]> getProductImage(@PathVariable Long id) {
         Tuote product = tuoteRepository.findById(id).orElse(null);
         if (product != null && product.getProductImage() != null) {
             HttpHeaders headers = new HttpHeaders();
-            return new ResponseEntity<>(product.getProductImage(), headers, HttpStatus.OK);
+            return new ResponseEntity<>(product.getProductImage(), headers,
+                    HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -321,8 +374,8 @@ public class KahvikauppaController {
         Tuote product = tuoteRepository.findById(id).orElse(null);
 
         if (product == null) {
-            // Jos tuotetta ei löydy
-            return "redirect:/admin"; // Ohjataan takaisin admin-sivulle
+            // Jos tuotetta ei olöydy hjataan takaisin admin-sivulle
+            return "redirect:/admin";
         }
         // Muunnetaan byte array Base64-muotoon
         // String base64Image =
@@ -354,6 +407,7 @@ public class KahvikauppaController {
         if (product != null) {
             // Kuvan käsittely ja tallennus tietokantaan
             byte[] imageBytes = productImage.getBytes();
+            // Koitetaan tällä jos olemassa oleva kuva tulisi inputtiin, ei toimi
             // String imageURL = "/productImage/" + id;
             // model.addAttribute("imageURL", imageURL);
 
@@ -415,28 +469,3 @@ public class KahvikauppaController {
     }
 
 }
-// JUURI tasolla olevat osastot (ensimmäinen taso)
-// List<Osasto> rootDepartments = this.osastoRepository.findRootDepartments();
-// model.addAttribute("rootDepartments", rootDepartments);
-
-// // ALAOSASTOT annetun vanhemman osaston perusteella (toinen taso)
-// @GetMapping("/{parentId}/getSubDepartments")
-// public String getSubDepartments(@PathVariable Long parentId, Model model) {
-// // List<Osasto> subDepartments =
-// // this.osastoRepository.findSubDepartments(parentId);
-// // model.addAttribute("subDepartments", subDepartments);
-// model.addAttribute("subDepartments",
-// this.osastoRepository.findSubDepartments(parentId));
-
-// // Palautetaan samalle admin-sivulle päivitetyllä mallilla
-// return "admin";
-// }
-
-// // ALEMMAN TASON OSASTOT annetun vanhemman osaston perusteella (kolmas taso)
-// @GetMapping("/{parentId}/getLowerLevelDepartments/")
-// @ResponseBody
-// public List<Osasto> getLowerLevelDepartments(@PathVariable Long parentId) {
-// List<Osasto> lowerLevelDepartments =
-// this.osastoRepository.findLowerLevelDepartments(parentId);
-// return lowerLevelDepartments;
-// }

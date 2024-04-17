@@ -91,6 +91,7 @@
             <th>ID</th>
             <th>Osaston nimi</th>
             <th>Osasto ID</th>
+            <th style="width: 13%">Tuotteiden määrä valikoimassa</th>
             <th style="width: 15%">Tarkemmat tiedot/muokkaa</th>
             <th style="width: 10%"></th>
           </tr>
@@ -103,6 +104,7 @@
             <td th:text="${department.osastoIDP}">
               Department's departmentIDP
             </td>
+            <td th:text="${department.productCount}">Product count</td>
             <td>
               <a th:href="@{/updateDepartment/{id}(id=${department.id})}">
                 <button class="update-button">Muokkaa</button>
@@ -120,7 +122,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="5" style="font-style: italic; text-align: center">
+            <td colspan="6" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
               <span th:text="${departments.size()}">0</span>
               osastoa.

@@ -344,9 +344,30 @@ td {
 
 .product-section {
   padding: 4rem;
+  margin-inline-end: 20rem;
 }
 
 .product-section p,
 figure {
   margin-block-end: 1rem;
+}
+
+.product-section figure {
+  width: 40rem;
+  height: 40rem;
+}
+
+.product-section figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-section h2 {
+  margin: 3rem 0;
+}
+
+.product-section p {
+  margin-block-end: 2rem;
+  margin-inline-end: 20rem;
 }

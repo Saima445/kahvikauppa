@@ -30,6 +30,9 @@ public class Valmistaja extends AbstractPersistable<Long> {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "productCount")
+    private Integer productCount; // Lisätty kenttä tuotteiden määrälle
+
     @OneToMany(mappedBy = "valmistaja")
     private List<Tuote> products = new ArrayList<>();
 

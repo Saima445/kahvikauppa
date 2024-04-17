@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface OsastoRepository extends JpaRepository<Osasto, Long> {
-    List<Osasto> findByOsastoIDP(int osastoIDP);
+
 }

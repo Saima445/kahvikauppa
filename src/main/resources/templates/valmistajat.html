@@ -89,6 +89,7 @@
           <tr>
             <th>Valmistajan nimi</th>
             <th>Nettisivut</th>
+            <th style="width: 13%">Tuotteiden määrä valikoimassa</th>
             <th style="width: 15%">Tarkemmat tiedot/muokkaa</th>
             <th style="width: 10%"></th>
           </tr>
@@ -105,6 +106,7 @@
                 >Producer's website</a
               >
             </td>
+            <td th:text="${producer.productCount}">Product count</td>
             <td>
               <a th:href="@{/updateProducer/{id}(id=${producer.id})}">
                 <button class="update-button">Muokkaa</button>
@@ -122,7 +124,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="4" style="font-style: italic; text-align: center">
+            <td colspan="5" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
               <span th:text="${producers.size()}">0</span>
               valmistajaa.

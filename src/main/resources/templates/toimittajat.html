@@ -98,6 +98,7 @@
             <th>Toimittajan nimi</th>
             <th>Yhteyshenkilö</th>
             <th>Yhteyshenkilön sähköposti</th>
+            <th style="width: 13%">Tuotteiden määrä valikoimassa</th>
             <th style="width: 15%">Tarkemmat tiedot/muokkaa</th>
             <th style="width: 10%"></th>
           </tr>
@@ -113,6 +114,7 @@
             <td th:text="${supplier.contactPersonEmail}">
               Contact person's email
             </td>
+            <td th:text="${supplier.productCount}">Product count</td>
             <td>
               <a th:href="@{/updateSupplier/{id}(id=${supplier.id})}">
                 <button class="update-button">Muokkaa</button>
@@ -130,7 +132,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="5" style="font-style: italic; text-align: center">
+            <td colspan="6" style="font-style: italic; text-align: center">
               Taulukossa on yhteensä
               <span th:text="${suppliers.size()}">0</span>
               toimittajaa.

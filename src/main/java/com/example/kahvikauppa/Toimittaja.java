@@ -29,6 +29,9 @@ public class Toimittaja extends AbstractPersistable<Long> {
     @Column(name = "contactPersonEmail")
     private String contactPersonEmail;
 
+    @Column(name = "productCount")
+    private Integer productCount; // Lisätty kenttä tuotteiden määrälle
+
     @OneToMany(mappedBy = "toimittaja")
     private List<Tuote> products = new ArrayList<>();
 

@@ -9,4 +9,13 @@ import org.springframework.data.repository.query.Param;
 public interface TuoteRepository extends JpaRepository<Tuote, Long> {
     @Query("SELECT t FROM Tuote t JOIN FETCH t.osasto o WHERE o.id = :osastoID OR o.osastoIDP = :osastoID")
     List<Tuote> findProductsByOsastoID(@Param("osastoID") Long osastoID);
+
+    @Query("SELECT COUNT(t) FROM Tuote t WHERE t.toimittaja.id = :toimittajaID")
+    Long countProductsByToimittajaID(@Param("toimittajaID") Long toimittajaID);
+
+    @Query("SELECT COUNT(t) FROM Tuote t WHERE t.valmistaja.id = :valmistajaID")
+    Long countProductsByValmistajaID(@Param("valmistajaID") Long valmistajaID);
+
+    @Query("SELECT COUNT(t) FROM Tuote t WHERE t.osasto.id = :osastoID")
+    Long countProductsByOsastoID(@Param("osastoID") Long osastoID);
 }

@@ -29,10 +29,11 @@ public class Tuote extends AbstractPersistable<Long> {
 
     @Column(name = "name")
     private String name;
+    // ALTER TABLE TUOTE_DETAILS ALTER COLUMN NAME VARCHAR(500)
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
-    // muokkasin h2-tietokantaan kuvaus-kentän merkkien pituutta, jotta käyttäjä voi
+    // muokattu h2-tietokantaan kuvaus-kentän merkkien pituutta, jotta käyttäjä voi
     // kirjoittaa pidemmän kuvauksen
     // ALTER TABLE TUOTE_DETAILS ALTER COLUMN DESCRIPTION VARCHAR(2000);
 

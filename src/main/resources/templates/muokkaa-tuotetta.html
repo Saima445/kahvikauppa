@@ -159,7 +159,7 @@
             style="
               display: none;
               margin-inline-start: 2rem;
-              border: 1.5px solid rgb(83, 190, 252);
+              border: 1.5px solid r#015ECC;
             "
             th:if="${isNewSupplier}"
           />
@@ -189,7 +189,7 @@
             style="
               display: none;
               margin-inline-start: 2rem;
-              border: 1.5px solid rgb(83, 190, 252);
+              border: 1.5px solid #015ecc;
             "
             th:if="${isNewProducer}"
           />
@@ -245,17 +245,17 @@
     </footer>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var textarea = document.getElementById("description");
-        var counter = document.getElementById("charCount");
+        let textarea = document.getElementById("description");
+        let counter = document.getElementById("charCount");
 
         textarea.addEventListener("input", function () {
-          var count = textarea.value.length;
+          let count = textarea.value.length;
           counter.textContent = count + "/2000"; // Enimmäismerkkimäärä 2000 tietokannassa
         });
         document
           .getElementById("supplier")
           .addEventListener("change", function () {
-            var isNewSupplier =
+            let isNewSupplier =
               document.getElementById("supplier").value === "new";
             document.getElementById("newSupplierNameInput").style.display =
               isNewSupplier ? "block" : "none";
@@ -265,7 +265,7 @@
         document
           .getElementById("producer")
           .addEventListener("change", function () {
-            var isNewProducer =
+            let isNewProducer =
               document.getElementById("producer").value === "new";
             document.getElementById("newProducerNameInput").style.display =
               isNewProducer ? "block" : "none";
