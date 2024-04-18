@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kahvikauppa</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/e00b2e3114.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/reset.css"
+      th:href="@{css/reset.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../static/css/layout.css"
+      th:href="@{css/layout.css}"
+    />
+  </head>
+  <body>
+    <header>
+      <section class="upper-bar">
+        <figure><img th:src="@{/images/kahvilogo.png}" alt="logo" /></figure>
+        <nav>
+          <ul class="navigation-items">
+            <li><a href="index.html" th:href="@{/}">Etusivu</a></li>
+            <li>
+              <a href="kahvilaitteet.html" th:href="@{/kahvilaitteet}"
+                >Kahvilaitteet</a
+              >
+            </li>
+            <li>
+              <a href="kulutustuotteet.html" th:href="@{/kulutustuotteet}"
+                >Kulutustuotteet</a
+              >
+            </li>
+            <li>
+              <a href="admin.html" th:href="@{/admin}"
+                ><i class="fa-regular fa-user"></i
+              ></a>
+            </li>
+          </ul>
+        </nav>
+      </section>
+      <section class="header-text">
+        <h1>TÖÖLÖN KAHVIKAUPPA</h1>
+        <p>Tervetuloa Kahvikauppaan</p>
+        <p>Myymme kahvilalaitteita ja -tuotteita</p>
+        <p id="header-text-a-margin">
+          Ota yhteyttä
+          <span id="header-text-a"><a href="#footer">Kahvikauppa</a></span>
+        </p>
+      </section>
+    </header>
+    <main>
+      <section class="admin-section">
+        <h2>ADMIN</h2>
+        <button><a th:href="@{/admin}">Tuotteet</a></button>
+        <button>
+          <a th:href="@{/toimittajat}">Toimittajat</a>
+        </button>
+        <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
+        <button><a th:href="@{/osastot}">Osastot</a></button>
+        <button><a th:href="@{/vipasiakkaat}">VIP-asiakkaat</a></button>
+      </section>
+      <div class="add-section">
+        <h3>Lisää uusi VIP-asiakas:</h3>
+        <form class="form-flex" th:action="@{/vipasiakkaat}" method="POST">
+          <label for="firstname">Etunimi:</label>
+          <input type="text" name="firstname" id="firstname" required />
+          <label for="lastname">Sukunimi:</label>
+          <input type="text" name="lastname" id="lastname" required />
+          <label for="email">Sähköpostiosoite:</label>
+          <input type="email" name="email" id="email" required />
+          <input class="submit-button" type="submit" value="Lisää" />
+        </form>
+      </div>
+
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Asiakkaan etunimi</th>
+            <th>Asiakkaan sukunimi</th>
+            <th>Asiakkaan sähköpostiosoite</th>
+            <!-- <th style="width: 15%">Tarkemmat tiedot/muokkaa</th> -->
+            <th style="width: 10%"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="vipCustomer : ${vipCustomers}">
+            <td th:text="${vipCustomer.firstname}">Customer firstname</td>
+            <td th:text="${vipCustomer.lastname}">Customer lastname</td>
+            <td th:text="${vipCustomer.email}">Customers email</td>
+            <!-- <td>
+              <a th:href="@{/updateVipCustomer/{id}(id=${vipCustomer.id})}">
+                <button class="update-button">Muokkaa</button>
+              </a>
+            </td> -->
+            <td>
+              <form
+                th:action="@{/deleteVipCustomer/{id}(id=${vipCustomer.id})}"
+                method="POST"
+              >
+                <button class="delete-button" type="submit" value="">
+                  Poista
+                </button>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="font-style: italic; text-align: center">
+              Taulukossa on yhteensä
+              <span th:text="${vipCustomers.size()}">0</span>
+              VIP-asiakasta.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <footer id="footer">
+      <section class="footer-contact">
+        <h4>Yhteystiedot</h4>
+        <p>Töölön Kahvikauppa</p>
+        <p>Töölöntorinkatu 445,</p>
+        <p>00160 Helsinki</p>
+        <p>0400445445</p>
+        <p>toolo@toolonkahvikauppa.fi</p>
+      </section>
+      <section class="footer-about-us">
+        <h4>Tietoa meistä</h4>
+        <p><a href="#">Toimitusehdot</a></p>
+        <p><a href="#">Tietosuojaseloste</a></p>
+        <p>Y-tunnus: 292292-4</p>
+      </section>
+      <section class="footer-icons">
+        <h4 id="icons-h4">Tuhtaamista somessa</h4>
+        <p>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        </p>
+        <p>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </p>
+      </section>
+      <p id="copyright">
+        Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
+      </p>
+    </footer>
+  </body>
+</html>

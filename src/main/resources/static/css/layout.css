@@ -21,6 +21,10 @@ header {
   text-align: center;
 }
 
+.upper-bar nav {
+  padding: 1rem;
+}
+
 .upper-bar {
   position: fixed;
   display: flex;
@@ -180,10 +184,6 @@ footer > * {
   /* flex-grow: 1; */
   text-align: center;
   letter-spacing: 0.1rem;
-}
-
-footer h2 {
-  margin-block-end: 2rem;
 }
 
 #copyright {
@@ -370,4 +370,47 @@ figure {
 .product-section p {
   margin-block-end: 2rem;
   margin-inline-end: 20rem;
+}
+
+.error-message {
+  border: 0.5px solid black;
+  color: red;
+  font-size: 1.6rem;
+  padding: 1rem;
+  margin: 1rem;
+}
+.success-message {
+  border: 0.5px solid black;
+  color: rgb(15, 121, 1);
+  font-size: 1.6rem;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+/* Mobiili */
+@media only screen and (max-width: 425px) {
+  h1 {
+    font-size: 4rem;
+  }
+  .navigation-items {
+    flex-wrap: wrap;
+    margin-inline-end: 3rem;
+  }
+
+  nav li {
+    margin-block-end: 1rem;
+  }
+  .cardflexes {
+    flex-wrap: wrap;
+  }
+  .card {
+    width: unset;
+  }
+  footer h4,
+  #icons-h4 {
+    font-size: 1.6rem;
+  }
+  footer p {
+    font-size: 1.2rem;
+  }
 }
