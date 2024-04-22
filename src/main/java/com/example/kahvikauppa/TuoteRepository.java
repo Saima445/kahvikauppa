@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface TuoteRepository extends JpaRepository<Tuote, Long> {
+    Tuote findByName(String name);
+
     @Query("SELECT t FROM Tuote t JOIN FETCH t.osasto o WHERE o.id = :osastoID OR o.osastoIDP = :osastoID")
     List<Tuote> findProductsByOsastoID(@Param("osastoID") Long osastoID);
 

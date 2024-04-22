@@ -1,5 +1,7 @@
 package com.example.kahvikauppa;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,27 +14,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class VipAsiakasController {
 
+    // @Autowired
+    // private VipAsiakasRepository vipAsiakasRepository;
     @Autowired
-    private VipAsiakasRepository vipAsiakasRepository;
+    VipAsiakasService vipAsiakasService;
 
     @GetMapping("/vipasiakas")
-    public String vipCustomer(Model model, @RequestParam(required = false, name = "error") String error,
-            @RequestParam(required = false, name = "message") String message,
+    public String vipCustomer(Model model,
+            @RequestParam(required = false, name = "error") String error,
             @RequestParam(required = false, name = "success") String success) {
+
         if (error != null && !error.isEmpty()) {
-            model.addAttribute("error", "Sopimusehdot ja uutiskirje tulee hyväksyä");
-        }
-        if (message != null && !message.isEmpty()) {
-            model.addAttribute("message", "Sähköpostiosoite on jo rekisteröity");
+            model.addAttribute("error", error);
         }
         if (success != null && !success.isEmpty()) {
             model.addAttribute("success",
-                    "Kiitos, kun liityit VIP-asiakkaaksemme! Saat kohta sähköpostiisi vahvistusviestin meiltä.");
-        } else {
-            model.addAttribute("error", ""); // Tyhjä virheviesti, jos virhettä ei ole
-            model.addAttribute("message", "");
-            model.addAttribute("success", "");
+                    success);
         }
+        // else {
+        // model.addAttribute("error", "");
+        // model.addAttribute("success", "");
+        // }
         return "vipasiakas";
     }
 
@@ -70,111 +72,114 @@ public class VipAsiakasController {
 
     // return "redirect:/vipasiakas?success=email_registered";
     // }
+    // --
+    // @PostMapping("/vipasiakas")
+    // public String addVipCustomer(@RequestParam String firstname, @RequestParam
+    // String lastname,
+    // @RequestParam String email, @RequestParam(required = false) String agree1,
+    // @RequestParam(required = false) String agree2, RedirectAttributes
+    // redirectAttributes) {
+
+    // // Tarkistetaan onko uutiskirjeen tilaus on hyväksytty
+    // if (agree1 == null || !agree1.equals("accepted")) {
+    // redirectAttributes.addAttribute("error", "newsletter_not_accepted");
+    // return "redirect:/vipasiakas";
+    // }
+
+    // // Tarkistetaan onko sopimusehdot on hyväksytty
+    // if (agree2 == null || !agree2.equals("accepted")) {
+    // redirectAttributes.addAttribute("error", "terms_not_accepted");
+    // return "redirect:/vipasiakas";
+    // }
+
+    // VipAsiakas existingVIP = vipAsiakasRepository.findByEmail(email);
+
+    // if (existingVIP != null) {
+    // redirectAttributes.addAttribute("message", "email_already_registered");
+    // return "redirect:/vipasiakas";
+    // }
+
+    // if (existingVIP == null) {
+    // VipAsiakas newVipCustomer = new VipAsiakas();
+    // newVipCustomer.setFirstname(firstname.trim());
+    // newVipCustomer.setLastname(lastname.trim());
+    // newVipCustomer.setEmail(email.trim());
+
+    // this.vipAsiakasRepository.save(newVipCustomer);
+    // }
+
+    // redirectAttributes.addAttribute("success", "email_registered");
+    // return "redirect:/vipasiakas";
+    // }
 
     @PostMapping("/vipasiakas")
     public String addVipCustomer(@RequestParam String firstname, @RequestParam String lastname,
-            @RequestParam String email, @RequestParam(required = false) String agree1,
-            @RequestParam(required = false) String agree2, RedirectAttributes redirectAttributes) {
-
-        // Tarkistetaan onko uutiskirjeen tilaus on hyväksytty
-        if (agree1 == null || !agree1.equals("accepted")) {
-            redirectAttributes.addAttribute("error", "newsletter_not_accepted");
-            return "redirect:/vipasiakas";
+            @RequestParam String email, Model model, RedirectAttributes redirectAttributes) {
+        // this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
+        // return "redirect:/vipasiakas";
+        try {
+            this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
+            // Onnistunut rekisteröinti
+            redirectAttributes.addFlashAttribute("success",
+                    "Kiitos, kun liityit VIP-asiakkaaksemme! Saat kohta sähköpostiisi vahvistusviestin meiltä.");
+        } catch (RuntimeException e) {
+            // Virhe tapahtui
+            redirectAttributes.addFlashAttribute("error", "Sähköpostiosoite on jo rekisteröity");
         }
-
-        // Tarkistetaan onko sopimusehdot on hyväksytty
-        if (agree2 == null || !agree2.equals("accepted")) {
-            redirectAttributes.addAttribute("error", "terms_not_accepted");
-            return "redirect:/vipasiakas";
-        }
-
-        VipAsiakas existingVIP = vipAsiakasRepository.findByEmail(email);
-
-        if (existingVIP != null) {
-            redirectAttributes.addAttribute("message", "email_already_registered");
-            return "redirect:/vipasiakas";
-        }
-
-        if (existingVIP == null) {
-            VipAsiakas newVipCustomer = new VipAsiakas();
-            newVipCustomer.setFirstname(firstname.trim());
-            newVipCustomer.setLastname(lastname.trim());
-            newVipCustomer.setEmail(email.trim());
-
-            this.vipAsiakasRepository.save(newVipCustomer);
-        }
-
-        redirectAttributes.addAttribute("success", "email_registered");
         return "redirect:/vipasiakas";
     }
 
+    // @GetMapping("/vipasiakkaat")
+    // public String vipCustomers(Model model) {
+    // model.addAttribute("vipCustomers", this.vipAsiakasRepository.findAll());
+    // return "vipasiakkaat";
+    // }
     @GetMapping("/vipasiakkaat")
     public String vipCustomers(Model model) {
-        model.addAttribute("vipCustomers", this.vipAsiakasRepository.findAll());
+        List<VipAsiakas> vipCustomers = this.vipAsiakasService.getAllVipCustomers();
+        model.addAttribute("vipCustomers", vipCustomers);
         return "vipasiakkaat";
     }
 
+    // @PostMapping("/vipasiakkaat")
+    // public String addVipCustomer(@RequestParam String firstname, @RequestParam
+    // String lastname,
+    // @RequestParam String email, RedirectAttributes redirectAttributes) {
+
+    // VipAsiakas existingVIP = vipAsiakasRepository.findByEmail(email);
+
+    // if (existingVIP != null) {
+    // redirectAttributes.addAttribute("message", "email_already_registered");
+    // return "redirect:/vipasiakkaat";
+    // }
+
+    // if (existingVIP == null) {
+    // VipAsiakas newVipCustomer = new VipAsiakas();
+    // newVipCustomer.setFirstname(firstname.trim());
+    // newVipCustomer.setLastname(lastname.trim());
+    // newVipCustomer.setEmail(email.trim());
+
+    // this.vipAsiakasRepository.save(newVipCustomer);
+    // }
+
+    // return "redirect:/vipasiakkaat";
+    // }
     @PostMapping("/vipasiakkaat")
-    public String addVipCustomer(@RequestParam String firstname, @RequestParam String lastname,
-            @RequestParam String email, RedirectAttributes redirectAttributes) {
-
-        VipAsiakas existingVIP = vipAsiakasRepository.findByEmail(email);
-
-        if (existingVIP != null) {
-            redirectAttributes.addAttribute("message", "email_already_registered");
-            return "redirect:/vipasiakkaat";
-        }
-
-        if (existingVIP == null) {
-            VipAsiakas newVipCustomer = new VipAsiakas();
-            newVipCustomer.setFirstname(firstname.trim());
-            newVipCustomer.setLastname(lastname.trim());
-            newVipCustomer.setEmail(email.trim());
-
-            this.vipAsiakasRepository.save(newVipCustomer);
-        }
-
+    public String addVipCustomer2(@RequestParam String firstname, @RequestParam String lastname,
+            @RequestParam String email) {
+        this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
         return "redirect:/vipasiakkaat";
     }
 
+    // @PostMapping("/deleteVipCustomer/{id}")
+    // public String deleteVipCustomer(@PathVariable Long id) {
+    // vipAsiakasRepository.deleteById(id);
+    // return "redirect:/vipasiakkaat";
+    // }
     @PostMapping("/deleteVipCustomer/{id}")
     public String deleteVipCustomer(@PathVariable Long id) {
-        vipAsiakasRepository.deleteById(id);
+        this.vipAsiakasService.deleteVipCustomer(id);
         return "redirect:/vipasiakkaat";
     }
-    // @GetMapping("/updateProducer/{id}")
-    // public String getUpdateProducerPage(@PathVariable Long id, Model model) {
-    // // Haetaan valmistaja tietokannasta valmistajan id:n perusteella
-    // Valmistaja producer = valmistajaRepository.findById(id).orElse(null);
-
-    // if (producer == null) {
-    // // Jos tuotetta ei löydy ohjataan takaisin valmistajat-sivulle
-    // return "redirect:/valmistajat";
-    // }
-    // model.addAttribute("producer", producer);
-
-    // return "muokkaa-valmistajaa";
-    // }
-
-    // @PostMapping("/updateProducer/{id}")
-    // public String updateProducer(@PathVariable Long id, @RequestParam String
-    // name, @RequestParam String url) {
-
-    // Valmistaja producer = valmistajaRepository.findById(id).orElse(null);
-    // if (producer != null) {
-    // producer.setName(name);
-    // producer.setUrl(url);
-
-    // valmistajaRepository.save(producer);
-    // }
-
-    // return "redirect:/valmistajat";
-    // }
-
-    // @PostMapping("/deleteProducer/{id}")
-    // public String deleteProducer(@PathVariable Long id) {
-    // valmistajaRepository.deleteById(id);
-    // return "redirect:/valmistajat";
-    // }
 
 }

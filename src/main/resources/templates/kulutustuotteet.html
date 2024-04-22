@@ -92,93 +92,6 @@
           </div>
         </div>
       </section>
-
-      <!-- <section class="grid-container">
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="tuote-laite.html" th:href="@{/tuote-laite}"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-        <div class="grid-card">
-          <figure class="grid-cardpicturesize">
-            <img th:src="@{/images/cardpic5.png}" alt="coffee-machine" />
-          </figure>
-          <h3>Laitteen nimi</h3>
-          <p>Laitteen hinta</p>
-          <p>
-            <a href="#"
-              >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-          </p>
-        </div>
-      </section> -->
     </main>
     <footer id="footer">
       <section class="footer-contact">
@@ -217,5 +130,30 @@
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
     </footer>
+    <script>
+      // Haetaan yläpalkin elementit
+      let upperBar = document.querySelector(".navigation-items");
+      let navigationLinks = document.querySelectorAll(".navigation-items li a");
+      // Tallennetaan nykyinen scroll-arvo
+      let lastScrollTop = 0;
+      window.addEventListener("scroll", function () {
+        // Sivun nykyinen scroll-arvo
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        // Tarkistetaan onko sivua rullattu ylös vai alaspäin
+        if (scrollTop > lastScrollTop) {
+          // Sivua rullattiin alaspäin, muutetaan yläpalkin väriä
+          upperBar.style.backgroundColor = "#3a342598";
+          navigationLinks.forEach(function (link) {
+            link.style.color = "whitesmoke";
+          });
+        } else {
+          // Sivua rullattiin ylöspäin, palautetaan väri
+          upperBar.style.backgroundColor = "transparent";
+        }
+        // Päivitetään sivun nykyinen scroll-arvo
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
+    </script>
   </body>
 </html>

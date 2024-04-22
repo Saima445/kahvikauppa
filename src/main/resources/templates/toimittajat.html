@@ -68,11 +68,12 @@
       <section class="admin-section">
         <h2>ADMIN</h2>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
-        <button style="background-color: #dff6ca">
+        <button style="background-color: #d5e1ca">
           <a th:href="@{/toimittajat}">Toimittajat</a>
         </button>
         <button><a th:href="@{/valmistajat}">Valmistajat</a></button>
         <button><a th:href="@{/osastot}">Osastot</a></button>
+        <button><a th:href="@{/vipasiakkaat}">VIP-asiakkaat</a></button>
       </section>
       <div class="add-section">
         <h3>Lisää uusi toimittaja:</h3>
@@ -179,5 +180,30 @@
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
     </footer>
+    <script>
+      // Haetaan yläpalkin elementit
+      let upperBar = document.querySelector(".navigation-items");
+      let navigationLinks = document.querySelectorAll(".navigation-items li a");
+      // Tallennetaan nykyinen scroll-arvo
+      let lastScrollTop = 0;
+      window.addEventListener("scroll", function () {
+        // Sivun nykyinen scroll-arvo
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        // Tarkistetaan onko sivua rullattu ylös vai alaspäin
+        if (scrollTop > lastScrollTop) {
+          // Sivua rullattiin alaspäin, muutetaan yläpalkin väriä
+          upperBar.style.backgroundColor = "#3a342598";
+          navigationLinks.forEach(function (link) {
+            link.style.color = "whitesmoke";
+          });
+        } else {
+          // Sivua rullattiin ylöspäin, palautetaan väri
+          upperBar.style.backgroundColor = "transparent";
+        }
+        // Päivitetään sivun nykyinen scroll-arvo
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
+    </script>
   </body>
 </html>

@@ -1,5 +1,7 @@
 html {
   font-size: 62.5%;
+  color: #3a3425a0;
+  color: #232d13;
 }
 
 body {
@@ -19,10 +21,7 @@ header {
   height: 55rem;
   padding: 2rem;
   text-align: center;
-}
-
-.upper-bar nav {
-  padding: 1rem;
+  color: #3a342581;
 }
 
 .upper-bar {
@@ -32,12 +31,21 @@ header {
   justify-content: space-between;
   width: 94vw;
 }
+
+.upper-bar nav {
+  padding: 1rem;
+}
+
 .navigation-items {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: end;
   align-items: center;
+  padding: 1.8rem;
+  border-radius: 1px;
+  background-color: transparent; /* oletustaustaväri */
+  transition: background-color 0.5s ease; /* pehmeä siirtymä värin muutokseen */
 }
 
 .navigation-items a {
@@ -47,8 +55,8 @@ header {
   margin-inline-start: 2rem;
 }
 .navigation-items a:hover {
-  color: #769643;
-  border-block-end: solid 0.5px #769643;
+  color: whitesmoke;
+  border-block-end: solid 0.5px black;
 }
 .upper-bar figure {
   width: 7.5rem;
@@ -376,14 +384,14 @@ figure {
   border: 0.5px solid black;
   color: red;
   font-size: 1.6rem;
-  padding: 1rem;
+  padding: 1.5rem;
   margin: 1rem;
 }
 .success-message {
   border: 0.5px solid black;
   color: rgb(15, 121, 1);
   font-size: 1.6rem;
-  padding: 1rem;
+  padding: 1.5rem;
   margin: 1rem;
 }
 

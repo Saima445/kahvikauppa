@@ -13,70 +13,102 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class OsastoController {
 
+    // @Autowired
+    // private OsastoRepository osastoRepository;
+    // @Autowired
+    // private TuoteRepository tuoteRepository;
     @Autowired
-    private OsastoRepository osastoRepository;
-    @Autowired
-    private ToimittajaRepository toimittajaRepository;
-    @Autowired
-    private TuoteRepository tuoteRepository;
-    @Autowired
-    private ValmistajaRepository valmistajaRepository;
+    private OsastoService osastoService;
+
+    // @GetMapping("/osastot")
+    // public String departments(Model model) {
+    // List<Osasto> departments = this.osastoRepository.findAll();
+    // // Käydään läpi jokainen osasto ja lasketaan tuotteiden määrä
+    // for (Osasto department : departments) {
+    // Long productCount =
+    // tuoteRepository.countProductsByOsastoID(department.getId());
+    // department.setProductCount(productCount.intValue());
+    // }
+    // model.addAttribute("departments", this.osastoRepository.findAll());
+    // return "osastot";
+    // }
 
     @GetMapping("/osastot")
     public String departments(Model model) {
-        List<Osasto> departments = this.osastoRepository.findAll();
-        // Käydään läpi jokainen osasto ja lasketaan tuotteiden määrä
-        for (Osasto department : departments) {
-            Long productCount = tuoteRepository.countProductsByOsastoID(department.getId());
-            department.setProductCount(productCount.intValue());
-        }
-        model.addAttribute("departments", this.osastoRepository.findAll());
+        List<Osasto> departments = this.osastoService.getAllDepartments();
+        model.addAttribute("departments", departments);
         return "osastot";
     }
 
+    // @PostMapping("/osastot")
+    // public String addDepartment(@RequestParam String name, @RequestParam Long
+    // osastoIDP) {
+    // Osasto newOsasto = new Osasto();
+    // newOsasto.setName(name.trim());
+    // newOsasto.setOsastoIDP(osastoIDP);
+
+    // this.osastoRepository.save(newOsasto);
+
+    // return "redirect:/osastot";
+    // }
     @PostMapping("/osastot")
     public String addDepartment(@RequestParam String name, @RequestParam Long osastoIDP) {
-        Osasto newOsasto = new Osasto();
-        newOsasto.setName(name.trim());
-        newOsasto.setOsastoIDP(osastoIDP);
-
-        this.osastoRepository.save(newOsasto);
-
+        this.osastoService.addDepartment(name, osastoIDP);
         return "redirect:/osastot";
     }
 
+    // @GetMapping("/updateDepartment/{id}")
+    // public String getUpdateDepartmentPage(@PathVariable Long id, Model model) {
+    // // Haetaan osasto tietokannasta osaston id:n perusteella
+    // Osasto department = osastoRepository.findById(id).orElse(null);
+
+    // if (department == null) {
+    // // Jos osastoa ei löydy ohjataan takaisin osastot-sivulle
+    // return "redirect:/osastot";
+    // }
+
+    // model.addAttribute("department", department);
+
+    // return "muokkaa-osastoa";
+    // }
     @GetMapping("/updateDepartment/{id}")
     public String getUpdateDepartmentPage(@PathVariable Long id, Model model) {
-        // Haetaan osasto tietokannasta osaston id:n perusteella
-        Osasto department = osastoRepository.findById(id).orElse(null);
-
-        if (department == null) {
-            // Jos osastoa ei löydy ohjataan takaisin osastot-sivulle
-            return "redirect:/osastot";
-        }
-
-        model.addAttribute("department", department);
-
-        return "muokkaa-osastoa";
-    }
-
-    @PostMapping("/updateDepartment/{id}")
-    public String updateDepartment(@PathVariable Long id, @RequestParam String name, @RequestParam Long osastoIDP) {
-
-        Osasto department = osastoRepository.findById(id).orElse(null);
+        Osasto department = this.osastoService.getDepartmentById(id);
         if (department != null) {
-            department.setName(name);
-            department.setOsastoIDP(osastoIDP);
-
-            osastoRepository.save(department);
+            model.addAttribute("department", department);
+            return "muokkaa-osastoa";
         }
-
         return "redirect:/osastot";
     }
 
+    // @PostMapping("/updateDepartment/{id}")
+    // public String updateDepartment(@PathVariable Long id, @RequestParam String
+    // name, @RequestParam Long osastoIDP) {
+
+    // Osasto department = osastoRepository.findById(id).orElse(null);
+    // if (department != null) {
+    // department.setName(name);
+    // department.setOsastoIDP(osastoIDP);
+
+    // osastoRepository.save(department);
+    // }
+
+    // return "redirect:/osastot";
+    // }
+    @PostMapping("/updateDepartment/{id}")
+    public String updateDepartment(@PathVariable Long id, @RequestParam String name, @RequestParam Long osastoIDP) {
+        this.osastoService.updateDepartment(id, name, osastoIDP);
+        return "redirect:/osastot";
+    }
+
+    // @PostMapping("/deleteDepartment/{id}")
+    // public String deleteDepartment(@PathVariable Long id) {
+    // osastoRepository.deleteById(id);
+    // return "redirect:/osastot";
+    // }
     @PostMapping("/deleteDepartment/{id}")
     public String deleteDepartment(@PathVariable Long id) {
-        osastoRepository.deleteById(id);
+        this.osastoService.deleteDepartment(id);
         return "redirect:/osastot";
     }
 }

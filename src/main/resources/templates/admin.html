@@ -67,7 +67,7 @@
     <main>
       <section class="admin-section">
         <h2>ADMIN</h2>
-        <button style="background-color: #dff6ca">
+        <button style="background-color: #d5e1ca">
           <a th:href="@{/admin}">Tuotteet</a>
         </button>
         <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
@@ -307,6 +307,30 @@
             document.getElementById("newProducerNameLabel").style.display =
               isNewProducer ? "block" : "none";
           });
+      });
+      // Haetaan yläpalkin elementit
+      let upperBar = document.querySelector(".navigation-items");
+      let navigationLinks = document.querySelectorAll(".navigation-items li a");
+      // Tallennetaan sivun nykyinen scroll-arvo
+      let lastScrollTop = 0;
+      // Scroll-tapahtumia
+      window.addEventListener("scroll", function () {
+        // Sivun nykyinen scroll-arvo
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        // Tarkistetaan onko sivua rullattu ylöspäin vai alaspäin
+        if (scrollTop > lastScrollTop) {
+          // Sivua rullattiin alaspäin, muutetaan yläpalkin taustaväriä
+          upperBar.style.backgroundColor = "#3a342598";
+          navigationLinks.forEach(function (link) {
+            link.style.color = "whitesmoke";
+          });
+        } else {
+          // Sivua rullattiin ylöspäin, palautetaan oletustaustaväri
+          upperBar.style.backgroundColor = "transparent";
+        }
+        // Päivitetään sivun nykyinen scroll-arvo
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
       });
     </script>
   </body>
