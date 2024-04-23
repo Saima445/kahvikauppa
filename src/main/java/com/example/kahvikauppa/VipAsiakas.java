@@ -5,13 +5,12 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @NoArgsConstructor
@@ -19,13 +18,14 @@ import java.util.List;
 @Data
 @Table(name = "vipasiakas_details")
 public class VipAsiakas extends AbstractPersistable<Long> {
-
+    @NotEmpty
     @Column(name = "firstname")
     private String firstname;
-
+    @NotEmpty
     @Column(name = "lastname")
     private String lastname;
-
+    @NotEmpty
+    @Email
     @Column(name = "email")
     private String email;
 

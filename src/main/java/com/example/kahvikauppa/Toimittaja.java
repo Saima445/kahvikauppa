@@ -13,24 +13,28 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Table(name = "toimittaja_details")
 public class Toimittaja extends AbstractPersistable<Long> {
-
+    @NotEmpty
     @Column(name = "name")
     private String name;
-
+    @NotEmpty
     @Column(name = "contactPerson")
     private String contactPerson;
-
+    @NotEmpty
+    @Email
     @Column(name = "contactPersonEmail")
     private String contactPersonEmail;
 
     @Column(name = "productCount")
-    private Integer productCount; // Lisätty kenttä tuotteiden määrälle
+    private Integer productCount;
 
     @OneToMany(mappedBy = "toimittaja")
     private List<Tuote> products = new ArrayList<>();

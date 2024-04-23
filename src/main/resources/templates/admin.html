@@ -4,10 +4,11 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head>
-    <meta charset="UTF-8" />
+  <head th:replace="index::head">
+    <!-- <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kahvikauppa</title>
+    <title>Töölön Kahvikauppa</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
     <link
       href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
       rel="stylesheet"
@@ -27,12 +28,15 @@
       type="text/css"
       href="../static/css/layout.css"
       th:href="@{css/layout.css}"
-    />
+    /> -->
   </head>
   <body>
-    <header>
+    <header th:replace="index::header"></header>
+    <!-- <header>
       <section class="upper-bar">
-        <figure><img th:src="@{/images/kahvilogo.png}" alt="logo" /></figure>
+        <figure>
+          <img th:src="@{/images/kahvikauppa_logo2.png}" alt="logo" />
+        </figure>
         <nav>
           <ul class="navigation-items">
             <li><a href="index.html" th:href="@{/}">Etusivu</a></li>
@@ -63,7 +67,7 @@
           <span id="header-text-a"><a href="#footer">Kahvikauppa</a></span>
         </p>
       </section>
-    </header>
+    </header> -->
     <main>
       <section class="admin-section">
         <h2>ADMIN</h2>
@@ -200,7 +204,6 @@
             <th style="width: 10%"></th>
           </tr>
         </thead>
-
         <tbody>
           <tr th:each="product : ${products}">
             <td th:text="${product.name}">Product name</td>
@@ -236,7 +239,7 @@
         </tbody>
       </table>
     </main>
-
+    <!-- th:replace="admin::footer" ei toimi jostain syystä -->
     <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
@@ -274,68 +277,44 @@
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
     </footer>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        let textarea = document.getElementById("description");
-        let counter = document.getElementById("charCount");
-
-        // Alustava merkkimäärän laskenta
-        let initialCount = textarea.value.length;
-        counter.textContent = initialCount + "/2000";
-
-        textarea.addEventListener("input", function () {
-          let count = textarea.value.length;
-          counter.textContent = count + "/2000"; // Enimmäismerkkimäärä 2000 tietokannassa
-        });
-        document
-          .getElementById("supplier")
-          .addEventListener("change", function () {
-            let isNewSupplier =
-              document.getElementById("supplier").value === "new";
-            document.getElementById("newSupplierNameInput").style.display =
-              isNewSupplier ? "block" : "none";
-            document.getElementById("newSupplierNameLabel").style.display =
-              isNewSupplier ? "block" : "none";
-          });
-        document
-          .getElementById("producer")
-          .addEventListener("change", function () {
-            let isNewProducer =
-              document.getElementById("producer").value === "new";
-            document.getElementById("newProducerNameInput").style.display =
-              isNewProducer ? "block" : "none";
-            document.getElementById("newProducerNameLabel").style.display =
-              isNewProducer ? "block" : "none";
-          });
-      });
-      // Haetaan yläpalkin elementit
-      let upperBar = document.querySelector(".navigation-items");
-      let navigationLinks = document.querySelectorAll(".navigation-items li a");
-      // Tallennetaan sivun nykyinen scroll-arvo
-      let lastScrollTop = 0;
-      // Scroll-tapahtumia
-      window.addEventListener("scroll", function () {
-        // Sivun nykyinen scroll-arvo
-        let scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-        // Tarkistetaan onko sivua rullattu ylöspäin vai alaspäin
-        if (scrollTop > lastScrollTop) {
-          // Sivua rullattiin alaspäin, muutetaan yläpalkin taustaväriä
-          upperBar.style.backgroundColor = "#3a342598";
-          navigationLinks.forEach(function (link) {
-            link.style.color = "whitesmoke";
-          });
-        } else {
-          // Sivua rullattiin ylöspäin, palautetaan oletustaustaväri
-          upperBar.style.backgroundColor = "transparent";
-        }
-        // Päivitetään sivun nykyinen scroll-arvo
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-      });
-    </script>
+    <script th:src="@{/javascript/scrollBehavior.js}"></script>
+    <script th:src="@{/javascript/charCount.js}"></script>
+    <script th:src="@{/javascript/newNameInput.js}"></script>
   </body>
 </html>
+<!-- // document.addEventListener("DOMContentLoaded", function () {
+  //   let textarea = document.getElementById("description");
+  //   let counter = document.getElementById("charCount");
 
+  //   // Alustava merkkimäärän laskenta
+  //   let initialCount = textarea.value.length;
+  //   counter.textContent = initialCount + "/2000";
+
+  //   textarea.addEventListener("input", function () {
+  //     let count = textarea.value.length;
+  //     counter.textContent = count + "/2000"; // Enimmäismerkkimäärä 2000 tietokannassa
+  //   });
+  //   document
+  //     .getElementById("supplier")
+  //     .addEventListener("change", function () {
+  //       let isNewSupplier =
+  //         document.getElementById("supplier").value === "new";
+  //       document.getElementById("newSupplierNameInput").style.display =
+  //         isNewSupplier ? "block" : "none";
+  //       document.getElementById("newSupplierNameLabel").style.display =
+  //         isNewSupplier ? "block" : "none";
+  //     });
+  //   document
+  //     .getElementById("producer")
+  //     .addEventListener("change", function () {
+  //       let isNewProducer =
+  //         document.getElementById("producer").value === "new";
+  //       document.getElementById("newProducerNameInput").style.display =
+  //         isNewProducer ? "block" : "none";
+  //       document.getElementById("newProducerNameLabel").style.display =
+  //         isNewProducer ? "block" : "none";
+  //     });
+  // }); -->
 <!-- OSASTO OPTION SELECTI PORRASTETUSTI!! -->
 <!-- <label for="rootDepartment">Osasto:</label>
             <select id="rootDepartment" name="rootDepartment">

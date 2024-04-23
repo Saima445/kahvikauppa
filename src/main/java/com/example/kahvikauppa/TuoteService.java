@@ -1,7 +1,10 @@
 package com.example.kahvikauppa;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,25 @@ public class TuoteService {
 
     public Tuote getProductById(Long id) {
         return this.tuoteRepository.findById(id).orElse(null);
+    }
+
+    public List<Tuote> getProductsKahvilaitteet() {
+        return tuoteRepository.findProductsByOsastoID(1L); // kaikki tuotteet osasto 1 alla
+    }
+
+    public List<Tuote> getProductsKulutustuotteet() {
+        // Haetaan tuotteet osaston 2 alla
+        List<Tuote> osasto2Tuotteet = tuoteRepository.findProductsByOsastoID(2L);
+        // Haetaan tuotteet osaston 7 alla
+        List<Tuote> osasto7Tuotteet = tuoteRepository.findProductsByOsastoID(7L);
+        // Yhdistetään
+        osasto2Tuotteet.addAll(osasto7Tuotteet);
+        // poistetaan mahdolliset duplikaatit
+        Set<Tuote> yhdistetytTuotteet = new LinkedHashSet<>(osasto2Tuotteet);
+
+        List<Tuote> kulutustuotteet = new ArrayList<>(yhdistetytTuotteet);
+
+        return kulutustuotteet;
     }
 
     public List<Osasto> getAllDepartments() {
@@ -151,6 +173,29 @@ public class TuoteService {
     public void deleteProduct(Long id) {
         this.tuoteRepository.deleteById(id);
     }
+
+    public List<Tuote> searchMachines(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            return getProductsKahvilaitteet();
+        } else {
+            return tuoteRepository.findByNameLikeIgnoreCaseAndOsastoId("%" + keyword + "%", 1L);
+        }
+    }
+
+    public List<Tuote> searchConsumerProducts(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            return getProductsKulutustuotteet();
+        } else {
+            // Hae tuotteet osaston 2 ja 7 alla ja lisää ne yhteen
+            List<Tuote> osasto2Tuotteet = tuoteRepository.findByNameLikeIgnoreCaseAndOsastoId("%" + keyword + "%", 2L);
+            List<Tuote> osasto7Tuotteet = tuoteRepository.findByNameLikeIgnoreCaseAndOsastoId("%" + keyword + "%", 7L);
+            osasto2Tuotteet.addAll(osasto7Tuotteet);
+            Set<Tuote> yhdistetytTuotteet = new LinkedHashSet<>(osasto2Tuotteet);
+            // Muunnetaan listaksi
+            return new ArrayList<>(yhdistetytTuotteet);
+        }
+    }
+
 }
 
 // Toimittaja existingSupplier = null;

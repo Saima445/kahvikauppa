@@ -4,10 +4,11 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head>
+  <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kahvikauppa</title>
+    <title>Töölön Kahvikauppa</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
     <link
       href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
       rel="stylesheet"
@@ -16,23 +17,16 @@
       src="https://kit.fontawesome.com/e00b2e3114.js"
       crossorigin="anonymous"
     ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/reset.css"
-      th:href="@{css/reset.css}"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/layout.css"
-      th:href="@{css/layout.css}"
-    />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reset.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
   </head>
   <body>
-    <header>
+    <!-- th:fragment="header" ei toimi jostain syystä -->
+    <header th:fragment="header">
       <section class="upper-bar">
-        <figure><img th:src="@{/images/kahvilogo.png}" alt="logo" /></figure>
+        <figure>
+          <img th:src="@{/images/kahvikauppa_logo2.png}" alt="logo" />
+        </figure>
         <nav>
           <ul class="navigation-items">
             <li><a href="index.html" th:href="@{/}">Etusivu</a></li>
@@ -101,6 +95,7 @@
         </div>
       </div>
     </main>
+    <!-- th:fragment="footer" ei toimi jostain syystä -->
     <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
@@ -138,30 +133,6 @@
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
     </footer>
-    <script>
-      // Haetaan yläpalkin elementit
-      let upperBar = document.querySelector(".navigation-items");
-      let navigationLinks = document.querySelectorAll(".navigation-items li a");
-      // Tallennetaan nykyinen scroll-arvo
-      let lastScrollTop = 0;
-      window.addEventListener("scroll", function () {
-        // Sivun nykyinen scroll-arvo
-        let scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-        // Tarkistetaan onko sivua rullattu ylös vai alaspäin
-        if (scrollTop > lastScrollTop) {
-          // Sivua rullattiin alaspäin, muutetaan yläpalkin väriä
-          upperBar.style.backgroundColor = "#3a342598";
-          navigationLinks.forEach(function (link) {
-            link.style.color = "whitesmoke";
-          });
-        } else {
-          // Sivua rullattiin ylöspäin, palautetaan väri
-          upperBar.style.backgroundColor = "transparent";
-        }
-        // Päivitetään sivun nykyinen scroll-arvo
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-      });
-    </script>
+    <script th:src="@{/javascript/scrollBehavior.js}"></script>
   </body>
 </html>

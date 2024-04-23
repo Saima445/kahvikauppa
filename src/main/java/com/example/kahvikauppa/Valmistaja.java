@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @NoArgsConstructor
@@ -23,15 +24,15 @@ import java.util.List;
 @Data
 @Table(name = "valmistaja_details")
 public class Valmistaja extends AbstractPersistable<Long> {
-
+    @NotEmpty
     @Column(name = "name")
     private String name;
-
+    @NotEmpty
     @Column(name = "url")
     private String url;
 
     @Column(name = "productCount")
-    private Integer productCount; // Lisätty kenttä tuotteiden määrälle
+    private Integer productCount;
 
     @OneToMany(mappedBy = "valmistaja")
     private List<Tuote> products = new ArrayList<>();
