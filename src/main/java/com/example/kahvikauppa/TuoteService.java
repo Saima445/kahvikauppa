@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,6 +38,14 @@ public class TuoteService {
         return tuoteRepository.findProductsByOsastoID(1L); // kaikki tuotteet osasto 1 alla
     }
 
+    public Page<Tuote> getProductsKahvilaitteetPage(int page, int size) {
+        List<Tuote> allKahvilaitteet = getProductsKahvilaitteet();
+        int start = page * size;
+        int end = Math.min(start + size, allKahvilaitteet.size());
+        List<Tuote> pageContent = allKahvilaitteet.subList(start, end);
+        return new PageImpl<>(pageContent, PageRequest.of(page, size), allKahvilaitteet.size());
+    }
+
     public List<Tuote> getProductsKulutustuotteet() {
         // Haetaan tuotteet osaston 2 alla
         List<Tuote> osasto2Tuotteet = tuoteRepository.findProductsByOsastoID(2L);
@@ -48,6 +59,14 @@ public class TuoteService {
         List<Tuote> kulutustuotteet = new ArrayList<>(yhdistetytTuotteet);
 
         return kulutustuotteet;
+    }
+
+    public Page<Tuote> getProductsKulutustuotteetPage(int page, int size) {
+        List<Tuote> allKulutustuotteet = getProductsKulutustuotteet();
+        int start = page * size;
+        int end = Math.min(start + size, allKulutustuotteet.size());
+        List<Tuote> pageContent = allKulutustuotteet.subList(start, end);
+        return new PageImpl<>(pageContent, PageRequest.of(page, size), allKulutustuotteet.size());
     }
 
     public List<Osasto> getAllDepartments() {

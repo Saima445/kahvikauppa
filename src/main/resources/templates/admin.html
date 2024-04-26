@@ -4,7 +4,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="index::head">
+  <head th:replace="~{index::head}">
     <!-- <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Töölön Kahvikauppa</title>
@@ -31,7 +31,7 @@
     /> -->
   </head>
   <body>
-    <header th:replace="index::header"></header>
+    <header th:replace="~{index::header}"></header>
     <!-- <header>
       <section class="upper-bar">
         <figure>
@@ -193,7 +193,7 @@
       <table class="admin-table">
         <thead>
           <tr>
-            <th>Tuotteet nimi</th>
+            <th>Tuotteen nimi</th>
             <th>Tuotteen hinta</th>
             <!-- <th>Tuotteen kuvaus</th>
             <th>Kuva</th> -->
@@ -214,18 +214,18 @@
             <td th:text="${product.toimittaja.name}">Product's supplier</td>
             <td th:text="${product.valmistaja.name}">Product's producer</td>
             <td>
-              <a th:href="@{/updateProduct/{id}(id=${product.id})}">
-                <button class="update-button">Muokkaa</button>
-              </a>
+              <button class="update-button">
+                <a th:href="@{/updateProduct/{id}(id=${product.id})}"
+                  >Muokkaa</a
+                >
+              </button>
             </td>
             <td>
               <form
                 th:action="@{/deleteProduct/{id}(id=${product.id})}"
                 method="POST"
               >
-                <button class="delete-button" type="submit" value="">
-                  Poista
-                </button>
+                <button class="delete-button" type="submit">Poista</button>
               </form>
             </td>
           </tr>
@@ -239,8 +239,8 @@
         </tbody>
       </table>
     </main>
-    <!-- th:replace="admin::footer" ei toimi jostain syystä -->
-    <footer id="footer">
+    <div th:replace="~{index::footer}"></div>
+    <!-- <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
         <p>Töölön Kahvikauppa</p>
@@ -276,10 +276,7 @@
       <p id="copyright">
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
-    </footer>
-    <script th:src="@{/javascript/scrollBehavior.js}"></script>
-    <script th:src="@{/javascript/charCount.js}"></script>
-    <script th:src="@{/javascript/newNameInput.js}"></script>
+    </footer> -->
   </body>
 </html>
 <!-- // document.addEventListener("DOMContentLoaded", function () {

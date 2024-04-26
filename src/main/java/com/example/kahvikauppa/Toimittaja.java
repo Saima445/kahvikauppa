@@ -25,10 +25,10 @@ public class Toimittaja extends AbstractPersistable<Long> {
     @NotEmpty
     @Column(name = "name")
     private String name;
-    @NotEmpty
+
     @Column(name = "contactPerson")
     private String contactPerson;
-    @NotEmpty
+
     @Email
     @Column(name = "contactPersonEmail")
     private String contactPersonEmail;

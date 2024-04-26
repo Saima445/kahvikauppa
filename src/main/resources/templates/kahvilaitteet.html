@@ -4,7 +4,8 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head>
+  <head th:replace="~{index::head}"></head>
+  <!-- <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Töölön Kahvikauppa</title>
@@ -20,9 +21,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{css/reset.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{css/layout.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{css/products.css}" />
-  </head>
+  </head> -->
   <body>
-    <header th:replace="index::header"></header>
+    <header th:replace="~{index::header}"></header>
     <!-- <header>
       <section class="upper-bar">
         <figure>
@@ -63,7 +64,11 @@
       <h2>KAHVILAITTEET</h2>
       <p
         class="summary-p"
-        th:text="'Laitteita yhteensä: ' + ${kahvilaitteet.size()}"
+        th:text="' Sivu ' + (${pageNumber != null ? pageNumber : '1'}) + '/' + (${totalPages != null ? totalPages : '1'})"
+      ></p>
+      <p
+        style="margin: 1rem 0rem 2rem 2rem"
+        th:text="'Laitteita sivulla: ' + ${kahvilaitteet.size()} + '/' + (${kaikkiKahvilaitteet != null ? kaikkiKahvilaitteet.size() : '0'})"
       ></p>
       <form th:action="@{/searchMachines}" method="GET">
         <input
@@ -73,12 +78,19 @@
           name="keyword"
           placeholder="Etsi tuotteita"
         />
-        <button class="search-button" type="submit">Hae</button>
+        <button class="site-button" type="submit">Hae</button>
       </form>
+      <section
+        th:if="${keyword}"
+        class="error-message"
+        style="margin: 1rem 1rem 2rem 1rem"
+      >
+        <p th:text="${keyword}"></p>
+      </section>
       <button
         th:if="${keywordExists}"
-        class="search-button"
-        style="margin-inline-start: 1rem"
+        class="site-button"
+        style="margin: 1rem 0 0 1rem"
       >
         <a th:href="@{/kahvilaitteet}"
           ><i
@@ -88,8 +100,28 @@
           >Takaisin tuotteisiin</a
         >
       </button>
-      <section th:if="${keyword}" class="error-message">
-        <p th:text="${keyword}"></p>
+      <section class="page-buttons-flex">
+        <div th:if="${currentPage > 0}">
+          <button class="site-button">
+            <a th:href="@{/kahvilaitteet(page=${currentPage - 1})}"
+              ><i
+                class="fa-solid fa-arrow-left-long"
+                style="margin-inline-end: 1rem"
+              ></i
+              >Edellinen sivu</a
+            >
+          </button>
+        </div>
+        <div th:if="${currentPage != null and currentPage &lt; totalPages - 1}">
+          <button class="site-button">
+            <a th:href="@{/kahvilaitteet(page=${currentPage + 1})}"
+              >Seuraava sivu<i
+                class="fa-solid fa-arrow-right-long"
+                style="margin-inline-start: 1rem"
+              ></i
+            ></a>
+          </button>
+        </div>
       </section>
       <section class="grid-container">
         <div class="grid-card" th:each="product : ${kahvilaitteet}">
@@ -107,8 +139,35 @@
           </div>
         </div>
       </section>
+      <section
+        class="page-buttons-flex"
+        style="justify-content: center; margin-block-end: 3rem"
+      >
+        <div th:if="${currentPage > 0}">
+          <button class="site-button">
+            <a th:href="@{/kahvilaitteet(page=${currentPage - 1})}"
+              ><i
+                class="fa-solid fa-arrow-left-long"
+                style="margin-inline-end: 1rem"
+              ></i
+              >Edellinen sivu</a
+            >
+          </button>
+        </div>
+        <div th:if="${currentPage != null and currentPage &lt; totalPages - 1}">
+          <button class="site-button">
+            <a th:href="@{/kahvilaitteet(page=${currentPage + 1})}"
+              >Seuraava sivu<i
+                class="fa-solid fa-arrow-right-long"
+                style="margin-inline-start: 1rem"
+              ></i
+            ></a>
+          </button>
+        </div>
+      </section>
     </main>
-    <footer id="footer">
+    <div th:replace="~{index::footer}"></div>
+    <!-- <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
         <p>Töölön Kahvikauppa</p>
@@ -144,7 +203,7 @@
       <p id="copyright">
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
-    </footer>
-    <script th:src="@{/javascript/scrollBehavior.js}"></script>
+    </footer> -->
+    <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
   </body>
 </html>

@@ -4,7 +4,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="index::head"></head>
+  <head th:replace="~{index::head}"></head>
   <!-- <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,7 +22,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
   </head> -->
   <body>
-    <header th:replace="index::header"></header>
+    <header th:replace="~{index::header}"></header>
     <!-- <header>
       <section class="upper-bar">
         <figure>
@@ -74,14 +74,15 @@
         <p th:text="${product.description}" style="line-height: 2rem">
           Tuotteen kuvaus
         </p>
-        <button>
+        <button class="site-button">
           <a th:href="@{/kahvilaitteet}"
             ><i class="fa-solid fa-arrow-left-long"></i> Takaisin</a
           >
         </button>
       </section>
     </main>
-    <footer id="footer">
+    <div th:replace="~{index::footer}"></div>
+    <!-- <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
         <p>Töölön Kahvikauppa</p>
@@ -117,7 +118,7 @@
       <p id="copyright">
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
-    </footer>
-    <script th:src="@{/javascript/scrollBehavior.js}"></script>
+    </footer> -->
+    <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
   </body>
 </html>

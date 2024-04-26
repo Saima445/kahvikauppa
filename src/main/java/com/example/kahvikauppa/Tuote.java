@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -20,7 +21,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Table(name = "tuote_details")
 public class Tuote extends AbstractPersistable<Long> {
-    @NotEmpty
+    @NotEmpty // stringeihin
     @Column(name = "name")
     private String name;
     // ALTER TABLE TUOTE_DETAILS ALTER COLUMN NAME VARCHAR(500)
@@ -30,10 +31,11 @@ public class Tuote extends AbstractPersistable<Long> {
     // muokattu h2-tietokantaan kuvaus-kentän merkkien pituutta, jotta käyttäjä voi
     // kirjoittaa pidemmän kuvauksen
     // ALTER TABLE TUOTE_DETAILS ALTER COLUMN DESCRIPTION VARCHAR(2000);
-    @NotEmpty
+
+    @NotNull // numeroihin, longeihin
     @Column(name = "price")
     private BigDecimal price;
-    @NotEmpty
+
     @Column(name = "productImage")
     @Lob
     private byte[] productImage;

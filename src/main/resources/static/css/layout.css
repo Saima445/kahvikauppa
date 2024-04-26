@@ -1,7 +1,5 @@
 html {
   font-size: 62.5%;
-  color: #3a3425a0;
-  color: #232d13;
 }
 
 body {
@@ -235,8 +233,7 @@ a:hover {
   color: blue;
 }
 
-button:hover,
-.submit-button:hover {
+button:hover {
   cursor: pointer;
   background-color: rgb(224, 224, 224);
   color: blue;
@@ -246,7 +243,7 @@ button:hover,
   width: fit-content;
 }
 
-.update-button:hover {
+.update-button a:hover {
   color: rgb(255, 149, 0);
 }
 
@@ -257,17 +254,18 @@ button:hover,
   color: red;
 }
 
-.search-button {
+.site-button {
   width: fit-content;
   padding: 0.5rem 2rem;
 }
-.search-button:hover {
-  color: rgb(45, 120, 45);
+.site-button:hover,
+.submit-button:hover {
   font-style: italic;
   letter-spacing: 0.1rem;
+  color: rgb(45, 120, 45);
 }
 
-.search-button a:hover {
+.site-button a:hover {
   color: rgb(45, 120, 45);
 }
 
@@ -280,6 +278,12 @@ button:hover,
   border: 0.8px black solid;
   width: 35rem;
   font-family: "Bodoni Moda", serif;
+}
+
+.page-buttons-flex {
+  display: flex;
+  margin: 1rem 0 0 1rem;
+  gap: 1rem;
 }
 
 /* ADMIN-SIVU */

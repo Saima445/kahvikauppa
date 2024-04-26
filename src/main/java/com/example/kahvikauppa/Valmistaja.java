@@ -27,7 +27,7 @@ public class Valmistaja extends AbstractPersistable<Long> {
     @NotEmpty
     @Column(name = "name")
     private String name;
-    @NotEmpty
+
     @Column(name = "url")
     private String url;
 

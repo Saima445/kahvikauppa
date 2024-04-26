@@ -4,7 +4,7 @@
   grid-template-columns: repeat(3, 31.5%);
   /* auto auto auto; */
   /* repeat(3, 1fr); */
-  grid-template-rows: repeat(6, auto);
+  /* grid-template-rows: repeat(6, auto); */
   grid-gap: 2rem;
   padding: 2rem 0rem;
   justify-content: center;

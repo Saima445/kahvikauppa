@@ -4,7 +4,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="index::head"></head>
+  <head th:replace="~{index::head}"></head>
   <!-- <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +32,7 @@
     />
   </head> -->
   <body>
-    <header th:replace="index::header"></header>
+    <header th:replace="~{index::header}"></header>
     <!-- <header>
       <section class="upper-bar">
         <figure>
@@ -112,9 +112,11 @@
             </td>
             <td th:text="${department.productCount}">Product count</td>
             <td>
-              <a th:href="@{/updateDepartment/{id}(id=${department.id})}">
-                <button class="update-button">Muokkaa</button>
-              </a>
+              <button class="update-button">
+                <a th:href="@{/updateDepartment/{id}(id=${department.id})}"
+                  >Muokkaa</a
+                >
+              </button>
             </td>
             <td>
               <form
@@ -137,8 +139,8 @@
         </tbody>
       </table>
     </main>
-
-    <footer id="footer">
+    <div th:replace="~{index::footer}"></div>
+    <!-- <footer id="footer">
       <section class="footer-contact">
         <h4>Yhteystiedot</h4>
         <p>Töölön Kahvikauppa</p>
@@ -174,7 +176,7 @@
       <p id="copyright">
         Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
       </p>
-    </footer>
-    <script th:src="@{/javascript/scrollBehavior.js}"></script>
+    </footer> -->
+    <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
   </body>
 </html>

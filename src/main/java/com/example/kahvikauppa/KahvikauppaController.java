@@ -1,11 +1,9 @@
 package com.example.kahvikauppa;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class KahvikauppaController {
 
-    @Autowired
-    private TuoteRepository tuoteRepository;
+    // @Autowired
+    // private TuoteRepository tuoteRepository;
     @Autowired
     private TuoteService tuoteService;
 
@@ -29,11 +27,18 @@ public class KahvikauppaController {
     }
 
     @GetMapping("/kahvilaitteet")
-    public String machines(Model model) {
+    public String machines(Model model, @RequestParam(defaultValue = "0") int page) {
         // List<Tuote> kahvilaitteet = tuoteRepository.findProductsByOsastoID(1L); //
-        // kaikki tuotteet osasto 1 alla
-        List<Tuote> kahvilaitteet = tuoteService.getProductsKahvilaitteet();
+        int pageSize = 6; // Haluttu rivien määrä yhdellä sivulla
+        Page<Tuote> tuotePage = tuoteService.getProductsKahvilaitteetPage(page, pageSize);
+        List<Tuote> kahvilaitteet = tuotePage.getContent();
         model.addAttribute("kahvilaitteet", kahvilaitteet);
+        model.addAttribute("totalPages", tuotePage.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageNumber", page + 1); // Lisää sivunumeron malliin
+        // kaikki tuotteet osasto 1 alla
+        List<Tuote> kaikkiKahvilaitteet = tuoteService.getProductsKahvilaitteet();
+        model.addAttribute("kaikkiKahvilaitteet", kaikkiKahvilaitteet);
         return "kahvilaitteet";
     }
 
@@ -52,7 +57,7 @@ public class KahvikauppaController {
     }
 
     @GetMapping("/kulutustuotteet")
-    public String consumerProducts(Model model) {
+    public String consumerProducts(Model model, @RequestParam(defaultValue = "0") int page) {
         // kaikki tuotteet osasto 2 alla, EI TOIMI OSASTO 7 ALLE OLEVILLE!
         // List<Tuote> kulutustuotteet = tuoteRepository.findProductsByOsastoID(2L);
         // model.addAttribute("kulutustuotteet", kulutustuotteet);
@@ -67,8 +72,16 @@ public class KahvikauppaController {
         // Set<Tuote> yhdistetytTuotteet = new LinkedHashSet<>(osasto2Tuotteet);
 
         // model.addAttribute("kulutustuotteet", new ArrayList<>(yhdistetytTuotteet));
-        List<Tuote> kulutustuotteet = tuoteService.getProductsKulutustuotteet();
+
+        int pageSize = 6; // Haluttu rivien määrä yhdellä sivulla
+        Page<Tuote> tuotePage = tuoteService.getProductsKulutustuotteetPage(page, pageSize);
+        List<Tuote> kulutustuotteet = tuotePage.getContent();
         model.addAttribute("kulutustuotteet", kulutustuotteet);
+        model.addAttribute("totalPages", tuotePage.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageNumber", page + 1); // Lisää sivunumeron malliin
+        List<Tuote> kaikkiKulutustuotteet = tuoteService.getProductsKulutustuotteet();
+        model.addAttribute("kaikkiKulutustuotteet", kaikkiKulutustuotteet);
         return "kulutustuotteet";
     }
 
@@ -99,27 +112,32 @@ public class KahvikauppaController {
         }
     }
 
+    // HAKU-TOIMINNALLISUUDET
     @GetMapping("/searchMachines")
     public String searchMachines(@RequestParam String keyword, Model model) {
         List<Tuote> machines = tuoteService.searchMachines(keyword);
+        List<Tuote> kaikkiKahvilaitteet = tuoteService.getProductsKahvilaitteet();
         if (machines.isEmpty()) {
             model.addAttribute("keyword", "Hakuehtoa vastaavia tuotteita ei löytynyt kahvilaitteistamme");
             model.addAttribute("keywordExists", true);
         }
         model.addAttribute("kahvilaitteet", machines);
         model.addAttribute("keywordExists", true);
+        model.addAttribute("kaikkiKahvilaitteet", kaikkiKahvilaitteet);
         return "kahvilaitteet";
     }
 
     @GetMapping("/searchConsumerProducts")
     public String searchProducts(@RequestParam String keyword, Model model) {
-        List<Tuote> machines = tuoteService.searchConsumerProducts(keyword);
-        if (machines.isEmpty()) {
+        List<Tuote> products = tuoteService.searchConsumerProducts(keyword);
+        List<Tuote> kaikkiKulutustuotteet = tuoteService.getProductsKulutustuotteet();
+        if (products.isEmpty()) {
             model.addAttribute("keyword", "Hakuehtoa vastaavia tuotteita ei löytynyt kulutustuotteistamme");
             model.addAttribute("keywordExists", true);
         }
-        model.addAttribute("kulutustuotteet", machines);
+        model.addAttribute("kulutustuotteet", products);
         model.addAttribute("keywordExists", true);
+        model.addAttribute("kaikkiKulutustuotteet", kaikkiKulutustuotteet);
         return "kulutustuotteet";
     }
 

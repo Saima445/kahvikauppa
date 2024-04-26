@@ -5,8 +5,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @NoArgsConstructor
@@ -26,7 +25,7 @@ public class Osasto extends AbstractPersistable<Long> {
     @NotEmpty
     @Column(name = "name")
     private String name;
-    @NotEmpty
+    @NotNull
     @Column(name = "osastoIDP")
     private Long osastoIDP;
 
