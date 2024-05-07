@@ -28,6 +28,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   width: 94vw;
+  z-index: 999; /* Aseta yläpalkille korkea z-indeksi */
 }
 
 .navigation-items {
@@ -105,6 +106,11 @@ h3 {
 h4 {
   font-size: 2rem;
   font-weight: bold;
+  margin-block-end: 2rem;
+}
+/* ORDER h-koko */
+h5 {
+  font-size: 2.2rem;
   margin-block-end: 2rem;
 }
 
@@ -425,9 +431,17 @@ figure {
   h1 {
     font-size: 4rem;
   }
+
+  footer > * {
+    width: unset;
+    flex-basis: 100%;
+    margin-block-end: 2rem;
+  }
   .navigation-items {
     flex-wrap: wrap;
     margin-inline-end: 3rem;
+    padding: 1rem;
+    /* width: 21rem; */
   }
 
   nav li {
@@ -441,9 +455,13 @@ figure {
   }
   footer h4,
   #icons-h4 {
-    font-size: 1.6rem;
+    font-size: 2.2rem;
   }
   footer p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+  }
+  .admin-section {
+    flex-wrap: wrap;
+    justify-content: end;
   }
 }

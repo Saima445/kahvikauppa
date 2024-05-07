@@ -5,62 +5,36 @@
   xmlns:th="http://www.thymeleaf.org"
 >
   <head th:replace="~{index::head}"></head>
-  <!-- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Töölön Kahvikauppa</title>
-    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/e00b2e3114.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" type="text/css" th:href="@{css/reset.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{css/layout.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{css/products.css}" />
-  </head> -->
   <body>
     <header th:replace="~{index::header}"></header>
-    <!-- <header>
-      <section class="upper-bar">
-        <figure>
-          <img th:src="@{/images/kahvikauppa_logo2.png}" alt="logo" />
-        </figure>
-        <nav>
-          <ul class="navigation-items">
-            <li><a href="index.html" th:href="@{/}">Etusivu</a></li>
-            <li>
-              <a href="kahvilaitteet.html" th:href="@{/kahvilaitteet}"
-                >Kahvilaitteet</a
-              >
-            </li>
-            <li>
-              <a href="kulutustuotteet.html" th:href="@{/kulutustuotteet}"
-                >Kulutustuotteet</a
-              >
-            </li>
-            <li>
-              <a href="admin.html" th:href="@{/admin}"
-                ><i class="fa-regular fa-user"></i
-              ></a>
-            </li>
-          </ul>
-        </nav>
-      </section>
-      <section class="header-text">
-        <h1>TÖÖLÖN KAHVIKAUPPA</h1>
-        <p>Tervetuloa Kahvikauppaan</p>
-        <p>Myymme kahvilalaitteita ja -tuotteita</p>
-        <p id="header-text-a-margin">
-          Ota yhteyttä
-          <span id="header-text-a"><a href="#footer">Kahvikauppa</a></span>
-        </p>
-      </section>
-    </header> -->
     <main>
+      <!-- <div id="orderList">
+        <ul></ul>
+        <form
+          id="orderForm"
+          th:action="@{/order}"
+          method="POST"
+          style="text-align: center"
+        >
+          <input type="hidden" id="orderFormInput" name="order" />
+          <button
+            id="order-button"
+            class="site-button"
+            style="margin-block-start: 1rem"
+            type="submit"
+          >
+            Lähetä tilaus
+          </button>
+        </form>
+      </div> -->
+      <div id="favourites">
+        <ul id="favorites-list"></ul>
+      </div>
+      <i
+        id="heart-icon"
+        class="fa-regular fa-heart"
+        onclick="showFavorites()"
+      ></i>
       <h2>KAHVILAITTEET</h2>
       <p
         class="summary-p"
@@ -124,7 +98,11 @@
         </div>
       </section>
       <section class="grid-container">
-        <div class="grid-card" th:each="product : ${kahvilaitteet}">
+        <div
+          class="grid-card"
+          th:each="product : ${kahvilaitteet}"
+          style="position: relative"
+        >
           <figure class="grid-cardpicturesize">
             <img th:src="@{/productImage/{id}(id=${product.id})}" />
           </figure>
@@ -136,6 +114,24 @@
                 >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
               </a>
             </p>
+            <!-- <button
+              id="order-button"
+              class="site-button"
+              style="position: absolute; bottom: 1rem; right: 1rem"
+              th:value="${product.id + ',' + product.name + ',' + product.price}"
+              onclick="event.preventDefault(); addToCart(this.getAttribute('value'));"
+            >
+              Tilaa
+              <i class="fa-solid fa-basket-shopping"></i>
+            </button> -->
+            <button
+              th:value="${product.id + ',' + product.name + ',' + product.price}"
+              onclick="toggleFavorite(this.getAttribute('value'))"
+              class="site-button"
+              style="position: absolute; bottom: 1rem; right: 1rem"
+            >
+              Lisää suosikiksi<i class="fa-regular fa-heart"></i>
+            </button>
           </div>
         </div>
       </section>
@@ -167,43 +163,231 @@
       </section>
     </main>
     <div th:replace="~{index::footer}"></div>
-    <!-- <footer id="footer">
-      <section class="footer-contact">
-        <h4>Yhteystiedot</h4>
-        <p>Töölön Kahvikauppa</p>
-        <p>Töölöntorinkatu 445,</p>
-        <p>00160 Helsinki</p>
-        <p>0400445445</p>
-        <p>toolo@toolonkahvikauppa.fi</p>
-      </section>
-      <section class="footer-about-us">
-        <h4>Tietoa meistä</h4>
-        <p><a href="#">Toimitusehdot</a></p>
-        <p><a href="#">Tietosuojaseloste</a></p>
-        <p>Y-tunnus: 292292-4</p>
-      </section>
-      <section class="footer-icons">
-        <h4 id="icons-h4">Tuhtaamista somessa</h4>
-        <p>
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-youtube"></i></a>
-        </p>
-      </section>
-      <p id="copyright">
-        Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
-      </p>
-    </footer> -->
+    <script>
+      // Alusta tyhjä suosikkilista
+      let favorites = {};
+      let timerId;
+      // Lisää tai poista tuote suosikkien joukosta
+      function toggleFavorite(productInfo) {
+        // Jaa tuotetiedot pilkulla erotelluksi taulukoksi
+        let productData = productInfo.split(",");
+        let productId = productData[0];
+        let productName = productData[1];
+        let productPrice = parseFloat(productData[2]);
+
+        if (productId in favorites) {
+          // Poista tuote suosikeista, jos se on jo siellä
+          delete favorites[productId];
+          removeFavoriteItem(productName);
+        } else {
+          // Lisää tuote suosikkeihin, jos se ei ole vielä siellä
+          favorites[productId] = {
+            name: productName,
+            price: productPrice,
+          };
+          addFavoriteItem(productName, productPrice);
+        }
+        updateFavorites();
+        showFavorites();
+        // Käynnistä ajastin vain jos se ei ole vielä käynnissä
+        if (!timerId) {
+          timerId = setTimeout(hideFavorites, 4000); // Piilota suosikkilista 4 sekunnin kuluttua
+        }
+      }
+
+      // Lisää tuote suosikkilistaan näytölle
+      function addFavoriteItem(productName, productPrice) {
+        let favoritesList = document.getElementById("favorites-list");
+        let li = document.createElement("li");
+        li.textContent = productName + " - " + productPrice + "€";
+        favoritesList.appendChild(li);
+      }
+
+      // Poista tuote suosikkilistasta näytölle
+      function removeFavoriteItem(productName) {
+        let favoritesList = document.getElementById("favorites-list");
+        let items = favoritesList.getElementsByTagName("li");
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].textContent.includes(productName)) {
+            favoritesList.removeChild(items[i]);
+            break;
+          }
+        }
+      }
+
+      // Päivitä suosikkilista näytölle
+      function updateFavorites() {
+        var favoritesList = document.getElementById("favorites-list");
+        favoritesList.innerHTML = "";
+
+        // Tarkista, onko suosikkilistalla tuotteita
+        if (Object.keys(favorites).length > 0) {
+          // Luo otsikko vain, jos sitä ei ole vielä lisätty
+          if (!document.getElementById("favoritesListHeader")) {
+            let favoritesListHeader = document.createElement("h5");
+            favoritesListHeader.textContent = "Suosikit";
+            favoritesListHeader.id = "favoritesListHeader";
+            favoritesListHeader.style.textAlign = "center";
+            favoritesListHeader.style.textDecoration = "underline 0.5px black";
+            document.getElementById("favourites").prepend(favoritesListHeader);
+          }
+
+          // Lisää suosikkien tiedot listalle
+          for (var productId in favorites) {
+            var product = favorites[productId];
+            var li = document.createElement("li");
+            li.textContent = product.name + " - " + product.price + "€";
+            favoritesList.appendChild(li);
+          }
+        } else {
+          // Poista otsikko, jos suosikkilistalla ei ole tuotteita
+          let favoritesListHeader = document.getElementById(
+            "favoritesListHeader"
+          );
+          if (favoritesListHeader) {
+            favoritesListHeader.remove();
+          }
+        }
+
+        // Siirrä suosikkilista oikeaan reunaan
+        document.getElementById("favourites").classList.add("favorites-list");
+      }
+
+      // Piilota suosikkilista
+      function hideFavorites() {
+        document.getElementById("favourites").style.display = "none";
+        // näytä sydän ikoni
+        document.getElementById("heart-icon").style.display = "block";
+        // Nollaa ajastin
+        timerId = null;
+      }
+      // Näytä suosikkilista
+      function showFavorites() {
+        // Nollaa aiempi ajastin ja käynnistä uusi
+        clearTimeout(timerId);
+        timerId = setTimeout(hideFavorites, 4000);
+        document.getElementById("favourites").style.display = "block";
+        // Piilota sydänikoni
+        document.getElementById("heart-icon").style.display = "none";
+      }
+    </script>
+    <!-- <script>
+      // Alusta tyhjä tilauslista
+      let orderItems = {};
+
+      // Tilauslistaan lisääminen
+      function addToCart(productInfo) {
+        let productData = productInfo.split(",");
+        let productId = productData[0];
+        let productName = productData[1];
+        let productPrice = parseFloat(productData[2]);
+
+        if (productName in orderItems) {
+          // Tuote on jo tilauslistalla, päivitä sen määrää
+          orderItems[productName].count++;
+          updateCartItem(productName);
+        } else {
+          // Lisää tuote tilauslistalle ensimmäistä kertaa
+          orderItems[productName] = {
+            count: 1,
+            price: productPrice,
+          };
+
+          // Lisää tuote listalle näytölle
+          addCartItem(productName, productPrice);
+        }
+
+        // Päivitä total tilauslistalle
+        updateTotal();
+
+        // Päivitä lomakkeen input-kentät tilauslistan perusteella
+        updateFormInputs();
+
+        // Siirrä tilauslista oikeaan reunaan
+        document.getElementById("orderList").classList.add("order-list");
+      }
+
+      // Lisää tuote listalle näytölle
+      function addCartItem(productName, productPrice) {
+        // Lisää tilauslistan otsikko vain, jos sitä ei ole vielä lisätty
+        if (!document.getElementById("orderListHeader")) {
+          let orderListHeader = document.createElement("h5");
+          orderListHeader.textContent = "TILAUSLISTA";
+          orderListHeader.id = "orderListHeader";
+          document.getElementById("orderList").prepend(orderListHeader);
+        }
+
+        // Lisää tuote listalle näytölle
+        let listItem = document.createElement("li");
+        listItem.id = productName;
+        listItem.textContent =
+          "1 kpl, tuote: " +
+          productName +
+          ", hinta: " +
+          productPrice.toFixed(2) +
+          "€";
+        document.querySelector("#orderList ul").appendChild(listItem);
+      }
+
+      // Päivitä tuotteen kappalemäärä näytöllä
+      function updateCartItem(productName) {
+        let listItem = document.getElementById(productName);
+        listItem.textContent =
+          orderItems[productName].count +
+          " kpl, tuote: " +
+          productName +
+          ", hinta: " +
+          (
+            orderItems[productName].price * orderItems[productName].count
+          ).toFixed(2) +
+          "€";
+      }
+
+      // Päivitä total tilauslistalle
+      function updateTotal() {
+        let total = 0;
+
+        // Laske total summa tilauslistalla olevista tuotteista
+        for (let productName in orderItems) {
+          total +=
+            orderItems[productName].count * orderItems[productName].price;
+        }
+
+        // Etsi total-elementti ja päivitä tai luo se uudelleen
+        let totalElement = document.getElementById("total");
+        if (!totalElement) {
+          totalElement = document.createElement("li");
+          totalElement.id = "total";
+          document.querySelector("#orderList ul").appendChild(totalElement);
+        } else {
+          // Poista total-elementti ja lisää se tilauslistan viimeiseksi
+          totalElement.remove();
+          totalElement = document.createElement("li");
+          totalElement.id = "total";
+          document.querySelector("#orderList ul").appendChild(totalElement);
+        }
+
+        // Päivitä total-summa näytölle
+        totalElement.textContent = "Yhteensä: " + total.toFixed(2) + "€";
+        totalElement.style = "font-weight: bold;";
+      }
+      function updateFormInputs() {
+        // Luo tilausobjekti
+        let orderData = [];
+        for (let productName in orderItems) {
+          let productData = {
+            productName: productName,
+            productCount: orderItems[productName].count,
+            productPrice: orderItems[productName].price,
+          };
+          orderData.push(productData);
+        }
+
+        // Lähetä tilausobjekti JSON-muodossa
+        document.getElementById("orderFormInput").value =
+          JSON.stringify(orderData);
+      }
+    </script> -->
     <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
   </body>
 </html>

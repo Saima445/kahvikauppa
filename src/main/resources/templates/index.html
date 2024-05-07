@@ -37,7 +37,9 @@
     <header th:fragment="header">
       <section class="upper-bar">
         <figure>
-          <img th:src="@{/images/kahvikauppa_logo2.png}" alt="logo" />
+          <a th:href="@{/}">
+            <img th:src="@{/images/kahvikauppa_logo2.png}" alt="logo"
+          /></a>
         </figure>
         <nav>
           <ul class="navigation-items">
@@ -48,8 +50,11 @@
             <li>
               <a th:href="@{/kulutustuotteet}">Kulutustuotteet</a>
             </li>
-            <li>
-              <a th:href="@{/admin}"><i class="fa-regular fa-user"></i></a>
+            <li id="admin-link">
+              <a th:href="@{/admin}">
+                <span>Kirjaudu sisään</span>
+                <i class="fa-regular fa-user"></i>
+              </a>
               <!-- <a th:href="@{/admin}">
                 <svg
                   height="20"

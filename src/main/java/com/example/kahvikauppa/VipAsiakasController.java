@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,22 +20,31 @@ public class VipAsiakasController {
     @Autowired
     VipAsiakasService vipAsiakasService;
 
-    @GetMapping("/vipasiakas")
-    public String vipCustomer(Model model,
-            @RequestParam(required = false, name = "error") String error,
-            @RequestParam(required = false, name = "success") String success) {
+    // @GetMapping("/vipasiakas")
+    // public String vipCustomer(Model model,
+    // @RequestParam(required = false, name = "error") String error,
+    // @RequestParam(required = false, name = "success") String success) {
 
-        if (error != null && !error.isEmpty()) {
-            model.addAttribute("error", error);
+    // if (error != null && !error.isEmpty()) {
+    // model.addAttribute("error", error);
+    // }
+    // if (success != null && !success.isEmpty()) {
+    // model.addAttribute("success",
+    // success);
+    // }
+    // // else {
+    // // model.addAttribute("error", "");
+    // // model.addAttribute("success", "");
+    // // }
+    // return "vipasiakas";
+    // }
+    @GetMapping("/vipasiakas")
+    public String vipCustomer(@ModelAttribute("message") String message, Model model) {
+        if (!message.isEmpty()) {
+            model.addAttribute("message", message);
+        } else {
+            model.addAttribute("message", false);
         }
-        if (success != null && !success.isEmpty()) {
-            model.addAttribute("success",
-                    success);
-        }
-        // else {
-        // model.addAttribute("error", "");
-        // model.addAttribute("success", "");
-        // }
         return "vipasiakas";
     }
 
@@ -111,23 +121,41 @@ public class VipAsiakasController {
     // redirectAttributes.addAttribute("success", "email_registered");
     // return "redirect:/vipasiakas";
     // }
-
     @PostMapping("/vipasiakas")
     public String addVipCustomer(@RequestParam String firstname, @RequestParam String lastname,
-            @RequestParam String email, Model model, RedirectAttributes redirectAttributes) {
-        // this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
-        // return "redirect:/vipasiakas";
-        try {
+            @RequestParam String email, RedirectAttributes redirectAttributes) {
+        VipAsiakas existingVIP = this.vipAsiakasService.findByEmail(email);
+        String message;
+        if (existingVIP != null) {
+            message = "Sähköpostiosoite on jo rekisteröity";
+        } else {
             this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
-            // Onnistunut rekisteröinti
-            redirectAttributes.addFlashAttribute("success",
-                    "Kiitos, kun liityit VIP-asiakkaaksemme! Saat kohta sähköpostiisi vahvistusviestin meiltä.");
-        } catch (RuntimeException e) {
-            // Virhe tapahtui
-            redirectAttributes.addFlashAttribute("error", "Sähköpostiosoite on jo rekisteröity");
+            message = "Kiitos, kun liityit VIP-asiakkaaksemme! Saat kohta sähköpostiisi vahvistusviestin meiltä.";
         }
+        redirectAttributes.addFlashAttribute("message", message);
+
         return "redirect:/vipasiakas";
     }
+    // @PostMapping("/vipasiakas")
+    // public String addVipCustomer(@RequestParam String firstname, @RequestParam
+    // String lastname,
+    // @RequestParam String email, Model model, RedirectAttributes
+    // redirectAttributes) {
+    // // this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
+    // // return "redirect:/vipasiakas";
+    // try {
+    // this.vipAsiakasService.addVipCustomer(firstname, lastname, email);
+    // // Onnistunut rekisteröinti
+    // redirectAttributes.addFlashAttribute("success",
+    // "Kiitos, kun liityit VIP-asiakkaaksemme! Saat kohta sähköpostiisi
+    // vahvistusviestin meiltä.");
+    // } catch (RuntimeException e) {
+    // // Virhe tapahtui
+    // redirectAttributes.addFlashAttribute("error", "Sähköpostiosoite on jo
+    // rekisteröity");
+    // }
+    // return "redirect:/vipasiakas";
+    // }
 
     // @GetMapping("/vipasiakkaat")
     // public String vipCustomers(Model model) {
@@ -135,8 +163,13 @@ public class VipAsiakasController {
     // return "vipasiakkaat";
     // }
     @GetMapping("/vipasiakkaat")
-    public String vipCustomers(Model model) {
+    public String vipCustomers(@ModelAttribute("message") String message, Model model) {
         List<VipAsiakas> vipCustomers = this.vipAsiakasService.getAllVipCustomers();
+        if (!message.isEmpty()) {
+            model.addAttribute("message", message);
+        } else {
+            model.addAttribute("message", false);
+        }
         model.addAttribute("vipCustomers", vipCustomers);
         return "vipasiakkaat";
     }
@@ -177,8 +210,15 @@ public class VipAsiakasController {
     // return "redirect:/vipasiakkaat";
     // }
     @PostMapping("/deleteVipCustomer/{id}")
-    public String deleteVipCustomer(@PathVariable Long id) {
-        this.vipAsiakasService.deleteVipCustomer(id);
+    public String deleteVipCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        String message;
+        try {
+            this.vipAsiakasService.deleteVipCustomer(id);
+            message = "Asiakas poistettu onnistuneesti tietokannasta.";
+        } catch (RuntimeException e) {
+            message = "Jotain meni pieleen ja asiakasta ei voitu poistaa tietokannasta.";
+        }
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/vipasiakkaat";
     }
 

@@ -5,71 +5,15 @@
   xmlns:th="http://www.thymeleaf.org"
 >
   <head th:replace="~{index::head}"></head>
-  <!-- <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Töölön Kahvikauppa</title>
-    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.png}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/e00b2e3114.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/reset.css"
-      th:href="@{css/reset.css}"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../static/css/layout.css"
-      th:href="@{css/layout.css}"
-    />
-  </head> -->
   <body>
     <header th:replace="~{index::header}"></header>
-    <!-- <header>
-      <section class="upper-bar">
-        <figure>
-          <img th:src="@{/images/kahvikauppa_logo2.png}" alt="logo" />
-        </figure>
-        <nav>
-          <ul class="navigation-items">
-            <li><a href="index.html" th:href="@{/}">Etusivu</a></li>
-            <li>
-              <a href="kahvilaitteet.html" th:href="@{/kahvilaitteet}"
-                >Kahvilaitteet</a
-              >
-            </li>
-            <li>
-              <a href="kulutustuotteet.html" th:href="@{/kulutustuotteet}"
-                >Kulutustuotteet</a
-              >
-            </li>
-            <li>
-              <a href="admin.html" th:href="@{/admin}"
-                ><i class="fa-regular fa-user"></i
-              ></a>
-            </li>
-          </ul>
-        </nav>
-      </section>
-      <section class="header-text">
-        <h1>TÖÖLÖN KAHVIKAUPPA</h1>
-        <p>Tervetuloa Kahvikauppaan</p>
-        <p>Myymme kahvilalaitteita ja -tuotteita</p>
-        <p id="header-text-a-margin">
-          Ota yhteyttä
-          <span id="header-text-a"><a href="#footer">Kahvikauppa</a></span>
-        </p>
-      </section>
-    </header> -->
     <main>
+      <section
+        th:if="${message}"
+        th:class="${message.startsWith('Toimittaja poistettu') ? 'success-message' : 'error-message'}"
+      >
+        <p th:text="${message}"></p>
+      </section>
       <section class="admin-section">
         <h2>ADMIN</h2>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
@@ -148,43 +92,6 @@
       </table>
     </main>
     <div th:replace="~{index::footer}"></div>
-    <!-- <footer id="footer">
-      <section class="footer-contact">
-        <h4>Yhteystiedot</h4>
-        <p>Töölön Kahvikauppa</p>
-        <p>Töölöntorinkatu 445,</p>
-        <p>00160 Helsinki</p>
-        <p>0400445445</p>
-        <p>toolo@toolonkahvikauppa.fi</p>
-      </section>
-      <section class="footer-about-us">
-        <h4>Tietoa meistä</h4>
-        <p><a href="#">Toimitusehdot</a></p>
-        <p><a href="#">Tietosuojaseloste</a></p>
-        <p>Y-tunnus: 292292-4</p>
-      </section>
-      <section class="footer-icons">
-        <h4 id="icons-h4">Tuhtaamista somessa</h4>
-        <p>
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        </p>
-        <p>
-          <a href="#"><i class="fa-brands fa-youtube"></i></a>
-        </p>
-      </section>
-      <p id="copyright">
-        Copyright © 2024 Töölön Kahvikauppa. Kaikki oikeudet pidätetään.
-      </p>
-    </footer> -->
     <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
   </body>
 </html>

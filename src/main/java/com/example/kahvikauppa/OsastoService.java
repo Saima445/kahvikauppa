@@ -19,8 +19,6 @@ public class OsastoService {
         List<Osasto> departments = this.osastoRepository.findAll();
         // Käydään läpi jokainen osasto ja lasketaan tuotteiden määrä
         for (Osasto department : departments) {
-            // Long productCount =
-            // tuoteRepository.countProductsByOsastoID(department.getId());
             // Päivitetään osaston tuotteiden määrä ja tallennetaan se tietokantaan
             updateProductCount(department);
         }
@@ -30,6 +28,15 @@ public class OsastoService {
 
     public Osasto getDepartmentById(Long id) {
         return this.osastoRepository.findById(id).orElse(null);
+    }
+
+    public List<Osasto> getDepartmentByIDP(Long osastoIDP) {
+        List<Osasto> subDepartments = this.osastoRepository.findByOsastoIDP(osastoIDP);
+        if (osastoIDP.equals(2L)) {
+            List<Osasto> subDepartment7 = this.osastoRepository.findByOsastoIDP(7L);
+            subDepartments.addAll(subDepartment7);
+        }
+        return subDepartments;
     }
 
     public Osasto addDepartment(String name, Long osastoIDP) {
@@ -63,10 +70,21 @@ public class OsastoService {
         this.osastoRepository.deleteById(id);
     }
 
-    // Metodi päivittää osaston tuotteiden määrän
     private void updateProductCount(Osasto department) {
-        // Haetaan osaston tuotteiden määrä tietokannasta
         Long productCount = this.tuoteRepository.countProductsByOsastoID(department.getId());
+
+        // Tarkistetaan, onko osasto yksi niistä, joihin tarvitaan alaosastojen
+        // tuotteiden yhdistämistä
+        if (department.getId().equals(1L) || department.getId().equals(7L) || department.getId().equals(2L)) {
+            // Haetaan alaosastot
+            List<Osasto> subDepartments = getDepartmentByIDP(department.getId());
+
+            // Käydään läpi jokainen alaosasto
+            for (Osasto subDepartment : subDepartments) {
+                // Lisätään alaosaston tuotteiden määrä yläosaston tuotteiden määrään
+                productCount += this.tuoteRepository.countProductsByOsastoID(subDepartment.getId());
+            }
+        }
         // Päivitetään osaston tuotteiden määrä
         department.setProductCount(productCount.intValue());
         // Tallennetaan päivitetty osasto tietokantaan
@@ -74,3 +92,39 @@ public class OsastoService {
     }
 
 }
+
+// // Metodi päivittää osaston tuotteiden määrän
+// private void updateProductCount(Osasto department) {
+// // Haetaan osaston tuotteiden määrä tietokannasta
+// Long productCount =
+// this.tuoteRepository.countProductsByOsastoID(department.getId());
+
+// // Tarkistetaan, onko osasto yksi niistä, joihin tarvitaan alaosastojen
+// // tuotteiden yhdistämistä
+// if (department.getId().equals(1L) || department.getId().equals(7L)) {
+// // Haetaan kaikki alaosastot
+// List<Osasto> subDepartments =
+// this.osastoRepository.findByOsastoIDP(department.getId());
+// // Käydään läpi jokainen alaosasto
+// for (Osasto subDepartment : subDepartments) {
+// // Lisätään alaosaston tuotteiden määrä yläosaston tuotteiden määrään
+// productCount +=
+// this.tuoteRepository.countProductsByOsastoID(subDepartment.getId());
+// }
+// } else if (department.getId().equals(2L)) {
+// // Haetaan kaikki alaosastot
+// List<Osasto> subDepartments = getDepartmentByIDP(department.getId());
+
+// // Käydään läpi jokainen alaosasto
+// for (Osasto subDepartment : subDepartments) {
+// // Lisätään alaosaston tuotteiden määrä yläosaston tuotteiden määrään
+// productCount +=
+// this.tuoteRepository.countProductsByOsastoID(subDepartment.getId());
+// }
+// }
+
+// // Päivitetään osaston tuotteiden määrä
+// department.setProductCount(productCount.intValue());
+// // Tallennetaan päivitetty osasto tietokantaan
+// this.osastoRepository.save(department);
+// }

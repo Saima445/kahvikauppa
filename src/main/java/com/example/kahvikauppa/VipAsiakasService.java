@@ -18,9 +18,13 @@ public class VipAsiakasService {
         return vipCustomers;
     }
 
+    public VipAsiakas findByEmail(String email) {
+        return this.vipAsiakasRepository.findByEmail(email);
+    }
+
     public VipAsiakas addVipCustomer(String firstname, String lastname, String email) {
         // Tarkistetaan onko asiakas jo tietokannassa
-        VipAsiakas existingVIP = this.vipAsiakasRepository.findByEmail(email);
+        VipAsiakas existingVIP = findByEmail(email);
         if (existingVIP != null) {
             // Asiakas jo olemassa, palauta se
             // return existingVIP;

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ValmistajaController {
@@ -33,8 +35,13 @@ public class ValmistajaController {
     // return "valmistajat";
     // }
     @GetMapping("/valmistajat")
-    public String producers(Model model) {
+    public String producers(@ModelAttribute("message") String message, Model model) {
         List<Valmistaja> producers = this.valmistajaService.getAllProducers();
+        if (!message.isEmpty()) {
+            model.addAttribute("message", message);
+        } else {
+            model.addAttribute("message", false);
+        }
         model.addAttribute("producers", producers);
         return "valmistajat";
     }
@@ -104,8 +111,15 @@ public class ValmistajaController {
     // }
 
     @PostMapping("/deleteProducer/{id}")
-    public String deleteProducer(@PathVariable Long id) {
-        this.valmistajaService.deleteProducer(id);
+    public String deleteProducer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        String message;
+        try {
+            this.valmistajaService.deleteProducer(id);
+            message = "Valmistaja poistettu onnistuneesti tietokannasta.";
+        } catch (RuntimeException e) {
+            message = "Valmistajaa ei voi poistaa, koska siihen liittyy tuotteita tietokannassa (ks. tuotteiden määrä valikoimassa).";
+        }
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/valmistajat";
     }
 

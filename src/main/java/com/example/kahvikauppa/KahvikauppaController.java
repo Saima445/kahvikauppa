@@ -11,13 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class KahvikauppaController {
 
-    // @Autowired
-    // private TuoteRepository tuoteRepository;
+    @Autowired
+    private TilausRepository tilausRepository;
+
     @Autowired
     private TuoteService tuoteService;
 
@@ -29,7 +32,7 @@ public class KahvikauppaController {
     @GetMapping("/kahvilaitteet")
     public String machines(Model model, @RequestParam(defaultValue = "0") int page) {
         // List<Tuote> kahvilaitteet = tuoteRepository.findProductsByOsastoID(1L); //
-        int pageSize = 6; // Haluttu rivien määrä yhdellä sivulla
+        int pageSize = 9; // Haluttu rivien määrä yhdellä sivulla
         Page<Tuote> tuotePage = tuoteService.getProductsKahvilaitteetPage(page, pageSize);
         List<Tuote> kahvilaitteet = tuotePage.getContent();
         model.addAttribute("kahvilaitteet", kahvilaitteet);
@@ -73,7 +76,7 @@ public class KahvikauppaController {
 
         // model.addAttribute("kulutustuotteet", new ArrayList<>(yhdistetytTuotteet));
 
-        int pageSize = 6; // Haluttu rivien määrä yhdellä sivulla
+        int pageSize = 9; // Haluttu rivien määrä yhdellä sivulla
         Page<Tuote> tuotePage = tuoteService.getProductsKulutustuotteetPage(page, pageSize);
         List<Tuote> kulutustuotteet = tuotePage.getContent();
         model.addAttribute("kulutustuotteet", kulutustuotteet);
@@ -139,6 +142,12 @@ public class KahvikauppaController {
         model.addAttribute("keywordExists", true);
         model.addAttribute("kaikkiKulutustuotteet", kaikkiKulutustuotteet);
         return "kulutustuotteet";
+    }
+
+    @PostMapping(path = "/order", consumes = "application/json", produces = "application/json")
+    public String receiveOrder(@RequestBody Tilaus order) {
+        this.tilausRepository.save(order);
+        return "redirect/:kahvilaitteet";
     }
 
 }

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface TuoteRepository extends JpaRepository<Tuote, Long> {
-    // List<Tuote> findByNameLikeIgnoreCase(String keyword);
     // Search hakuun QUERY, tuotenimet pieneksi ja osastoID:t oikein
     @Query("SELECT t FROM Tuote t JOIN t.osasto o WHERE (o.id = :osastoID OR o.osastoIDP = :osastoID) AND LOWER(t.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Tuote> findByNameLikeIgnoreCaseAndOsastoId(@Param("keyword") String keyword, @Param("osastoID") Long osastoID);
