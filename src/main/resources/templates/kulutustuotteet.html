@@ -79,7 +79,7 @@
           <figure class="grid-cardpicturesize">
             <img th:src="@{/productImage/{id}(id=${product.id})}" />
           </figure>
-          <div class="grid-card-texts">
+          <div>
             <h3 th:text="${product.name}">Laitteen nimi</h3>
             <p th:text="${product.price} + '€'">Laitteen hinta</p>
             <p>

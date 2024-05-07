@@ -16,6 +16,7 @@
       </section>
       <section class="admin-section">
         <h2>ADMIN</h2>
+        <div th:replace="~{admin::exit-button}"></div>
         <button><a th:href="@{/admin}">Tuotteet</a></button>
         <button>
           <a th:href="@{/toimittajat}">Toimittajat</a>

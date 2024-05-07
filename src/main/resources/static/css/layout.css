@@ -292,6 +292,25 @@ button:hover {
   gap: 1rem;
 }
 
+.exit-button {
+  background-color: white;
+  border: 0.5px solid black;
+  border-radius: 1px;
+  padding: 1rem 4rem;
+  width: fit-content;
+  font-size: 1.2rem;
+  font-family: "Bodoni Moda", serif;
+  position: fixed;
+  bottom: 2rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+.exit-button:hover {
+  color: red;
+  background-color: whitesmoke;
+}
+
 /* ADMIN-SIVU */
 
 .admin-section {

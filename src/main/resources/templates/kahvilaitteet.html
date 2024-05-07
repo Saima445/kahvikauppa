@@ -106,9 +106,10 @@
           <figure class="grid-cardpicturesize">
             <img th:src="@{/productImage/{id}(id=${product.id})}" />
           </figure>
-          <div class="grid-card-texts">
+          <div>
             <h3 th:text="${product.name}">Laitteen nimi</h3>
             <p th:text="${product.price} + '€'">Laitteen hinta</p>
+
             <p>
               <a href="laite.html" th:href="@{/laite/{id}(id=${product.id})}"
                 >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
