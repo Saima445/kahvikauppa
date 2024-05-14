@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class KahvikauppaController {
@@ -29,8 +31,13 @@ public class KahvikauppaController {
     }
 
     @GetMapping("/kahvilaitteet")
-    public String machines(Model model, @RequestParam(defaultValue = "0") int page) {
-        // List<Tuote> kahvilaitteet = tuoteRepository.findProductsByOsastoID(1L); //
+    public String machines(@ModelAttribute("message") String message, Model model,
+            @RequestParam(defaultValue = "0") int page) {
+        if (!message.isEmpty()) {
+            model.addAttribute("message", message);
+        } else {
+            model.addAttribute("message", false);
+        }
         int pageSize = 9; // Haluttu rivien määrä yhdellä sivulla
         Page<Tuote> tuotePage = tuoteService.getProductsKahvilaitteetPage(page, pageSize);
         List<Tuote> kahvilaitteet = tuotePage.getContent();
@@ -59,22 +66,13 @@ public class KahvikauppaController {
     }
 
     @GetMapping("/kulutustuotteet")
-    public String consumerProducts(Model model, @RequestParam(defaultValue = "0") int page) {
-        // kaikki tuotteet osasto 2 alla, EI TOIMI OSASTO 7 ALLE OLEVILLE!
-        // List<Tuote> kulutustuotteet = tuoteRepository.findProductsByOsastoID(2L);
-        // model.addAttribute("kulutustuotteet", kulutustuotteet);
-
-        // Haetaan tuotteet osaston 2 alla
-        // List<Tuote> osasto2Tuotteet = tuoteRepository.findProductsByOsastoID(2L);
-        // // Haetaan tuotteet osaston 7 alla
-        // List<Tuote> osasto7Tuotteet = tuoteRepository.findProductsByOsastoID(7L);
-        // // Yhdistetään
-        // osasto2Tuotteet.addAll(osasto7Tuotteet);
-        // // poistetaan mahdolliset duplikaatit
-        // Set<Tuote> yhdistetytTuotteet = new LinkedHashSet<>(osasto2Tuotteet);
-
-        // model.addAttribute("kulutustuotteet", new ArrayList<>(yhdistetytTuotteet));
-
+    public String consumerProducts(@ModelAttribute("message") String message, Model model,
+            @RequestParam(defaultValue = "0") int page) {
+        if (!message.isEmpty()) {
+            model.addAttribute("message", message);
+        } else {
+            model.addAttribute("message", false);
+        }
         int pageSize = 9; // Haluttu rivien määrä yhdellä sivulla
         Page<Tuote> tuotePage = tuoteService.getProductsKulutustuotteetPage(page, pageSize);
         List<Tuote> kulutustuotteet = tuotePage.getContent();
@@ -143,13 +141,28 @@ public class KahvikauppaController {
         return "kulutustuotteet";
     }
 
-    // TILAUSLISTAN VASTAANOTTAMISEN TOIMINNALLISUUDET
+    // TILAUSLISTAN VASTAANOTTAMISEN
     @PostMapping("/sendOrder")
-    public String newOrder(@RequestParam String order) {
-        this.tilausService.newOrder(order);
-        return "redirect:/kulutustuotteet";
+    public String newOrder(@RequestParam String order, @RequestParam String page,
+            RedirectAttributes redirectAttributes) {
+        String message;
+        try {
+            this.tilausService.newOrder(order);
+            message = "Kiitos! Olemme vastaanottaneet tilauksesi ja käsittelemme sitä parhaillaan. Lähetämme sinulle tilausvahvistuksen sähköpostitse pian.<br>"
+                    +
+                    "Mikäli sinulla on kysyttävää tilauksestasi tai tarvitset lisätietoja, älä epäröi ottaa yhteyttä asiakaspalveluumme.<br>"
+                    +
+                    "Ystävällisin terveisin, Töölön Kahvikaupan tiimi";
+        } catch (RuntimeException e) {
+            message = "Tilausta lähettäessä sattui ongelma. Pahoittelemme mahdollisia aiheutuneita häiriöitä. Otathan yhteyttä asiakaspalveluumme saadaksesi lisätietoja ja apua.";
+        }
+        redirectAttributes.addFlashAttribute("message", message);
+        // Tarkista, mikä sivu lähetti tilauksen ja palaa sille sivulle
+        if ("kulutustuotteet".equals(page)) {
+            return "redirect:/kulutustuotteet";
+        }
+        return "redirect:/kahvilaitteet";
     }
-
 }
 
 // TILAUSLISTAN VASTAANOTTAMISEN TOIMINNALLISUUDET

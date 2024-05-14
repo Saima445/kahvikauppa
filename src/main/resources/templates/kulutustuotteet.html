@@ -8,9 +8,23 @@
   <body>
     <header th:replace="~{index::header}"></header>
     <main>
+      <section
+        th:if="${message}"
+        th:class="${message.startsWith('Kiitos!') ? 'success-message' : 'error-message'}"
+      >
+        <p th:utext="${message}"></p>
+      </section>
+      <i
+        id="basket-icon"
+        class="fa-solid fa-basket-shopping"
+        onclick="showOrderList()"
+      ></i>
       <h2>KULUTUSTUOTTEET</h2>
       <div id="orderFormContainer" style="display: none">
-        <h5>TILAUSLISTA</h5>
+        <div style="display: flex; justify-content: space-between">
+          <h5>TILAUSLISTA</h5>
+          <i class="fa-solid fa-xmark" onclick="hideOrderList()"></i>
+        </div>
         <ul id="orderList"></ul>
         <p id="total" style="font-weight: bold; margin: 1rem 0"></p>
         <form
@@ -19,8 +33,6 @@
           method="POST"
           style="text-align: center"
         >
-          <!-- enctype="multipart/form-data" -->
-          <!-- <input type="file" name="file" id="fileInput" style="display: none" /> -->
           <input
             id="order-button"
             class="submit-button"
@@ -28,6 +40,7 @@
             type="submit"
             value="Lähetä tilaus"
           />
+          <input type="hidden" name="page" th:value="kulutustuotteet" />
         </form>
       </div>
       <p
@@ -104,7 +117,7 @@
             <h3 th:text="${product.name}">Laitteen nimi</h3>
             <p th:text="${product.price} + '€'">Laitteen hinta</p>
             <p>
-              <a href="tuote.html" th:href="@{/tuote/{id}(id=${product.id})}"
+              <a th:href="@{/tuote/{id}(id=${product.id})}"
                 >Lisätietoja<i class="fa-solid fa-arrow-right-long"></i>
               </a>
             </p>
@@ -112,7 +125,7 @@
               class="site-button"
               style="position: absolute; bottom: 1rem; right: 1rem"
               th:value="${product.id + ':' + product.name + ':' + product.price}"
-              onclick="event.preventDefault();addToCart(this.getAttribute('value'));"
+              onclick="addToCart(this.getAttribute('value'));"
             >
               Tilaa
               <i class="fa-solid fa-basket-shopping"></i>
@@ -148,112 +161,10 @@
       </section>
     </main>
     <div th:replace="~{index::footer}"></div>
-    <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
-    <script>
-      // Alusta tyhjä tilauslista
-      let orderItems = {};
-
-      // Lisää uusi piilotettu input-kenttä formin sisälle
-      function addCartItemToForm(productId, productName, productPrice) {
-        let orderForm = document.getElementById("orderForm");
-        let orderInput = document.createElement("input");
-        orderInput.type = "text";
-        orderInput.style.display = "none";
-        orderInput.name = "order";
-        orderInput.value =
-          "ID:" +
-          productId +
-          ", NIMI: " +
-          productName +
-          ", HINTA: " +
-          productPrice +
-          "€";
-        orderForm.appendChild(orderInput);
-      }
-
-      // Tilauslistaan lisääminen
-      function addToCart(productInfo) {
-        let productData = productInfo.split(":");
-        let productId = productData[0];
-        let productName = productData[1];
-        let productPrice = parseFloat(productData[2]);
-
-        if (productName in orderItems) {
-          // Tuote on jo tilauslistalla, päivitä sen määrää
-          orderItems[productName].count++;
-          updateCartItem(productName);
-          addCartItemToForm(productId, productName, productPrice);
-        } else {
-          // Lisää tuote tilauslistalle ensimmäistä kertaa
-          orderItems[productName] = {
-            count: 1,
-            price: productPrice,
-          };
-
-          // Lisää tuote listalle näytölle
-          addCartItem(productName, productPrice);
-
-          // Lisää uusi piilotettu input-kenttä formin sisälle
-          // addCartItemToForm(productName, productPrice);
-          addCartItemToForm(productId, productName, productPrice);
-        }
-
-        document.getElementById("orderFormContainer").style.display = "block"; // Näytä tilauslistan container
-        // Siirrä tilauslista oikeaan reunaan
-        document
-          .getElementById("orderFormContainer")
-          .classList.add("order-list");
-        document
-          .getElementById("order-button")
-          .classList.add("input.submit-button");
-      }
-      // Lisää tuote listalle näytölle
-      function addCartItem(productName, productPrice) {
-        let orderList = document.getElementById("orderList");
-        let listItem = document.createElement("li");
-        listItem.id = productName;
-        listItem.textContent = `1 kpl, tuote: ${productName}, hinta: ${productPrice.toFixed(
-          2
-        )}€`;
-        orderList.appendChild(listItem);
-        updateTotal();
-      }
-      // Päivitä tilauslistan tuotteen määrä
-      function updateCartItem(productName) {
-        let listItems = document
-          .getElementById("orderList")
-          .getElementsByTagName("li");
-        for (let item of listItems) {
-          if (item.textContent.includes(productName)) {
-            let count = parseInt(item.textContent.split(" ")[0]);
-            item.textContent = `${
-              count + 1
-            } kpl, tuote: ${productName}, hinta: ${(
-              orderItems[productName].price *
-              (count + 1)
-            ).toFixed(2)}€`;
-            break;
-          }
-        }
-        updateTotal();
-      }
-
-      // Päivitä total tilauslistalle
-      function updateTotal() {
-        let total = 0;
-        // Laske total summa tilauslistalla olevista tuotteista
-        for (let productName in orderItems) {
-          total +=
-            orderItems[productName].count * orderItems[productName].price;
-        }
-        // Etsi total-elementti ja päivitä total-summa näytölle
-        let totalElement = document.getElementById("total");
-        totalElement.textContent = `Yhteensä: ${total.toFixed(2)}€`;
-      }
-    </script>
   </body>
 </html>
-
+<!-- enctype="multipart/form-data" -->
+<!-- <input type="file" name="file" id="fileInput" style="display: none" /> -->
 <!-- // function addCartItemToForm(productName, productPrice) {
   //   let orderForm = document.getElementById("orderForm");
   //   let existingInput = orderForm.querySelector('input[name="file"]');

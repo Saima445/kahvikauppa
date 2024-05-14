@@ -5,7 +5,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,17 +21,16 @@ public class Tilaus extends AbstractPersistable<Long> {
     @Column(name = "order_details")
     private String orderDetails;
 
-    // @Column(name = "order_content")
-    // @Lob
-    // private byte[] content;
-
-    // @Column(name = "product_name")
-    // private String productName;
-
-    // @Column(name = "product_price")
-    // private double productPrice;
-
-    // @Column(name = "quantity")
-    // private int quantity;
-
 }
+// @Column(name = "order_content")
+// @Lob
+// private byte[] content;
+
+// @Column(name = "product_name")
+// private String productName;
+
+// @Column(name = "product_price")
+// private double productPrice;
+
+// @Column(name = "quantity")
+// private int quantity;
