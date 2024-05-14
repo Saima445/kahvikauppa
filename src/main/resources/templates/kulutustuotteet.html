@@ -18,9 +18,9 @@
           th:action="@{/sendOrder}"
           method="POST"
           style="text-align: center"
-          enctype="multipart/form-data"
         >
-          <input type="file" name="file" id="fileInput" style="display: none" />
+          <!-- enctype="multipart/form-data" -->
+          <!-- <input type="file" name="file" id="fileInput" style="display: none" /> -->
           <input
             id="order-button"
             class="submit-button"
@@ -154,35 +154,21 @@
       let orderItems = {};
 
       // Lisää uusi piilotettu input-kenttä formin sisälle
-      function addCartItemToForm(productName, productPrice) {
+      function addCartItemToForm(productId, productName, productPrice) {
         let orderForm = document.getElementById("orderForm");
-        let existingInput = orderForm.querySelector('input[name="file"]');
-
-        let orderData = {
-          productName: productName,
-          productPrice: productPrice,
-          quantity: 1,
-        };
-        console.log("Tilausdata:", orderData);
-
-        if (existingInput) {
-          // Jos piilotettu input-kenttä jo on olemassa, päivitä sen arvo tilauksen tiedoilla
-          let existingValue = JSON.parse(
-            existingInput.getAttribute("data-order") || "[]"
-          );
-          existingValue.push(orderData);
-          existingInput.setAttribute(
-            "data-order",
-            JSON.stringify(existingValue)
-          );
-        } else {
-          // Jos input-kenttää ei ole vielä olemassa, luo uusi
-          let newInput = document.createElement("input");
-          newInput.setAttribute("type", "hidden");
-          newInput.setAttribute("name", "file");
-          newInput.setAttribute("data-order", JSON.stringify([orderData])); // Tallenna tiedot data-attribuuttiin
-          orderForm.appendChild(newInput); // Lisää input-kenttä lomakkeeseen
-        }
+        let orderInput = document.createElement("input");
+        orderInput.type = "text";
+        orderInput.style.display = "none";
+        orderInput.name = "order";
+        orderInput.value =
+          "ID:" +
+          productId +
+          ", NIMI: " +
+          productName +
+          ", HINTA: " +
+          productPrice +
+          "€";
+        orderForm.appendChild(orderInput);
       }
 
       // Tilauslistaan lisääminen
@@ -196,6 +182,7 @@
           // Tuote on jo tilauslistalla, päivitä sen määrää
           orderItems[productName].count++;
           updateCartItem(productName);
+          addCartItemToForm(productId, productName, productPrice);
         } else {
           // Lisää tuote tilauslistalle ensimmäistä kertaa
           orderItems[productName] = {
@@ -207,7 +194,8 @@
           addCartItem(productName, productPrice);
 
           // Lisää uusi piilotettu input-kenttä formin sisälle
-          addCartItemToForm(productName, productPrice);
+          // addCartItemToForm(productName, productPrice);
+          addCartItemToForm(productId, productName, productPrice);
         }
 
         document.getElementById("orderFormContainer").style.display = "block"; // Näytä tilauslistan container
@@ -265,6 +253,30 @@
     </script>
   </body>
 </html>
+
+<!-- // function addCartItemToForm(productName, productPrice) {
+  //   let orderForm = document.getElementById("orderForm");
+  //   let existingInput = orderForm.querySelector('input[name="file"]');
+
+  //   let orderData = {
+  //     productName: productName,
+  //     productPrice: productPrice,
+  //     quantity: 1,
+  //   };
+  //   console.log("Tilausdata:", orderData);
+
+  //   if (existingInput) {
+  //     // Jos piilotettu input-kenttä jo on olemassa, päivitä sen arvo tilauksen tiedoilla
+  //     let existingValue = JSON.parse(
+  //       existingInput.getAttribute("data-order") || "[]"
+  //     );
+  //     existingValue.push(orderData);
+  //     existingInput.setAttribute(
+  //       "data-order",
+  //       JSON.stringify(existingValue)
+  //     );
+  //   }
+  // } -->
 <!-- // fetch("http://localhost:8080/sendOrder", {
     //   method: "POST",
     //   headers: {

@@ -19,9 +19,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "tilaus_details")
 public class Tilaus extends AbstractPersistable<Long> {
 
-    @Column(name = "order_content")
-    @Lob
-    private byte[] content;
+    @Column(name = "order_details")
+    private String orderDetails;
+
+    // @Column(name = "order_content")
+    // @Lob
+    // private byte[] content;
 
     // @Column(name = "product_name")
     // private String productName;
