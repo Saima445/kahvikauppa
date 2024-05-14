@@ -111,7 +111,8 @@ h4 {
 /* ORDER h-koko */
 h5 {
   font-size: 2.2rem;
-  margin-block-end: 2rem;
+  margin-block-end: 1rem;
+  text-align: center;
 }
 
 img {
@@ -269,6 +270,7 @@ button:hover {
   font-style: italic;
   letter-spacing: 0.1rem;
   color: rgb(45, 120, 45);
+  cursor: pointer;
 }
 
 .site-button a:hover {
@@ -358,6 +360,7 @@ input.submit-button {
   margin-block-start: 1rem;
   width: fit-content;
   font-size: 1.4rem;
+  font-family: "Bodoni Moda", serif;
 }
 
 /* TABLE-MUOKKAUKSIA */

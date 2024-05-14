@@ -67,9 +67,11 @@
             </td>
             <td th:text="${supplier.productCount}">Product count</td>
             <td>
-              <a th:href="@{/updateSupplier/{id}(id=${supplier.id})}">
-                <button class="update-button">Muokkaa</button>
-              </a>
+              <button class="update-button">
+                <a th:href="@{/updateSupplier/{id}(id=${supplier.id})}"
+                  >Muokkaa</a
+                >
+              </button>
             </td>
             <td>
               <form

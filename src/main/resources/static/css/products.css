@@ -59,11 +59,12 @@
   margin-inline-start: 1rem;
 }
 
-.favorites-list {
+.favorites-list,
+.order-list {
   position: fixed;
   top: 9rem;
   right: 1rem;
-  /* width: 20rem; */
+  width: 30rem;
   background-color: white;
   border: 1px solid black;
   padding: 2rem;
@@ -71,9 +72,10 @@
   line-height: 2.5rem;
 }
 
-.favorites-list ul li {
+.favorites-list ul li,
+.order-list ul li {
   padding: 1.5rem 0;
-  border-block-start: 0.5px solid darkgray;
+  border-block-end: 0.5px solid darkgray;
 }
 #heart-icon {
   display: none;

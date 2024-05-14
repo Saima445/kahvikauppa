@@ -1,5 +1,6 @@
 package com.example.kahvikauppa;
 
+import org.hibernate.annotations.Collate;
 import java.math.BigDecimal;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 

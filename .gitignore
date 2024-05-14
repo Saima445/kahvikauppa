@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+kahvikauppa.mv.db
+kahvikauppa.trace.db 

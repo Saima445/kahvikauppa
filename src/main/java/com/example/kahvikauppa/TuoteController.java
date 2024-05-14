@@ -2,16 +2,17 @@ package com.example.kahvikauppa;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class TuoteController {
@@ -41,14 +42,18 @@ public class TuoteController {
     // return "admin";
     // }
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String admin(@ModelAttribute("message") String message, Model model) {
         model.addAttribute("products", this.tuoteService.getAllProducts());
         model.addAttribute("departments", this.tuoteService.getAllDepartments());
         model.addAttribute("suppliers", this.tuoteService.getAllSuppliers());
         model.addAttribute("producers", this.tuoteService.getAllProducers());
         model.addAttribute("isNewSupplier", true);
         model.addAttribute("isNewProducer", true);
-
+        if (!message.isEmpty()) {
+            model.addAttribute("message", message);
+        } else {
+            model.addAttribute("message", false);
+        }
         return "admin";
     }
 
@@ -264,8 +269,15 @@ public class TuoteController {
     // return "redirect:/admin";
     // }
     @PostMapping("/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        this.tuoteService.deleteProduct(id);
+    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        String message;
+        try {
+            this.tuoteService.deleteProduct(id);
+            message = "Tuote poistettu onnistuneesti tietokannasta.";
+        } catch (RuntimeException e) {
+            message = "Jotain meni pieleen ja tuotetta ei voitu poistaa tietokannasta.";
+        }
+        redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/admin";
     }
 

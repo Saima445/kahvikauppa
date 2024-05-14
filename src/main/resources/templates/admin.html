@@ -8,6 +8,12 @@
   <body>
     <header th:replace="~{index::header}"></header>
     <main>
+      <section
+        th:if="${message}"
+        th:class="${message.startsWith('Tuote poistettu') ? 'success-message' : 'error-message'}"
+      >
+        <p th:text="${message}"></p>
+      </section>
       <section class="admin-section">
         <h2>ADMIN</h2>
         <div th:fragment="exit-button">
