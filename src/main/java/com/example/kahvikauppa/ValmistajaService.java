@@ -19,8 +19,6 @@ public class ValmistajaService {
         List<Valmistaja> producers = this.valmistajaRepository.findAll();
         // Käydään läpi jokainen valmistaja ja lasketaan tuotteiden määrä
         for (Valmistaja producer : producers) {
-            // Long productCount =
-            // tuoteRepository.countProductsByValmistajaID(producer.getId());
             // Päivitetään valmistajan tuotteiden määrä ja tallennetaan se tietokantaan
             updateProductCount(producer);
         }

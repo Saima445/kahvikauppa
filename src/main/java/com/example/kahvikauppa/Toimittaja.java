@@ -1,6 +1,6 @@
 package com.example.kahvikauppa;
 
-import org.hibernate.annotations.Collate;
+// import org.hibernate.annotations.Collate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;

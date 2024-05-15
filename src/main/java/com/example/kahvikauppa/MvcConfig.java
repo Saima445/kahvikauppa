@@ -18,18 +18,6 @@ public class MvcConfig implements WebMvcConfigurer {
 // // Perussivut
 // registry.addViewController("/").setViewName("index");
 // registry.addViewController("/kahvilaitteet").setViewName("kahvilaitteet");
-// registry.addViewController("/kulutustuotteet").setViewName("kulutustuotteet");
-// registry.addViewController("/laite").setViewName("laite");
-// registry.addViewController("/tuote").setViewName("tuote");
-// registry.addViewController("/vipasiakas").setViewName("vipasiakas");
-
 // // Admin-sivut
 // registry.addViewController("/admin").setViewName("admin");
-// registry.addViewController("/muokkaa-osastoa").setViewName("muokkaa-osastoa");
-// registry.addViewController("/muokkaa-toimittajaa").setViewName("muokkaa-toimittajaa");
-// registry.addViewController("/muokkaa-tuotetta").setViewName("muokkaa-tuotetta");
-// registry.addViewController("/muokkaa-valmistajaa").setViewName("muokkaa-valmistajaa");
-// registry.addViewController("/osastot").setViewName("osastot");
-// registry.addViewController("/toimittajat").setViewName("toimittajat");
-// registry.addViewController("/valmistajat").setViewName("valmistajat");
-// registry.addViewController("/vipasiakkaat").setViewName("vipasiakkaat");
+// jne

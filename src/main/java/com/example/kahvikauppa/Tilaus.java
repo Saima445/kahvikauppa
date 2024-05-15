@@ -1,6 +1,5 @@
 package com.example.kahvikauppa;
 
-import org.hibernate.annotations.Collate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
@@ -22,15 +21,3 @@ public class Tilaus extends AbstractPersistable<Long> {
     private String orderDetails;
 
 }
-// @Column(name = "order_content")
-// @Lob
-// private byte[] content;
-
-// @Column(name = "product_name")
-// private String productName;
-
-// @Column(name = "product_price")
-// private double productPrice;
-
-// @Column(name = "quantity")
-// private int quantity;

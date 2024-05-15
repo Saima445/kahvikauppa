@@ -107,7 +107,6 @@ public class TuoteService {
         } else {
             // Hae olemassa oleva toimittaja
             existingSupplier = findSupplierById(Long.parseLong(supplierId));
-            // toimittajaRepository.findById(Long.parseLong(supplierId)).orElse(null);
         }
         return existingSupplier;
     }
@@ -216,33 +215,3 @@ public class TuoteService {
     }
 
 }
-
-// Toimittaja existingSupplier = null;
-// if ("new".equals(supplierId)) {
-// // Uusi toimittaja
-// existingSupplier = toimittajaRepository.findByName(newSupplierName.trim());
-// if (existingSupplier == null) {
-// // Jos toimittajaa ei löydy, luodaan uusi
-// existingSupplier = new Toimittaja();
-// existingSupplier.setName(newSupplierName.trim());
-// existingSupplier = toimittajaRepository.save(existingSupplier);
-// }
-// } else {
-// // Hae olemassa oleva toimittaja
-// existingSupplier = findSupplierById(Long.parseLong(supplierId));
-// }
-
-// Valmistaja existingProducer = null;
-// if ("new".equals(producerId)) {
-// // Uusi valmistaja
-// existingProducer = valmistajaRepository.findByName(newProducerName.trim());
-// if (existingProducer == null) {
-// // Jos valmistajaa ei löydy, luodaan uusi
-// existingProducer = new Valmistaja();
-// existingProducer.setName(newProducerName.trim());
-// existingProducer = valmistajaRepository.save(existingProducer);
-// }
-// } else {
-// // Hae olemassa oleva valmistaja
-// existingProducer = findProducerById(Long.parseLong(producerId));
-// }

@@ -73,13 +73,13 @@ public class KahvikauppaController {
         } else {
             model.addAttribute("message", false);
         }
-        int pageSize = 9; // Haluttu rivien määrä yhdellä sivulla
+        int pageSize = 9; // Haluttu tuotteiden määrä yhdellä sivulla
         Page<Tuote> tuotePage = tuoteService.getProductsKulutustuotteetPage(page, pageSize);
         List<Tuote> kulutustuotteet = tuotePage.getContent();
         model.addAttribute("kulutustuotteet", kulutustuotteet);
         model.addAttribute("totalPages", tuotePage.getTotalPages());
         model.addAttribute("currentPage", page);
-        model.addAttribute("pageNumber", page + 1); // Lisää sivunumeron malliin
+        model.addAttribute("pageNumber", page + 1);
         List<Tuote> kaikkiKulutustuotteet = tuoteService.getProductsKulutustuotteet();
         model.addAttribute("kaikkiKulutustuotteet", kaikkiKulutustuotteet);
         return "kulutustuotteet";

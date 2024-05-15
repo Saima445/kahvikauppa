@@ -158,8 +158,6 @@
           <tr th:each="product : ${products}">
             <td th:text="${product.name}">Product name</td>
             <td th:text="${product.price}">Product's price</td>
-            <!-- <td th:text="${product.description}">Product description</td>
-            <td th:text="${product.productImage}">Product image path</td> -->
             <td th:text="${product.osasto.name}">Product's department</td>
             <td th:text="${product.toimittaja.name}">Product's supplier</td>
             <td th:text="${product.valmistaja.name}">Product's producer</td>
@@ -190,89 +188,5 @@
       </table>
     </main>
     <div th:replace="~{index::footer}"></div>
-    <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script>
-    <script th:src="@{/javascript/charCount.js}"></script>
-    <script th:src="@{/javascript/newNameInput.js}"></script> -->
   </body>
 </html>
-<!-- // document.addEventListener("DOMContentLoaded", function () {
-  //   let textarea = document.getElementById("description");
-  //   let counter = document.getElementById("charCount");
-
-  //   // Alustava merkkimäärän laskenta
-  //   let initialCount = textarea.value.length;
-  //   counter.textContent = initialCount + "/2000";
-
-  //   textarea.addEventListener("input", function () {
-  //     let count = textarea.value.length;
-  //     counter.textContent = count + "/2000"; // Enimmäismerkkimäärä 2000 tietokannassa
-  //   });
-  //   document
-  //     .getElementById("supplier")
-  //     .addEventListener("change", function () {
-  //       let isNewSupplier =
-  //         document.getElementById("supplier").value === "new";
-  //       document.getElementById("newSupplierNameInput").style.display =
-  //         isNewSupplier ? "block" : "none";
-  //       document.getElementById("newSupplierNameLabel").style.display =
-  //         isNewSupplier ? "block" : "none";
-  //     });
-  //   document
-  //     .getElementById("producer")
-  //     .addEventListener("change", function () {
-  //       let isNewProducer =
-  //         document.getElementById("producer").value === "new";
-  //       document.getElementById("newProducerNameInput").style.display =
-  //         isNewProducer ? "block" : "none";
-  //       document.getElementById("newProducerNameLabel").style.display =
-  //         isNewProducer ? "block" : "none";
-  //     });
-  // }); -->
-<!-- OSASTO OPTION SELECTI PORRASTETUSTI!! -->
-<!-- <label for="rootDepartment">Osasto:</label>
-            <select id="rootDepartment" name="rootDepartment">
-              <option value="">Valitse pääosasto</option>
-              <option
-                th:each="rootDepartment : ${rootDepartments}"
-                th:value="${rootDepartment.id}"
-                th:text="${rootDepartment.name}"
-              ></option>
-            </select> -->
-
-<!-- Sub department valinta, näkyy vain jos pääosasto on valittu -->
-<!-- <label
-              for="subDepartment"
-              th:if="${not #lists.isEmpty(subDepartments)}"
-              >Alaosasto:</label
-            >
-            <select
-              id="subDepartment"
-              name="subDepartment"
-              th:if="${not #lists.isEmpty(subDepartments)}"
-            >
-              <option value="">Valitse alaosasto</option>
-              <option
-                th:each="subDepartment : ${subDepartments}"
-                th:value="${subDepartment.id}"
-                th:text="${subDepartment.name}"
-              ></option>
-            </select> -->
-
-<!-- Lower level department valinta, näkyy vain jos alaosasto on valittu -->
-<!-- <label
-              for="lowerLevelDepartment"
-              th:if="${not #lists.isEmpty(lowerLevelDepartments)}"
-              >Valitse alemman tason osasto:</label
-            >
-            <select
-              id="lowerLevelDepartment"
-              name="lowerLevelDepartment"
-              th:if="${not #lists.isEmpty(lowerLevelDepartments)}"
-            >
-              <option value="">Valitse alempi tason osasto</option>
-              <option
-                th:each="lowerLevelDepartment : ${lowerLevelDepartments}"
-                th:value="${lowerLevelDepartment.id}"
-                th:text="${lowerLevelDepartment.name}"
-              ></option>
-            </select> -->

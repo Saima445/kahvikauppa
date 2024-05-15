@@ -1,6 +1,5 @@
 package com.example.kahvikauppa;
 
-import org.hibernate.annotations.Collate;
 import java.math.BigDecimal;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -40,16 +39,6 @@ public class Tuote extends AbstractPersistable<Long> {
     @Column(name = "productImage")
     @Lob
     private byte[] productImage;
-
-    // TARVITAANKO?
-    // @Column(name = "imageName")
-    // private String imageName;
-
-    // @Column(name = "imageType")
-    // private String imageType;
-
-    // @Column(name = "imageSize")
-    // private Long imageSize;
 
     @ManyToOne
     private Osasto osasto;

@@ -10,7 +10,7 @@ function addCartItemToForm(productId, productName, productPrice) {
   orderInput.style.display = "none";
   orderInput.name = "order";
   orderInput.value =
-    "ID:" +
+    "TUOTTEEN ID:" +
     productId +
     ", NIMI: " +
     productName +

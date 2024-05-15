@@ -92,39 +92,3 @@ public class OsastoService {
     }
 
 }
-
-// // Metodi päivittää osaston tuotteiden määrän
-// private void updateProductCount(Osasto department) {
-// // Haetaan osaston tuotteiden määrä tietokannasta
-// Long productCount =
-// this.tuoteRepository.countProductsByOsastoID(department.getId());
-
-// // Tarkistetaan, onko osasto yksi niistä, joihin tarvitaan alaosastojen
-// // tuotteiden yhdistämistä
-// if (department.getId().equals(1L) || department.getId().equals(7L)) {
-// // Haetaan kaikki alaosastot
-// List<Osasto> subDepartments =
-// this.osastoRepository.findByOsastoIDP(department.getId());
-// // Käydään läpi jokainen alaosasto
-// for (Osasto subDepartment : subDepartments) {
-// // Lisätään alaosaston tuotteiden määrä yläosaston tuotteiden määrään
-// productCount +=
-// this.tuoteRepository.countProductsByOsastoID(subDepartment.getId());
-// }
-// } else if (department.getId().equals(2L)) {
-// // Haetaan kaikki alaosastot
-// List<Osasto> subDepartments = getDepartmentByIDP(department.getId());
-
-// // Käydään läpi jokainen alaosasto
-// for (Osasto subDepartment : subDepartments) {
-// // Lisätään alaosaston tuotteiden määrä yläosaston tuotteiden määrään
-// productCount +=
-// this.tuoteRepository.countProductsByOsastoID(subDepartment.getId());
-// }
-// }
-
-// // Päivitetään osaston tuotteiden määrä
-// department.setProductCount(productCount.intValue());
-// // Tallennetaan päivitetty osasto tietokantaan
-// this.osastoRepository.save(department);
-// }

@@ -46,7 +46,6 @@
             <th>Asiakkaan etunimi</th>
             <th>Asiakkaan sukunimi</th>
             <th>Asiakkaan sähköpostiosoite</th>
-            <!-- <th style="width: 15%">Tarkemmat tiedot/muokkaa</th> -->
             <th style="width: 10%"></th>
           </tr>
         </thead>
@@ -56,11 +55,6 @@
             <td th:text="${vipCustomer.firstname}">Customer firstname</td>
             <td th:text="${vipCustomer.lastname}">Customer lastname</td>
             <td th:text="${vipCustomer.email}">Customers email</td>
-            <!-- <td>
-              <a th:href="@{/updateVipCustomer/{id}(id=${vipCustomer.id})}">
-                <button class="update-button">Muokkaa</button>
-              </a>
-            </td> -->
             <td>
               <form
                 th:action="@{/deleteVipCustomer/{id}(id=${vipCustomer.id})}"
@@ -83,6 +77,5 @@
       </table>
     </main>
     <div th:replace="~{index::footer}"></div>
-    <!-- <script th:src="@{/javascript/scrollBehavior.js}"></script> -->
   </body>
 </html>
