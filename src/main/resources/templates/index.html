@@ -26,12 +26,6 @@
       th:src="@{/javascript/scrollBehavior.js}"
       defer
     ></script>
-    <script type="module" th:src="@{/javascript/charCount.js}" defer></script>
-    <script
-      type="module"
-      th:src="@{/javascript/newNameInput.js}"
-      defer
-    ></script>
     <script type="module" th:src="@{/javascript/orderForm.js}" defer></script>
   </head>
   <body>
@@ -78,7 +72,7 @@
           </figure>
           <h3>Kahvilaitteet</h3>
           <p>
-            <a href="kahvilaitteet.html" th:href="@{/kahvilaitteet}"
+            <a th:href="@{/kahvilaitteet}"
               >Valikoimaan
               <i class="fa-solid fa-arrow-right-long"></i>
             </a>
@@ -90,7 +84,7 @@
           </figure>
           <h3>Kulutustuotteet</h3>
           <p>
-            <a href="kulutustuotteet.html" th:href="@{/kulutustuotteet}"
+            <a th:href="@{/kulutustuotteet}"
               >Valikoimaan
               <i class="fa-solid fa-arrow-right-long"></i>
             </a>
@@ -102,7 +96,7 @@
           </figure>
           <h3>Rekisteröidy VIP-asiakkaaksemme</h3>
           <p>
-            <a href="vipasiakas.html" th:href="@{/vipasiakas}"
+            <a th:href="@{/vipasiakas}"
               >Rekisteröidy
               <i class="fa-solid fa-arrow-right-long"></i>
             </a>

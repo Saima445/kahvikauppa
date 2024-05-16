@@ -162,7 +162,7 @@ public class TuoteService {
 
     public Tuote updateProduct(Long id, String name, BigDecimal price, String description,
             Long departmentId, String supplierId, String newSupplierName,
-            String producerId, String newProducerName, byte[] imageBytes) {
+            String producerId, String newProducerName) {
 
         Tuote product = getProductById(id);
         if (product != null) {
@@ -177,7 +177,6 @@ public class TuoteService {
             product.setOsasto(existingDepartment);
             product.setToimittaja(existingSupplier);
             product.setValmistaja(existingProducer);
-            product.setProductImage(imageBytes);
 
             existingSupplier.getProducts().add(product);
             existingProducer.getProducts().add(product);
@@ -186,6 +185,10 @@ public class TuoteService {
             return this.tuoteRepository.save(product);
         }
         return null;
+        // jätetään tuotteiden päivittämisestä kuvan päivitys-optio pois, en saa sitä
+        // millään filen kenttään
+        // byte[] imageBytes
+        // product.setProductImage(imageBytes);
     }
 
     public void deleteProduct(Long id) {

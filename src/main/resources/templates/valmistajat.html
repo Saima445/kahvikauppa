@@ -17,13 +17,13 @@
       <section class="admin-section">
         <h2>ADMIN</h2>
         <div th:replace="~{admin::exit-button}"></div>
-        <button><a th:href="@{/admin}">Tuotteet</a></button>
-        <button><a th:href="@{/toimittajat}">Toimittajat</a></button>
-        <button style="background-color: #d5e1ca">
-          <a th:href="@{/valmistajat}">Valmistajat</a>
-        </button>
-        <button><a th:href="@{/osastot}">Osastot</a></button>
-        <button><a th:href="@{/vipasiakkaat}">VIP-asiakkaat</a></button>
+        <a th:href="@{/admin}"><button>Tuotteet</button></a>
+        <a th:href="@{/toimittajat}"><button>Toimittajat</button></a>
+        <a th:href="@{/valmistajat}"
+          ><button style="background-color: #d5e1ca">Valmistajat</button></a
+        >
+        <a th:href="@{/osastot}"><button>Osastot</button></a>
+        <a th:href="@{/vipasiakkaat}"><button>VIP-asiakkaat</button></a>
       </section>
       <div class="add-section">
         <h3>Lisää uusi valmistaja:</h3>

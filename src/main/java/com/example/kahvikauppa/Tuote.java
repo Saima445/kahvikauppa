@@ -1,5 +1,6 @@
 package com.example.kahvikauppa;
 
+// import org.hibernate.annotations.Collate;
 import java.math.BigDecimal;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -32,7 +33,7 @@ public class Tuote extends AbstractPersistable<Long> {
     // kirjoittaa pidemmän kuvauksen
     // ALTER TABLE TUOTE_DETAILS ALTER COLUMN DESCRIPTION VARCHAR(2000);
 
-    @NotNull // numeroihin, longeihin
+    @NotNull // numeroihin, Longeihin
     @Column(name = "price")
     private BigDecimal price;
 

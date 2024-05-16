@@ -1,16 +1,18 @@
-// Alusta tyhjä tilauslista
 let orderItems = {};
 let timerId;
 
-// Lisää uusi piilotettu input-kenttä formin sisälle
+// Uusi piilotettu input-kenttä formin sisälle
 function addCartItemToForm(productId, productName, productPrice) {
   let orderForm = document.getElementById("orderForm");
   let orderInput = document.createElement("input");
   orderInput.type = "text";
   orderInput.style.display = "none";
   orderInput.name = "order";
+  const dateTime = getCurrentDateTime();
   orderInput.value =
-    "TUOTTEEN ID:" +
+    "TILAUSAIKA: " +
+    dateTime +
+    ", TUOTTEEN ID:" +
     productId +
     ", NIMI: " +
     productName +
@@ -28,34 +30,45 @@ window.addToCart = function (productInfo) {
   let productPrice = parseFloat(productData[2]);
 
   if (productName in orderItems) {
-    // Tuote on jo tilauslistalla, päivitä sen määrää
+    // Tuote on jo tilauslistalla, päivitetään määrää
     orderItems[productName].count++;
     updateCartItem(productName);
     addCartItemToForm(productId, productName, productPrice);
+    // Käynnistetään ajastin vain jos se ei ole vielä käynnissä
+    if (!timerId) {
+      timerId = setTimeout(hideOrderList, 3000);
+    }
+    if (timerId) {
+      clearTimeout(timerId);
+      timerId = setTimeout(hideOrderList, 3000); // Päivitetään ajastimen aika uudestaan
+    }
   } else {
-    // Lisää tuote tilauslistalle ensimmäistä kertaa
+    // Lisätään tuote tilauslistalle ensimmäistä kertaa
     orderItems[productName] = {
       count: 1,
       price: productPrice,
     };
 
-    // Lisää tuote listalle näytölle
+    // Lisätään tuote listalle näytölle
     addCartItem(productName, productPrice);
-    // Lisää uusi piilotettu input-kenttä formin sisälle
+    // Lisätään uusi piilotettu input-kenttä formin sisälle
     addCartItemToForm(productId, productName, productPrice);
     showOrderList();
-    // Käynnistä ajastin vain jos se ei ole vielä käynnissä
+    // Käynnistetään ajastin vain jos se ei ole vielä käynnissä
     if (!timerId) {
-      timerId = setTimeout(hideOrderList, 3000); // Piilota suosikkilista 4 sekunnin kuluttua
+      timerId = setTimeout(hideOrderList, 3000);
+    }
+    if (timerId) {
+      clearTimeout(timerId);
+      timerId = setTimeout(hideOrderList, 3000); // Päivitetään ajastimen aika uudestaan
     }
   }
 
-  document.getElementById("orderFormContainer").style.display = "block"; // Näytä tilauslistan container
-  // Siirrä tilauslista oikeaan reunaan
+  document.getElementById("orderFormContainer").style.display = "block";
   document.getElementById("orderFormContainer").classList.add("order-list");
   document.getElementById("order-button").classList.add("input.submit-button");
 };
-// Lisää tuote listalle näytölle
+// Lisätään tuote listalle näytölle
 function addCartItem(productName, productPrice) {
   let orderList = document.getElementById("orderList");
   let listItem = document.createElement("li");
@@ -66,7 +79,7 @@ function addCartItem(productName, productPrice) {
   orderList.appendChild(listItem);
   updateTotal();
 }
-// Päivitä tilauslistan tuotteen määrä
+// Päivitetään tilauslistan tuotteen määrä
 function updateCartItem(productName) {
   let listItems = document
     .getElementById("orderList")
@@ -78,36 +91,49 @@ function updateCartItem(productName) {
         orderItems[productName].price *
         (count + 1)
       ).toFixed(2)}€`;
+      if (timerId) {
+        clearTimeout(timerId);
+        timerId = setTimeout(hideOrderList, 3000); // Päivitetään ajastimen aika uudestaan
+      }
       break;
     }
   }
+  if (timerId) {
+    clearTimeout(timerId);
+    timerId = setTimeout(hideOrderList, 3000); // Päivitetään ajastimen aika uudestaan
+  }
   updateTotal();
 }
-// Päivitä total tilauslistalle
+// Päivitetään total tilauslistalle
 function updateTotal() {
   let total = 0;
-  // Laske total summa tilauslistalla olevista tuotteista
   for (let productName in orderItems) {
     total += orderItems[productName].count * orderItems[productName].price;
   }
-  // Etsi total-elementti ja päivitä total-summa näytölle
   let totalElement = document.getElementById("total");
   totalElement.textContent = `Yhteensä: ${total.toFixed(2)}€`;
 }
 
-// Piilota tilauslista
+function getCurrentDateTime() {
+  const now = new Date();
+  const date = now.toLocaleDateString();
+  const time = now.toLocaleTimeString();
+  return `${date} ${time}`;
+}
+
+// Piilota tl
 window.hideOrderList = function () {
   document.getElementById("orderFormContainer").style.display = "none";
-  // näytä sydän ikoni
+  // näytä kori-ikoni
   document.getElementById("basket-icon").style.display = "block";
   // Nollaa ajastin
   timerId = null;
 };
 // Näytä tilauslista
 window.showOrderList = function () {
-  // Nollaa aiempi ajastin ja käynnistä uusi
+  // Nollaa ajastin
   clearTimeout(timerId);
   document.getElementById("orderFormContainer").style.display = "block";
-  // Piilota sydänikoni
+  // Piilota kori-ikoni
   document.getElementById("basket-icon").style.display = "none";
 };

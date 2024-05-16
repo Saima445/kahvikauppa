@@ -33,6 +33,7 @@ public class TuoteController {
         } else {
             model.addAttribute("message", false);
         }
+
         return "admin";
     }
 
@@ -79,17 +80,19 @@ public class TuoteController {
     public String updateProduct(@PathVariable Long id, @RequestParam String name, @RequestParam BigDecimal price,
             @RequestParam String description, @RequestParam Long departmentId, @RequestParam String supplierId,
             @RequestParam String newSupplierName, @RequestParam String producerId,
-            @RequestParam String newProducerName, @RequestParam("productImage") MultipartFile productImage,
-            Model model) throws IOException {
-
-        byte[] imageBytes = productImage.getBytes();
+            @RequestParam String newProducerName,
+            Model model) {
 
         // TuoteService uuden tuotteen lisäämiseen
         this.tuoteService.updateProduct(id, name, price, description, departmentId,
-                supplierId, newSupplierName, producerId, newProducerName,
-                imageBytes);
+                supplierId, newSupplierName, producerId, newProducerName);
 
         return "redirect:/admin";
+        // sama muutos tänne tuotekuvanpäivittämisen osalta
+        // @RequestParam("productImage") MultipartFile productImage,
+        // throws IOException
+        // byte[] imageBytes = productImage.getBytes();
+        // imageBytes
     }
 
     @PostMapping("/deleteProduct/{id}")

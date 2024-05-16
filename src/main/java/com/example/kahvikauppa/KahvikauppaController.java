@@ -112,7 +112,7 @@ public class KahvikauppaController {
         }
     }
 
-    // HAKU-TOIMINNALLISUUDET
+    // SEARCH TOIMINNALLISUUDET
     @GetMapping("/searchMachines")
     public String searchMachines(@RequestParam String keyword, Model model) {
         List<Tuote> machines = tuoteService.searchMachines(keyword);
@@ -154,7 +154,8 @@ public class KahvikauppaController {
                     +
                     "Ystävällisin terveisin, Töölön Kahvikaupan tiimi";
         } catch (RuntimeException e) {
-            message = "Tilausta lähettäessä sattui ongelma. Pahoittelemme mahdollisia aiheutuneita häiriöitä. Otathan yhteyttä asiakaspalveluumme saadaksesi lisätietoja ja apua.";
+            message = "Tilausta lähettäessä sattui ongelma. Pahoittelemme mahdollisia aiheutuneita häiriöitä. Otathan yhteyttä asiakaspalveluumme saadaksesi lisätietoja ja apua."
+                    + e.getMessage();
         }
         redirectAttributes.addFlashAttribute("message", message);
         // Tarkista, mikä sivu lähetti tilauksen ja palaa sille sivulle
@@ -164,14 +165,3 @@ public class KahvikauppaController {
         return "redirect:/kahvilaitteet";
     }
 }
-
-// TILAUSLISTAN VASTAANOTTAMISEN TOIMINNALLISUUDET
-// @PostMapping("/sendOrder")
-// public String sendOrder(@RequestParam("file") MultipartFile file) throws
-// IOException {
-// System.out.println("TIEDOSTON SISÄLTÖ: " + new String(file.getBytes()));
-// Tilaus newOrder = new Tilaus();
-// newOrder.setContent(file.getBytes());
-// this.tilausRepository.save(newOrder);
-// return "redirect:/kulutustuotteet";
-// }

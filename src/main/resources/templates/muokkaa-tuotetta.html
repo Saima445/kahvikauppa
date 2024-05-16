@@ -4,7 +4,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="~{index::head}"></head>
+  <head th:replace="~{admin::head}"></head>
   <body>
     <header th:replace="~{index::header}"></header>
     <main>
@@ -65,7 +65,7 @@
             th:text="${description.length() + '/2000'}"
             style="margin-block-end: 1rem; font-size: 1.2rem"
           ></div>
-          <label for="productImage">Kuva:</label>
+          <!-- <label for="productImage">Kuva:</label>
           <input
             th:value="${imageURL}"
             type="file"
@@ -73,7 +73,7 @@
             id="productImage"
             accept="image/*"
             required
-          />
+          /> -->
           <label for="department">Osasto:</label>
           <select name="departmentId" id="department" required>
             <option value="">Valitse osasto</option>

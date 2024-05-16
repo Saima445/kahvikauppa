@@ -27,7 +27,7 @@ public class VipAsiakasService {
         VipAsiakas existingVIP = findByEmail(email);
         if (existingVIP != null) {
             // Asiakas jo olemassa, palauta se
-            throw new RuntimeException();
+            return existingVIP;
         }
         // Luodaan uusi asiakas
         VipAsiakas newVIP = new VipAsiakas();
