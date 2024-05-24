@@ -2,7 +2,7 @@
 
 ## Projektin kuvaus
 
-Kahvikauppa on monipuolinen verkkosovellus, joka tarjoaa kahvikaupan hallinnolle ja asiakkaille käyttäjäystävällisen alustan tuotteiden selailuun, tilaamiseen ja hallintaan. Sovellus tarjoaa laajan valikoiman toiminnallisuuksia, jotka mahdollistavat tuotteiden selaamisen, tehokkaan tuotehallinnan, asiakassuhteiden hallinnan (VIP-asiakasrekisteröinti) ja tilausten vastaanottamisen.
+Kahvikauppa on monipuolinen verkkosovellus, joka tarjoaa kahvikaupan hallinnolle ja asiakkaille käyttäjäystävällisen alustan tuotteiden selailuun, tilaamiseen ja hallintaan. Sovelluksen ulkoasu on itsesuunniteltu ja toteutettu niin, että käyttökokemus olisi mahdollisimman helppo ja yhtenäinen. Siisti ja yhdenmukainen tyyli näkyy kaikissa sovelluksen osissa. Sovellus tarjoaa laajan valikoiman toiminnallisuuksia, jotka mahdollistavat tuotteiden selaamisen, tehokkaan tuotehallinnan, asiakassuhteiden hallinnan (VIP-asiakasrekisteröinti) ja tilausten vastaanottamisen.
 
 ## Ominaisuudet
 
