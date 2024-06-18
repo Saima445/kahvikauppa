@@ -16,7 +16,12 @@
           Sinut on kirjattu ulos.
         </div>
         <h2 style="margin: 2rem 0">Kirjaudu sisään</h2>
-        <form th:action="@{/login}" method="post" class="form-flex">
+        <form
+          th:action="@{/login}"
+          method="post"
+          class="form-flex"
+          style="margin-inline-start: 2rem"
+        >
           <label for="username">Käyttäjätunnus:</label>
           <input type="text" id="username" name="username" />
 

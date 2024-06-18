@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
+// import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -49,4 +50,7 @@ public class Tuote extends AbstractPersistable<Long> {
 
     @ManyToOne
     private Valmistaja valmistaja;
+
+    // @ManyToMany
+    // private Tilaus tilaus;
 }

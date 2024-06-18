@@ -97,6 +97,7 @@
             name="productImage"
             id="productImage"
             accept="image/*"
+            required
           />
           <label for="department">Osasto:</label>
           <select name="departmentId" id="department" required>
@@ -115,7 +116,7 @@
             <option
               th:each="supplier : ${suppliers}"
               th:value="${supplier.id}"
-              th:text="${supplier.name}"
+              th:text="${supplier.id} +' '+ ${supplier.name}"
             ></option>
           </select>
           <!-- LISÄTÄÄN UUSI TOIMITTAJA JOS TARVITSEE -->
@@ -144,7 +145,7 @@
             <option
               th:each="producer : ${producers}"
               th:value="${producer.id}"
-              th:text="${producer.name}"
+              th:text="${producer.id} +' '+ ${producer.name}"
             ></option>
           </select>
           <!-- LISÄTÄÄN UUSI VALMISTAJA JOS TARVITSEE -->
