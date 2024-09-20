@@ -65,34 +65,34 @@ Projekti hyödyntää laajasti Java-pohjaisia teknologioita ja Spring Frameworki
 ## Näyttökuvia sovelluksesta
 
 ### Etusivu
-![Etusivu](./images/front_page.png)
+![Etusivu](./src/main/resources/public/images/front_page.png)
 
 ### Kulutustuotteet-osasto
-![Kulutustuotteiden osasto](./images/kulutustuotteet_page.png)
+![Kulutustuotteet-osasto](./src/main/resources/public/images/kulutustuotteet_page.png)
 
 ### Kahvilaitteet-osasto
-![Kahvilaitteet-osasto](./images/kahvilaitteet_page.png)
+![Kahvilaitteet-osasto](./src/main/resources/public/images/kahvilaitteet_page.png)
 
 ### Tilaukset ja haku
-![Tilaukset ja haku](./images/order-list_and_search.png)
+![Tilaukset ja haku](./src/main/resources/public/images/order-list_and_search.png)
 
 ### VIP-asiakasrekisteröinti
-![VIP-asiakasrekisteröinti](./images/vipasiakas_page.png)
+![VIP-asiakasrekisteröinti](./src/main/resources/public/images/vipasiakas_page.png)
 
 ### Sisäänkirjautuminen
-![Sisäänkirjautumissivu](./images/sign-in_page.png)
+![Sisäänkirjautumissivu](./src/main/resources/public/images/sign-in_page.png)
 
 ### Tuotteiden hallinta
-![Lisää tuote](./images/add-product_page.png)
+![Lisää tuote](./src/main/resources/public/images/add-product_page.png)
 
 ### Toimittajien hallinta
-![Lisää toimittaja](./images/add-supplier_page.png)
+![Lisää toimittaja](./src/main/resources/public/images/add-supplier_page.png)
 
 ### Valmistajien hallinta
-![Lisää valmistaja](./images/add-producer_page.png)
+![Lisää valmistaja](./src/main/resources/public/images/add-producer_page.png)
 
 ### Osastojen hallinta
-![Lisää osasto](./images/add-department_page.png)
+![Lisää osasto](./src/main/resources/public/images/add-department_page.png)
 
 ### VIP-asiakkaiden hallinta
-![VIP-asiakkaiden hallinta](./images/list-of-vip-customers_page.png)
+![VIP-asiakkaiden hallinta](./src/main/resources/public/images/list-of-vip-customers_page.png)
