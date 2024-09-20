@@ -61,3 +61,38 @@ Projekti hyödyntää laajasti Java-pohjaisia teknologioita ja Spring Frameworki
 - Frontend: HTML, CSS, JavaScript
 - Backend: Spring Boot, Spring Boot DevTools, Lombok, Spring Web, Thymeleaf, Spring Data JPA
 - Tietokanta: H2 Database
+
+## Näyttökuvia sovelluksesta
+
+### Etusivu
+![Etusivu](./images/front_page.png)
+
+### Kulutustuotteet-osasto
+![Kulutustuotteiden osasto](./images/kulutustuotteet_page.png)
+
+### Kahvilaitteet-osasto
+![Kahvilaitteet-osasto](./images/kahvilaitteet_page.png)
+
+### Tilaukset ja haku
+![Tilaukset ja haku](./images/order-list_and_search.png)
+
+### VIP-asiakasrekisteröinti
+![VIP-asiakasrekisteröinti](./images/vipasiakas_page.png)
+
+### Sisäänkirjautuminen
+![Sisäänkirjautumissivu](./images/sign-in_page.png)
+
+### Tuotteiden hallinta
+![Lisää tuote](./images/add-product_page.png)
+
+### Toimittajien hallinta
+![Lisää toimittaja](./images/add-supplier_page.png)
+
+### Valmistajien hallinta
+![Lisää valmistaja](./images/add-producer_page.png)
+
+### Osastojen hallinta
+![Lisää osasto](./images/add-department_page.png)
+
+### VIP-asiakkaiden hallinta
+![VIP-asiakkaiden hallinta](./images/list-of-vip-customers_page.png)
