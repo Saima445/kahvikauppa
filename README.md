@@ -1,12 +1,12 @@
-# Coffee Shop App
+# Coffee shop app
 
-## Project Description
+## Project description
 
 Coffee Shop is a versatile web application designed to provide an intuitive platform for both the management of the coffee shop and customers, allowing users to browse, order, and manage products with ease. The interface is custom-designed to ensure a seamless and user-friendly experience throughout the app. The clean and consistent style is reflected in every part of the application. The app features a wide range of functionalities, including product browsing, efficient product management, customer relationship management (VIP registration), and order processing.
 
 ## Features
 
-### Product Management
+### Product management
 
 The admin user can add, edit, and delete products (linked to an H2 database). Each product includes detailed information such as name, price, description, product image, and an assigned manufacturer, supplier, and department. Saved products can easily be edited or deleted.
 
@@ -14,7 +14,7 @@ The admin user can add, edit, and delete products (linked to an H2 database). Ea
 - Edit existing products as needed.
 - Remove products from the selection and database.
 - 
-### Supplier and Manufacturer Management
+### Supplier and manufacturer management
 
 The admin user can add, edit, and delete suppliers and manufacturers (linked to an H2 database). Each supplier and manufacturer has detailed information such as name, contact person, and website. Saved details can be easily modified or deleted.
 
@@ -22,7 +22,7 @@ The admin user can add, edit, and delete suppliers and manufacturers (linked to 
 - Edit supplier and manufacturer details.
 - Delete suppliers and manufacturers from the selection and database.
 
-### Department Management
+### Department management
 
 The admin user can add, edit, and delete departments (linked to an H2 database). Each department is assigned a Department IDP (parent id), which helps create a hierarchical structure in the database. Departments allow for efficient organization and grouping of products, making it easier for customers to find items and for products to be listed on their respective HTML pages.
 
@@ -30,14 +30,14 @@ The admin user can add, edit, and delete departments (linked to an H2 database).
 - Edit department details.
 - Remove departments from the selection and database.
 
-### VIP Customer Management
+### VIP Customer management
 
 The app allows customers to register as VIPs, and the admin can manage these VIP customers (linked to an H2 database) within the app.
 
 - Register new VIP customers, specifying their first name, last name, and email.
 - Remove VIP customers as needed.
 
-### User Management
+### User management
 
 Access to the Coffee Shop admin panel requires login with admin credentials. The login process ensures that only authorized personnel can access the panel and perform administrative tasks.
 
@@ -51,7 +51,7 @@ The login functionality is implemented using the **Spring Security** library, en
 
 - Logging in with admin credentials enables access to the admin panel.
 
-## Technologies and Libraries
+## Technologies and libraries
 
 The project leverages a range of Java-based technologies and components from the **Spring Framework** to build the backend. The frontend uses traditional web technologies such as HTML, CSS, and JavaScript, with **Thymeleaf** for rendering dynamic content and **H2 Database** for data management.
 
