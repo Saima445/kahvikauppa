@@ -1,98 +1,96 @@
-# Kahvikauppa
+# Coffee Shop App
 
-## Projektin kuvaus
+## Project Description
 
-Kahvikauppa on monipuolinen verkkosovellus, joka tarjoaa kahvikaupan hallinnolle ja asiakkaille käyttäjäystävällisen alustan tuotteiden selailuun, tilaamiseen ja hallintaan. Sovelluksen ulkoasu on itsesuunniteltu ja toteutettu niin, että käyttökokemus olisi mahdollisimman helppo ja yhtenäinen. Siisti ja yhdenmukainen tyyli näkyy kaikissa sovelluksen osissa. Sovellus tarjoaa laajan valikoiman toiminnallisuuksia, jotka mahdollistavat tuotteiden selaamisen, tehokkaan tuotehallinnan, asiakassuhteiden hallinnan (VIP-asiakasrekisteröinti) ja tilausten vastaanottamisen.
+Coffee Shop is a versatile web application designed to provide an intuitive platform for both the management of the coffee shop and customers, allowing users to browse, order, and manage products with ease. The interface is custom-designed to ensure a seamless and user-friendly experience throughout the app. The clean and consistent style is reflected in every part of the application. The app features a wide range of functionalities, including product browsing, efficient product management, customer relationship management (VIP registration), and order processing.
 
-## Ominaisuudet
+## Features
 
-### Tuotteiden hallinta
+### Product Management
 
-Admin-käyttäjä voi lisätä, muokata ja poistaa sovelluksessa (linkitetty H2-tietokantaan) tuotteita. Jokaisella tuotteella on tarkat tiedot, kuten nimi, hinta, kuvaus, tuotekuva, sekä tuotteelle osoitetaan aina valmistaja, toimittaja ja osasto. Tallennettuja tuotteita pystyy helposti muokkaamaan ja poistamaan.
+The admin user can add, edit, and delete products (linked to an H2 database). Each product includes detailed information such as name, price, description, product image, and an assigned manufacturer, supplier, and department. Saved products can easily be edited or deleted.
 
-- Lisää uusia tuotteita, määrittele niiden nimi, hinta ja kuvaus.
-- Muokkaa olemassa olevia tuotteita tarvittaessa.
-- Poista tuotteita valikoimasta ja tietokannasta.
+- Add new products, define their name, price, and description.
+- Edit existing products as needed.
+- Remove products from the selection and database.
+- 
+### Supplier and Manufacturer Management
 
-### Toimittajien ja valmistajien hallinta
+The admin user can add, edit, and delete suppliers and manufacturers (linked to an H2 database). Each supplier and manufacturer has detailed information such as name, contact person, and website. Saved details can be easily modified or deleted.
 
-Admin-käyttäjä voi lisätä, muokata ja poistaa sovelluksessa (linkitetty H2-tietokantaan) toimittajia ja valmistajia. Jokaiselle valmistajalle ja toimittajalle on tarkat tiedot, kuten nimi, yhteyshenkilö, verkko-osoite jne. Tallennettuja tietoja pystyy helposti muokkaamaan ja poistamaan.
+- Add new suppliers and manufacturers, specifying their name, contact info, and website.
+- Edit supplier and manufacturer details.
+- Delete suppliers and manufacturers from the selection and database.
 
-- Lisää uusia toimittajia ja valmistajia, määrittele heidän nimensä, yhteystietonsa, verkko-osoitteet jne.
-- Muokkaa toimittajien ja valmistajien tietoja.
-- Poista toimittajia ja valmistajia tarvittaessa valikoimasta ja tietokannasta.
+### Department Management
 
-### Osastojen hallinta
+The admin user can add, edit, and delete departments (linked to an H2 database). Each department is assigned a Department IDP (parent id), which helps create a hierarchical structure in the database. Departments allow for efficient organization and grouping of products, making it easier for customers to find items and for products to be listed on their respective HTML pages.
 
-Admin-käyttäjä voi lisätä, muokata ja poistaa sovelluksessa (linkitetty H2-tietokantaan) osastoja. Jokaiselle osastolle osoitetaan osasto IDP (parent id), jonka avulla saadaan osastohierarkia tietokantaan. Osastojen avulla tuotteet voidaan järjestää ja ryhmitellä tehokkaasti, mikä helpottaa asiakkaiden tuotteiden löytämistä ja tuotteiden listautumista omille html-sivuilleen.
+- Create new departments, define their name and department IDP (parent id).
+- Edit department details.
+- Remove departments from the selection and database.
 
-- Luo uusia osastoja, määrittele niiden nimi ja osasto IDP (parent id:s).
-- Muokkaa osastojen tietoja.
-- Poista osastoja valikoimasta ja tietokannasta.
+### VIP Customer Management
 
-### VIP-asiakkaiden hallinta
+The app allows customers to register as VIPs, and the admin can manage these VIP customers (linked to an H2 database) within the app.
 
-Sovellus tarjoaa asiakkaalle mahdollisuuden rekisteröityä VIP-asiakkaaksi. Admin-käyttäjät voivat hallinnoida rekisteröityneitä VIP-asiakkaita (linkitetty H2-tietokantaan) sovelluksessa.
+- Register new VIP customers, specifying their first name, last name, and email.
+- Remove VIP customers as needed.
 
-- Rekisteröi uusia VIP-asiakkaita, määrittele heidän etunimensä, sukunimensä ja sähköpostiosoitteensa.
-- Poista VIP-asiakkaita tarvittaessa.
+### User Management
 
-### Käyttäjähallinta
+Access to the Coffee Shop admin panel requires login with admin credentials. The login process ensures that only authorized personnel can access the panel and perform administrative tasks.
 
-Kahvikaupan hallintapaneeliin pääseminen edellyttää sisäänkirjautumista admin-tunnuksilla. Sisäänkirjautumisen avulla varmistetaan, että vain valtuutetut henkilöt voivat käyttää hallintapaneelia ja suorittaa erilaisia hallinnollisia toimenpiteitä.
+- Users enter their username and password on the login form.
+- The credentials are securely sent to the server.
+- The server validates the credentials and ensures they are correct.
+- If authentication is successful, the user is redirected to the admin panel to perform various tasks.
+- If authentication fails, the user receives an error message and is prompted to try again.
 
-- Käyttäjätunnus ja salasana syötetään sisäänkirjautumislomakkeelle.
-- Sisäänkirjautumistiedot lähetetään turvallisesti palvelimelle.
-- Palvelin tarkistaa käyttäjän antamat tiedot ja varmistaa, että ne ovat oikein.
-- Jos tunnistautuminen onnistuu, käyttäjä ohjataan hallintapaneeliin, jossa hän voi suorittaa erilaisia toimenpiteitä.
-- Jos tunnistautuminen epäonnistuu, käyttäjä saa virheilmoituksen ja ohjataan takaisin sisäänkirjautumissivulle yrittämään uudelleen.
+The login functionality is implemented using the **Spring Security** library, ensuring strong authentication and authorization mechanisms for web applications. This feature is integrated into the Coffee Shop backend, validating credentials before granting access to the admin panel.
 
-Sisäänkirjautumistoiminnallisuus on olennainen osa kahvikaupan turvallisuutta ja käyttäjähallintaa, ja se varmistaa, että vain oikeutetut henkilöt voivat käyttää hallintapaneelia ja sen tarjoamia toiminnallisuuksia.
+- Logging in with admin credentials enables access to the admin panel.
 
-Tämä sisäänkirjautumistoiminnallisuus on toteutettu Spring Security -kirjaston avulla, joka tarjoaa vahvan tunnistautumisen ja autorisoinnin mekanismit web-sovelluksille. Sisäänkirjautumistoiminnallisuus on integroitu osaksi kahvikaupan backendiä, ja se varmistaa käyttäjätunnuksen ja salasanan oikeellisuuden ennen kuin käyttäjä pääsee käyttämään hallintapaneelia.
+## Technologies and Libraries
 
-- Sisäänkirjautuminen admin-tunnuksilla mahdollistaa hallintapaneelin käytön.
+The project leverages a range of Java-based technologies and components from the **Spring Framework** to build the backend. The frontend uses traditional web technologies such as HTML, CSS, and JavaScript, with **Thymeleaf** for rendering dynamic content and **H2 Database** for data management.
 
-## Teknologiat ja kirjastot
-
-Projekti hyödyntää laajasti Java-pohjaisia teknologioita ja Spring Frameworkin eri osia backendin toteuttamiseen. Frontendissä käytetään perinteisiä web-tekniikoita, kuten HTML:ää, CSS:ää sekä JavaScriptiä ja Thymeleafia dynaamisen sisällön renderöintiin sekä H2-tietokantaa tietojen tallentamiseen ja hallintaan.
-
-- Kieli: Java
+- Language: Java
 - Frontend: HTML, CSS, JavaScript
 - Backend: Spring Boot, Spring Boot DevTools, Lombok, Spring Web, Thymeleaf, Spring Data JPA
-- Tietokanta: H2 Database
+- Database: H2 Database
+  
+## Screenshots of the application
 
-## Näyttökuvia sovelluksesta
-
-### Etusivu
+### Homepage
 ![Etusivu](./src/main/resources/public/images/front_page.png)
 
-### Kulutustuotteet-osasto
+### Consumer products department
 ![Kulutustuotteet-osasto](./src/main/resources/public/images/kulutustuotteet_page.png)
 
-### Kahvilaitteet-osasto
+### Coffee machines department
 ![Kahvilaitteet-osasto](./src/main/resources/public/images/kahvilaitteet_page.png)
 
-### Tilaukset ja haku
+### Orders and search
 ![Tilaukset ja haku](./src/main/resources/public/images/order-list_and_search.png)
 
-### VIP-asiakasrekisteröinti
+### VIP customer registration
 ![VIP-asiakasrekisteröinti](./src/main/resources/public/images/vipasiakas_page.png)
 
-### Sisäänkirjautuminen
+### Login page
 ![Sisäänkirjautumissivu](./src/main/resources/public/images/sign-in_page.png)
 
-### Tuotteiden hallinta
+### Product management
 ![Lisää tuote](./src/main/resources/public/images/add-product_page.png)
 
-### Toimittajien hallinta
+### Supplier management
 ![Lisää toimittaja](./src/main/resources/public/images/add-supplier_page.png)
 
-### Valmistajien hallinta
+### Manufacturer management
 ![Lisää valmistaja](./src/main/resources/public/images/add-producer_page.png)
 
-### Osastojen hallinta
+### Department management
 ![Lisää osasto](./src/main/resources/public/images/add-department_page.png)
 
-### VIP-asiakkaiden hallinta
+### VIP customer management
 ![VIP-asiakkaiden hallinta](./src/main/resources/public/images/list-of-vip-customers_page.png)
