@@ -13,7 +13,7 @@ The admin user can add, edit, and delete products (linked to an H2 database). Ea
 - Add new products, define their name, price, and description.
 - Edit existing products as needed.
 - Remove products from the selection and database.
-- 
+  
 ### Supplier and manufacturer management
 
 The admin user can add, edit, and delete suppliers and manufacturers (linked to an H2 database). Each supplier and manufacturer has detailed information such as name, contact person, and website. Saved details can be easily modified or deleted.
